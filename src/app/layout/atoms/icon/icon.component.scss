@@ -1,0 +1,14 @@
+lou-icon {
+	display: inline-block;
+	width: 100%;
+
+	span,
+	svg {
+		display: block;
+		width: 100%;
+	}
+
+	svg {
+		height: auto;
+	}
+}
