@@ -2,8 +2,6 @@
 
 ## V1
 
-- [ ] Global Style reset
-- [ ] Webkit UI
 - [ ] CSS Atoms
 - [ ] Architecture
 - [ ] TDD workflow

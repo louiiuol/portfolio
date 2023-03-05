@@ -1,10 +1,10 @@
-# Web developer full-stack Typescript, passionate by UX design 🎨
+# Web developer full-stack Typescript, passionate about UX design 🎨
 
-<p align='center'> <a target='blank' href='https://louiiuol.github.io/louiiuol/' ><img src='./src/assets/intro.gif' /></a> </p>
+<p align='center'>  <a target='blank' href='https://louiiuol.github.io/louiiuol/' ><img src='./src/assets/images/gif/intro.gif' /></a> </p>
 
 ## Presentation 🎙
 
-> 🚀 **Padawan Web developer** that loves to **design** and **develop** all sort of web projects ! Mainly working on a weird language that is Javascript, and  more recently discovering peace with Typescript ! 🕊
+> 🚀 **Confirmed Web developer** that loves to **design** and **develop** all sort of web projects ! Mainly working on a weird language that is Javascript, and  more recently discovering peace with Typescript ! 🕊
 >
 > - 🌍 I've just deployed my *[portfolio](https://louiiuol.github.io/louiiuol/)* with React & Github Pages !
 > - 📚 I’m currently **learning in depth JS frameworks** (React) and Node.js ..
@@ -17,6 +17,10 @@
 - This project was generated with [Angular CLI](https://github.com/angular/angular-cli) (15.2.1).
 - This project uses Typescript (~4.9.4)
 - This  project Prime NG (V15) to  ease UI  development
+
+## Templates & Prototypes
+
+All templates and prototypes are available [here](https://www.figma.com/file/pGv11GrLnifc0rYB6EJtxG/Portfolio?node-id=1%3A2&t=E7ws6Q8z3u4EsKfg-1)
 
 ## Available commands
 

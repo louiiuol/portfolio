@@ -19,6 +19,7 @@ bootstrapApplication(AppComponent, {
 	providers: [
 		importProvidersFrom(HttpClientModule),
 		importProvidersFrom(BrowserAnimationsModule),
+    // TODO Compare with other preloading strategies
 		provideRouter(APP_ROUTES, withPreloading(PreloadAllModules)),
 	],
 }).catch(err => console.error(err));
