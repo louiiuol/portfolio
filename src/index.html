@@ -2,13 +2,41 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>Portfolio</title>
-		<base href="/" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="icon" type="image/x-icon" href="favicon.ico" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Louis Godlewski | Portfolio</title>
+		<meta name="theme-color" content="#0F3057" />
+		<meta
+			name="description"
+			content="Typescript web designer and developer, passionate about UX and design patterns." />
+		<meta
+			name="keywords"
+			content="Web UX designer, fullstack developer, typescript" />
+		<meta name="author" content="Louis Godlewski" />
+		<base href="/" />
+		<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" />
 	</head>
 	<body>
-		<noscript><h1>You need to enable JavaScript to run this app.</h1></noscript>
+		<noscript>
+			<div
+				class="h-screen w-full flex align-items-center justify-content-center flex-column">
+				<div class="content w-9 mx-auto px-6 py-4 bg-primary-reverse shadow-4">
+					<h1 class="p-component text-3xl text-primary text-center">
+						This website needs Javascript to work !
+					</h1>
+					<p class="p-component font-italic text-500 pt-2">
+						Please enable it and refresh your page. You can also download my
+						Curriculum Vitae
+						<a
+							class="text-primary underline"
+							download
+							href="assets/pdf/cv-louis_godlewski.pdf">
+							here
+						</a>
+					</p>
+				</div>
+			</div>
+		</noscript>
 		<app-root></app-root>
 	</body>
 </html>
