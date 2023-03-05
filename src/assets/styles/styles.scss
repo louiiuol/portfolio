@@ -1,0 +1,26 @@
+:root {
+	--secondary-color: rgb(217, 79, 111);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;0,600;0,800;1,200;1,400;1,600;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap');
+
+body {
+	min-height: 100dvh;
+	margin: 0;
+	width: 100%;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+/* GLOBAL SELECTION STYLES */
+::-moz-selection {
+	background: var(--primary-color);
+	color: white;
+}
+::selection {
+	background: var(--primary-color);
+	color: white;
+}
