@@ -1,10 +1,11 @@
 {
-  /* WORKSPACE COLOR SCHEMES */
+	/* WORKSPACE COLOR SCHEMES */
 	"workbench.colorCustomizations": {
 		"statusBar.background": "#bb2649",
 		"statusBar.foreground": "#3c0411",
 		"statusBarItem.hoverBackground": "#000000a3",
 		"statusBarItem.remoteBackground": "#3c0411",
-		"statusBarItem.remoteForeground": "#f3f3f3",
+		"statusBarItem.remoteForeground": "#f3f3f3"
 	},
+	"cSpell.words": ["louiiuol"]
 }
