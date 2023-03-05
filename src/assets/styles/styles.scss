@@ -11,15 +11,7 @@ body {
 	width: 100%;
 }
 
-* {
-	box-sizing: border-box;
-}
-
 /* GLOBAL SELECTION STYLES */
-::-moz-selection {
-	background: var(--primary-color);
-	color: white;
-}
 ::selection {
 	background: var(--primary-color);
 	color: white;
