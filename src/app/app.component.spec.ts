@@ -11,23 +11,13 @@ describe('AppComponent', () => {
 	});
 
 	it('should create the app', () => {
-		const fixture = TestBed.createComponent(AppComponent);
-		const app = fixture.componentInstance;
+		const app = TestBed.createComponent(AppComponent).componentInstance;
 		expect(app).toBeTruthy();
 	});
 
-	it(`should have as title 'portfolio'`, () => {
-		const fixture = TestBed.createComponent(AppComponent);
-		const app = fixture.componentInstance;
-		expect(app.title).toEqual('portfolio');
-	});
-
-	it('should render title', () => {
-		const fixture = TestBed.createComponent(AppComponent);
-		fixture.detectChanges();
-		const compiled = fixture.nativeElement as HTMLElement;
-		expect(compiled.querySelector('button')?.textContent).toContain(
-			'Welcome to my portfolio !'
-		);
+	it('should render header component', () => {
+		const app = TestBed.createComponent(AppComponent)
+			.nativeElement as HTMLElement;
+		expect(app.querySelector('lou-header')).toBeTruthy();
 	});
 });
