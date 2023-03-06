@@ -22,7 +22,7 @@
 
 > All templates and prototypes made to design this application are available [here](https://www.figma.com/file/pGv11GrLnifc0rYB6EJtxG/Portfolio?node-id=1%3A2&t=E7ws6Q8z3u4EsKfg-1)
 >
-> Feel free to commit the figma file to suggest any idea !
+> Feel free to comment the figma file to suggest any idea !
 
 ## Built With 🚀
 
