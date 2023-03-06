@@ -1,8 +1,13 @@
 import {Routes} from '@angular/router';
+import {HomeComponent} from './layout/pages/home.component';
 
 export const APP_ROUTES: Routes = [
 	{
+		path: 'home',
+		component: HomeComponent,
+	},
+	{
 		path: '**',
-		redirectTo: '404',
+		redirectTo: 'home',
 	},
 ];
