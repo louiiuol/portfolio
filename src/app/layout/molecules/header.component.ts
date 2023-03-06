@@ -1,18 +1,47 @@
 import {CommonModule} from '@angular/common';
 import {Component, HostBinding} from '@angular/core';
+import {ButtonModule} from 'primeng/button';
 
 @Component({
 	standalone: true,
-	imports: [CommonModule],
-	selector: 'vp-header',
+	imports: [CommonModule, ButtonModule],
+	selector: 'lou-header',
 	template: `
-		<a href=""><span>Louis Godlewski</span></a>
-		<ul class="links">
-			<li><a href="">about</a></li>
-			<li><button href="">contact</button></li>
+		<a
+			pButton
+			type="button"
+			routerLink="/home"
+			class="text-niconne text-4xl p-button-text p-button-sm"
+			>Louis Godlewski</a
+		>
+		<ul id="navigation-links" class="flex gap-3">
+			<li>
+				<a
+					pButton
+					pRipple
+					routerLink="/home"
+					type="button"
+					label="home"
+					class="p-button-text p-button-sm"></a>
+				<a
+					pButton
+					pRipple
+					routerLink="/about"
+					type="button"
+					label="about"
+					class="p-button-text p-button-sm"></a>
+			</li>
+			<li>
+				<button
+					pButton
+					type="button"
+					label="contact"
+					class="p-button-sm"></button>
+			</li>
 		</ul>
 	`,
 })
 export class HeaderComponent {
-	@HostBinding('class') class = '';
+	@HostBinding('class') class =
+		'surface-ground h-4rem flex px-5 py-2 align-items-center justify-content-between shadow-2';
 }
