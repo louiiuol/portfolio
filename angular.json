@@ -81,12 +81,20 @@
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
+						"codeCoverage": true,
 						"polyfills": ["zone.js", "zone.js/testing"],
 						"tsConfig": "tsconfig.spec.json",
 						"inlineStyleLanguage": "scss",
 						"assets": ["src/favicon.ico", "src/assets"],
-						"styles": ["src/styles.scss"],
-						"scripts": []
+						"styles": [
+							"node_modules/primeicons/primeicons.css",
+							"node_modules/primeflex/primeflex.css",
+							"node_modules/primeng/resources/primeng.min.css",
+							"src/assets/styles/theme.min.css",
+							"src/assets/styles/styles.scss"
+						],
+						"scripts": [],
+						"karmaConfig": "karma.conf.js"
 					}
 				}
 			}
