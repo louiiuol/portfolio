@@ -1,51 +1,38 @@
 import {CommonModule} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
-import {
-	Component,
-	OnChanges,
-	Input,
-	ViewEncapsulation,
-	OnDestroy,
-} from '@angular/core';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {Subscription} from 'rxjs';
+import {Component, OnChanges, Input, ViewEncapsulation} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {TrustHtmlPipe} from 'src/app/modules/core/pipes/trust-html.pipe';
 
 /**
- * Component to display a loading icon.
+ * Component embedding a SVG icon
  */
 @Component({
 	standalone: true,
-	imports: [CommonModule],
+	imports: [CommonModule, TrustHtmlPipe],
 	selector: 'lou-icon',
 	template: `<!-- SVG embedded Icon -->
-		<span *ngIf="svgIconTag" [innerHTML]="svgIconTag"></span>`,
+		<span
+			*ngIf="svgIconTag"
+			[innerHTML]="svgIconTag | async | trustHtml"></span>`,
 	styleUrls: ['./icon.component.scss'],
 	encapsulation: ViewEncapsulation.None,
 })
-export class IconComponent implements OnChanges, OnDestroy {
+export class IconComponent implements OnChanges {
+	/** Defines icon to be shown. Check assets/img/svg/ folder for available icons */
+	@Input() name?: string;
 
-  /** Defines icon to be shown. Check assets/img/svg/ folder for available icons */
-  @Input() name?: string;
+	svgIconTag: Observable<string> = of('');
 
-	svgIconTag?: SafeHtml;
-	obs?: Subscription;
-
-	constructor(
-		private _httpClient: HttpClient,
-		private _sanitizer: DomSanitizer
-	) {}
-
-	ngOnDestroy(): void {
-		this.obs?.unsubscribe();
-	}
+	constructor(private _httpClient: HttpClient) {}
 
 	ngOnChanges(): void {
 		if (!this.name) return;
-		this.obs = this._httpClient
-			.get(`assets/images/svg/${this.name}.svg`, {responseType: 'text'})
-			.subscribe(
-				value =>
-					(this.svgIconTag = this._sanitizer.bypassSecurityTrustHtml(value))
-			);
+		this.svgIconTag = this._httpClient.get(
+			`assets/images/svg/${this.name}.svg`,
+			{
+				responseType: 'text',
+			}
+		);
 	}
 }
