@@ -9,6 +9,7 @@ import {ButtonModule} from 'primeng/button';
 	template: `
 		<a
 			pButton
+			id="logo"
 			type="button"
 			routerLink="/home"
 			class="text-niconne text-4xl p-button-text p-button-sm"
@@ -23,6 +24,8 @@ import {ButtonModule} from 'primeng/button';
 					type="button"
 					label="home"
 					class="p-button-text p-button-sm"></a>
+			</li>
+			<li>
 				<a
 					pButton
 					pRipple
