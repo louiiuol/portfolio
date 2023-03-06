@@ -16,8 +16,7 @@ describe('HeaderComponent', () => {
 	});
 
 	it('should render Logo with correct font family', () => {
-		const header = TestBed.createComponent(HeaderComponent)
-			.nativeElement as HTMLElement;
+		const header = TestBed.createComponent(HeaderComponent).nativeElement;
 		const logo = header.querySelector('#logo');
 		const computedFontFamily = logo
 			? window.getComputedStyle(logo).getPropertyValue('font-family')
@@ -26,12 +25,11 @@ describe('HeaderComponent', () => {
 	});
 
 	it('should render links', () => {
-		const header = TestBed.createComponent(HeaderComponent)
-			.nativeElement as HTMLElement;
+		const header = TestBed.createComponent(HeaderComponent).nativeElement;
 		const linksCount =
 			header.querySelector('#navigation-links')?.children.length;
 		expect(linksCount).toEqual(3);
 	});
 
-  // TODO links should redirect to correct page (BLOCKED BY routes)
+	// TODO links should redirect to correct page (BLOCKED BY routes)
 });
