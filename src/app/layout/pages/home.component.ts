@@ -1,19 +1,19 @@
 import {CommonModule} from '@angular/common';
 import {Component, HostBinding} from '@angular/core';
 import {NgxLoadingModule} from 'ngx-loading';
+import {IconComponent} from '../atoms';
 
 @Component({
 	standalone: true,
-	imports: [CommonModule, NgxLoadingModule],
+	imports: [CommonModule, NgxLoadingModule, IconComponent],
 	selector: 'lou-home',
 	template: `<!-- Introduction Page -->
 		<main
 			class="h-full flex flex-column justify-content-evenly align-items-center">
-			<img
+			<lou-icon
 				id="intro-loader"
-				alt="Logo used as a loader"
-				src="assets/images/svg/logo-expanded.svg"
-				class="w-6 mx-auto max-w-30rem" />
+				name="logo-expanded"
+				class="w-6 mx-auto max-w-30rem"></lou-icon>
 			<span>Typist element</span>
 			<i class="pi pi-times"></i>
 		</main> `,
