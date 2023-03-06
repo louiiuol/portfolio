@@ -1,6 +1,6 @@
 {
 	"name": "portfolio",
-	"version": "0.0.1",
+	"version": "0.0.0",
 	"scripts": {
 		"start": "ng serve",
 		"build": "ng build",
@@ -29,6 +29,7 @@
 		"@angular-devkit/build-angular": "^15.2.1",
 		"@angular/cli": "~15.2.1",
 		"@angular/compiler-cli": "^15.2.1",
+		"@hirez_io/observer-spy": "^2.2.0",
 		"@types/jasmine": "~4.3.1",
 		"jasmine-core": "~4.5.0",
 		"karma": "~6.4.1",

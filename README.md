@@ -34,8 +34,9 @@
 | `@angular/animations` | `^15.2.1` | Add animations capability to components. More information [here](https://angular.io/guide/animations#defining-animations-and-attaching-them-to-the-html-template) |
 | `zone.js` | `~0.13.0` | Implements Zones for JavaScript, inspired by Dart. A Zone is an execution context that persists across async tasks. You can think of it as thread-local storage for JavaScript VMs. |
 | `rxjs` | `~7.8.0` | RxJS is a library for reactive programming using Observables, to make it easier to compose asynchronous or callback-based code. [documentation](https://rxjs.dev/api)
-| `karma` | `^6.4.1` |  Brings a productive testing environment to developers
-| `jasmine-core` | `~4.5.0` | Test runner for Node environment
+| `karma` | `^6.4.1` |  Brings a productive testing environment to developers |
+| `jasmine-core` | `~4.5.0` | Test runner for Node environment |
+| `observer-spy` | `^2.2.0` | A viable alternative to Marble Tests (for observable) [documentation](https://github.com/hirezio/observer-spy#usage)
 | `primeng` | `^15.2.0` | Next Gen UI library [documentation](https://primeng.org/button)
 | `primeicons` | `^6.0.1` | Font Icon Library for Prime UI Libraries [list of icons](https://primeng.org/icons#:~:text=pi%2Dangle%2Dup-,pi%2Dapple,-pi%2Darrow%2Dcircle)
 | `primeflex` | `^3.3.0` | Lightweight responsive CSS utility library [documentation](https://www.primefaces.org/primeflex/backgroundcolor)
