@@ -1,6 +1,12 @@
 import {CommonModule} from '@angular/common';
 import {HttpClient} from '@angular/common/http';
-import {Component, OnChanges, Input, ViewEncapsulation} from '@angular/core';
+import {
+	Component,
+	OnChanges,
+	Input,
+	ViewEncapsulation,
+	ChangeDetectionStrategy,
+} from '@angular/core';
 import {catchError, Observable, of} from 'rxjs';
 import {TrustHtmlPipe} from 'src/app/modules/core/pipes/trust-html.pipe';
 
@@ -12,29 +18,30 @@ import {TrustHtmlPipe} from 'src/app/modules/core/pipes/trust-html.pipe';
 	imports: [CommonModule, TrustHtmlPipe],
 	selector: 'lou-icon',
 	template: `<!-- SVG embedded Icon -->
-		<span
-			*ngIf="svgIconTag$"
-			[innerHTML]="svgIconTag$ | async | trustHtml"></span>`,
+		<span *ngIf="name" [innerHTML]="svgIconTag$ | async | trustHtml"></span>`,
 	styleUrls: ['./icon.component.scss'],
 	encapsulation: ViewEncapsulation.None,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconComponent implements OnChanges {
 	/** Defines icon to be shown. Check assets/img/svg/ folder for available icons */
 	@Input() name?: string;
 
-	svgIconTag$: Observable<string | undefined> = of(undefined);
+	svgIconTag$?: Observable<string | undefined>;
+
+	private readonly ASSETS_ROOT = 'assets/images/svg';
 
 	constructor(private _httpClient: HttpClient) {}
 
 	ngOnChanges(): void {
 		if (!this.name) return;
 		this.svgIconTag$ = this._httpClient
-			.get(`assets/images/svg/${this.name}.svg`, {
+			.get(`${this.ASSETS_ROOT}/${this.name}.svg`, {
 				responseType: 'text',
 			})
 			.pipe(
 				catchError(() =>
-					this._httpClient.get(`assets/images/svg/logo-expanded.svg`, {
+					this._httpClient.get(`${this.ASSETS_ROOT}/logo-expanded.svg`, {
 						responseType: 'text',
 					})
 				)
