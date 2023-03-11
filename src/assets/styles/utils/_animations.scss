@@ -17,3 +17,16 @@
 	}
 }
 
+.invisible {
+	opacity: 0;
+}
+
+@for $i from 1 to 15 {
+	.animation-delay-#{$i} {
+		animation-delay: #{$i}s;
+	}
+}
+
+.animation-forwards {
+	animation-fill-mode: forwards;
+}
