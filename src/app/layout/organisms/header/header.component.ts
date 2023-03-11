@@ -7,7 +7,7 @@ import {IconComponent} from '../../atoms';
 /**
  * Header section of the entire application
  * @author louiiuol
- * @version 0.1.0
+ * @version 0.1.1
  */
 @Component({
 	standalone: true,
@@ -18,7 +18,7 @@ import {IconComponent} from '../../atoms';
 export class HeaderComponent {
 	readonly navigationLinks = ['about'];
 	@HostBinding('class') class =
-		'surface-ground pr-5 py-2 shadow-2 flex align-items-center justify-content-between';
+		'block surface-ground shadow-2 fadein animation-duration-500';
 
 	contact(): void {
 		alert('coming soon ! 🔥');

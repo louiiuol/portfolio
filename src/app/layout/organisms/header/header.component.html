@@ -1,14 +1,17 @@
 <ul
+	role="navigation"
 	id="navigation-links"
-	class="flex gap-3 align-items-center justify-content-between">
+	class="w-full flex gap-3 pr-3 py-2 align-items-center justify-content-between">
 	<li class="flex-1 sm:flex-auto">
 		<a
 			pButton
 			id="logo"
 			routerLink="/home"
-			class="text-niconne text-4xl p-button-text p-button-sm line-height-1">
-			<span class="hidden sm:inline-block">Louis Godlewski</span>
-			<lou-icon class="max-w-2rem sm:hidden" name="logo-rounded"></lou-icon>
+			class="p-button-text p-button-sm line-height-1 spaceless">
+			<span class="hidden sm:inline-block text-niconne text-4xl">
+				Louis Godlewski
+			</span>
+			<lou-icon class="max-w-3rem sm:hidden" name="logo-rounded"></lou-icon>
 		</a>
 	</li>
 	<li *ngFor="let link of navigationLinks">
