@@ -1,0 +1,32 @@
+//============================//
+//GLOBAL ANIMATIONS KEYFRAMES//
+//===========================//
+
+@keyframes gradient {
+	0% {
+		background-size: 100% 100%;
+		background-position: 0% 50%;
+	}
+	50% {
+		background-size: 400% 400%;
+		background-position: 100% 50%;
+	}
+	100% {
+		background-size: 100% 100%;
+		background-position: 0% 50%;
+	}
+}
+
+.invisible {
+	opacity: 0;
+}
+
+@for $i from 1 to 15 {
+	.animation-delay-#{$i} {
+		animation-delay: #{$i}s;
+	}
+}
+
+.animation-forwards {
+	animation-fill-mode: forwards;
+}
