@@ -1,3 +1,4 @@
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -11,7 +12,7 @@ describe('HeaderComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [RouterTestingModule, HeaderComponent],
+			imports: [RouterTestingModule, HeaderComponent, HttpClientTestingModule],
 			declarations: [],
 		})
 			.overrideComponent(HeaderComponent, {
@@ -33,7 +34,7 @@ describe('HeaderComponent', () => {
 	it('should render Logo with correct font family', () => {
 		expect(
 			window
-				.getComputedStyle(nativeElement.querySelector('#logo'))
+				.getComputedStyle(nativeElement.querySelector('#logo span '))
 				.getPropertyValue('font-family')
 		).toEqual('Niconne, cursive');
 	});
