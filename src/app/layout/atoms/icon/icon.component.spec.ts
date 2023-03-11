@@ -1,7 +1,4 @@
-import {
-	ComponentFixture,
-	TestBed,
-} from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {IconComponent} from './icon.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
@@ -37,4 +34,6 @@ describe('IconComponent', () => {
 		console.log(debug);
 		expect(debug.query(By.css('span'))).toBeNull();
 	});
+
+	// TODO Cover remaining branches
 });
