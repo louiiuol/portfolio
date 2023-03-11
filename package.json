@@ -5,7 +5,7 @@
 		"start": "ng serve",
 		"test": "ng test --watch=false --browsers=ChromeHeadlessCI",
 		"build": "ng build",
-		"deploy:gh-pages": "ng build --configuration=production --base-href /portfolio/ && npx angular-cli-ghpages --dir=dist/portfolio"
+		"deploy:gh-pages": "ng build --configuration=production --base-href=/portfolio/ && npx angular-cli-ghpages --dir=dist/portfolio"
 	},
 	"private": true,
 	"dependencies": {
