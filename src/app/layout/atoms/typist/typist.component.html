@@ -1,0 +1,10 @@
+<span id="lambda" class="is-accent font-semibold">λ</span>
+<span id="typing-value" class="mx-3 text-color-secondary">
+	{{ typingValue }}
+</span>
+<span
+	id="cursor"
+	class="inline-block mt-1 text-700 border-round-sm"
+	[ngClass]="{'typing': isTyping, 'is-done-typing': isDoneTyping}">
+	&nbsp;
+</span>
