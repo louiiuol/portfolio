@@ -6,7 +6,8 @@
 
 ### Technical scope
 
-- [ ] CI / CD integration
+- [x] CI / CD integration
+- [ ] CI / CD w/ sonarQube
 - [ ] Deployment
 - [ ] PWA angular
 - [ ] Angular animations

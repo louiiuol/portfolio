@@ -5,7 +5,8 @@
 		"start": "ng serve",
 		"test": "ng test --watch=false --browsers=ChromeHeadlessCI",
 		"build": "ng build",
-		"deploy:gh-pages": "ng build --configuration=production --base-href=/portfolio/ && npx angular-cli-ghpages --dir=dist/portfolio"
+		"deploy:gh-pages": "ng build --configuration=production --base-href=/portfolio/ && npx angular-cli-ghpages --dir=dist/portfolio",
+		"lint": "ng lint"
 	},
 	"private": true,
 	"dependencies": {
@@ -27,11 +28,19 @@
 	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "^15.2.1",
+		"@angular-eslint/builder": "15.2.1",
+		"@angular-eslint/eslint-plugin": "15.2.1",
+		"@angular-eslint/eslint-plugin-template": "15.2.1",
+		"@angular-eslint/schematics": "15.2.1",
+		"@angular-eslint/template-parser": "15.2.1",
 		"@angular/cli": "~15.2.1",
 		"@angular/compiler-cli": "^15.2.1",
 		"@hirez_io/observer-spy": "^2.2.0",
 		"@types/jasmine": "~4.3.1",
+		"@typescript-eslint/eslint-plugin": "5.48.2",
+		"@typescript-eslint/parser": "5.48.2",
 		"angular-cli-ghpages": "^1.0.5",
+		"eslint": "^8.33.0",
 		"jasmine-core": "~4.5.0",
 		"karma": "~6.4.1",
 		"karma-chrome-launcher": "~3.1.1",
@@ -42,6 +51,6 @@
 		"typescript": "~4.9.4"
 	},
 	"pre-commit": [
-		"test"
+		"lint"
 	]
 }

@@ -28,5 +28,5 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@4.1.1
         with:
           branch: gh-pages
-          folder: dist/your-app-name
+          folder: dist/portfolio
           token: ${{ secrets.CI_TOKEN }}

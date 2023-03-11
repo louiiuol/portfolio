@@ -1,5 +1,5 @@
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ChangeDetectionStrategy, DebugElement} from '@angular/core';
+import {ChangeDetectionStrategy} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HeaderComponent} from './header.component';
@@ -7,8 +7,7 @@ import {HeaderComponent} from './header.component';
 describe('HeaderComponent', () => {
 	let component: HeaderComponent;
 	let fixture: ComponentFixture<HeaderComponent>;
-	let debug: DebugElement;
-	let nativeElement: any;
+	let nativeElement: Element;
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
@@ -23,7 +22,6 @@ describe('HeaderComponent', () => {
 		fixture = TestBed.createComponent(HeaderComponent);
 		component = fixture.componentInstance;
 		nativeElement = fixture.nativeElement;
-		debug = fixture.debugElement;
 		fixture.detectChanges();
 	});
 
@@ -32,10 +30,10 @@ describe('HeaderComponent', () => {
 	});
 
 	it('should render Logo with correct font family', () => {
+		const spanTag = nativeElement.querySelector('#logo span ');
 		expect(
-			window
-				.getComputedStyle(nativeElement.querySelector('#logo span '))
-				.getPropertyValue('font-family')
+			spanTag &&
+				window.getComputedStyle(spanTag).getPropertyValue('font-family')
 		).toEqual('Niconne, cursive');
 	});
 
