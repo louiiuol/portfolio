@@ -14,15 +14,14 @@ import {TrustHtmlPipe} from '@core';
  * Embedded SVG icon fetched locally from custom assets.
  * Check property "name" for technical information.
  * @author louiiuol
- * @version 0.1.0
+ * @version 0.1.1
  */
 @Component({
 	standalone: true,
 	imports: [CommonModule, TrustHtmlPipe],
 	selector: 'lou-icon',
-	template: ` <span
-		*ngIf="name"
-		[innerHTML]="svgIconTag$ | async | trustHtml"></span>`,
+	template: ` <!-- SVG embed tag -->
+		<span *ngIf="name" [innerHTML]="svgIconTag$ | async | trustHtml"></span>`,
 	styleUrls: ['./icon.component.scss'],
 	encapsulation: ViewEncapsulation.None,
 	changeDetection: ChangeDetectionStrategy.OnPush,
