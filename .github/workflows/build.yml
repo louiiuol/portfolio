@@ -24,5 +24,9 @@ jobs:
       - name: Test the app
         run: npm run test
 
-      - name: Build the app
-        run: npm run deploy:gh-pages
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.1
+        with:
+          branch: gh-pages
+          folder: dist/your-app-name
+          token: ${{ secrets.CI_TOKEN }}
