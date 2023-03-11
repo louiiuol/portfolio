@@ -20,4 +20,6 @@ describe('AppComponent', () => {
 			.nativeElement as HTMLElement;
 		expect(app.querySelector('lou-header')).toBeTruthy();
 	});
+
+	// TODO should render home component by default
 });
