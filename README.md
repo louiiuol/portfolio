@@ -41,7 +41,8 @@
 | `primeicons` | `^6.0.1` | Font Icon Library for Prime UI Libraries [list of icons](https://primeng.org/icons#:~:text=pi%2Dangle%2Dup-,pi%2Dapple,-pi%2Darrow%2Dcircle)
 | `primeflex` | `^3.3.0` | Lightweight responsive CSS utility library [documentation](https://www.primefaces.org/primeflex/backgroundcolor)
 | `ngx-loading` | `^15.0.0` | Lightweight NG Module to ease loader integration [config](https://github.com/Zak-C/ngx-loading/blob/master/projects/ngx-loading/src/lib/ngx-loading-config.ts)
-| `angular-cli-ghpages` | `^1.0.5` | Tool easing deployment with 'Github Pages'. See [reference](https://medium.com/tech-insights/how-to-deploy-angular-apps-to-github-pages-gh-pages-896c4e10f9b4)
+| `angular-cli-ghpages` | `^1.0.5` | Tool easing deployment with 'Github Pages'. See [reference](https://medium.com/tech-insights/how-to-deploy-angular-apps-to-github-pages-gh-pages-896c4e10f9b4) |
+| `pre-commit` | `^1.2.2` | Hook installer for git: It will ensure that `ng test` passes before committing changes |
 
 ## Contact 🙌
 
