@@ -46,6 +46,10 @@
 | `angular-cli-ghpages` | `^1.0.5` | Tool easing deployment with 'Github Pages'. See [reference](https://medium.com/tech-insights/how-to-deploy-angular-apps-to-github-pages-gh-pages-896c4e10f9b4) |
 | `pre-commit` | `^1.2.2` | Hook installer for git: It will ensure that `ng test` passes before committing changes |
 
+## License 💼
+
+This project is licensed under the GNU General Public License v3.0 License (cf. [License](https://www.gnu.org/licenses/gpl-3.0.en.html))
+
 ## Contact 🙌
 
 Feel free to [Submit a new issue](https://github.com/louiiuol/portfolio-V2/issues/new/choose) if you have any suggestions or wish to learn more about certain aspects of this project.
