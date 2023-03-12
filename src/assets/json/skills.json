@@ -1,0 +1,190 @@
+[
+    {
+        "title": "Interfaces utilisateur",
+        "skills": [{
+            "name":"Suite adobe",
+            "icon": "adobe",
+            "level": "avancé",
+            "certified": false,
+            "pro": true
+            },
+            {
+                "name":"Wireframes & maquettes",
+                "icon": "wireframe",
+                "level": "expert",
+                "certified": false,
+                "pro": true
+            },
+            {
+                "name":"Animations & motion design",
+                "icon": "motion",
+                "level": "avancé",
+                "certified": true,
+                "pro": true
+            },
+            {
+                "name":"Productions graphiques",
+                "icon": "graphic",
+                "level": "confirmé",
+                "certified": false,
+                "pro": true
+            }
+        ]
+    },
+    {
+        "title": "Intégration web",
+        "skills": [{
+            "name":"HTML5 | CSS3 | SCSS",
+            "icon": "html",
+            "level": "expert",
+            "certified": true,
+            "pro": true
+            },
+            {
+                "name":"Javascript natif ES6",
+                "icon": "javascript",
+                "level": "avancé",
+                "certified": false,
+                "pro": true
+            },
+            {
+                "name":"Angular X",
+                "icon": "angular",
+                "level": "avancé",
+                "certified": true,
+                "pro": true
+            },
+            {
+                "name":"React",
+                "icon": "react",
+                "level": "novice",
+                "certified": false,
+                "pro": false
+            },
+            {
+                "name":"Sécurité & authentification",
+                "icon": "security",
+                "level": "confirmé",
+                "certified": false,
+                "pro": true
+            }
+        ]
+    },
+    {
+        "title": "Serveurs Applicatifs",
+        "skills": [{
+            "name":"JAVA 8 - 13",
+            "icon": "java",
+            "level": "avancé",
+            "certified": true,
+            "pro": true
+            },
+            {
+                "name":"Node.js",
+                "icon": "nodejs",
+                "level": "novice",
+                "certified": false,
+                "pro": false
+                },
+            {
+                "name":"REST API",
+                "icon": "rest",
+                "level": "confirmé",
+                "certified": false,
+                "pro": true
+            },
+            {
+                "name":"Springboot",
+                "icon": "springboot",
+                "level": "avancé",
+                "certified": true,
+                "pro": true
+            },
+            {
+                "name":"JPA Hibernate",
+                "icon": "hibernate",
+                "level": "avancé",
+                "certified": false,
+                "pro": false
+            },
+            {
+                "name":"Déploiement et gestion des environnements",
+                "icon": "server",
+                "level": "intermédiaire",
+                "certified": true,
+                "pro": true
+            },
+            {
+                "name":"algorithmique",
+                "icon": "algos",
+                "level": "avancé",
+                "certified": false,
+                "pro": true
+            }
+        ]
+    },
+    {
+        "title": "Architecture de projets",
+        "skills": [{
+            "name":"UML | MCD | MLD",
+            "icon": "database",
+            "level": "confirmé",
+            "certified": true,
+            "pro": false
+            },
+            {
+                "name":"Diagrammes de classes",
+                "icon": "schema",
+                "level": "confirmé",
+                "certified": true,
+                "pro": true
+            },
+            {
+                "name":"Administration de Bases De Données",
+                "icon": "users",
+                "level": "confirmé",
+                "certified": true,
+                "pro": true
+            },
+            {
+                "name":"Intégration Continue (Github, Jenkins, AWS)",
+                "icon": "github",
+                "level": "confirmé",
+                "certified": true,
+                "pro": true
+            },
+            {
+                "name":"Gestion de packages (npm, webpack) ",
+                "icon": "npm",
+                "level": "confirmé",
+                "certified": true,
+                "pro": true
+            }
+        ]
+    },
+    {
+        "title": "Compétences transverses",
+        "skills": [{
+            "name":"Anglais",
+            "icon": "anglais",
+            "level": "C1 (oral)",
+            "certified": false,
+            "pro": false
+            },
+            {
+                "name":"Agilité (SCRUM, Lean)",
+                "icon": "agilite",
+                "level": "confirmé",
+                "certified": true,
+                "pro": true
+            },
+            {
+                "name":"Gestion de projet",
+                "icon": "gestion",
+                "level": "confirmé",
+                "certified": true,
+                "pro": false
+            }
+        ]
+    }
+]

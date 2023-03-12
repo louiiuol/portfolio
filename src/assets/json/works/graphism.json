@@ -1,0 +1,163 @@
+[
+    {
+        "name": "Affiches Photoshop",
+        "src": "affiches-photoshop",
+        "content": [
+            {
+                "name": "soirée débat",
+                "description": "Affiche (fictive) pour une soirée débat \"white in the back ?\" ",
+                "src": "debat.jpg",
+                "location": "IUT MMI"
+            },
+            {
+                "name": "AFC - Acheter neuf",
+                "description": "Contenu facebook réalisé pour le compte d'AFC, lors d'un stage en tant qu'assitant de production.",
+                "src": "afc.jpg",
+                "location": "Agence Trajectoires"
+            },
+            {
+                "name": "Plan de métro",
+                "description": "Plan de métro (fictif) pour la ville de Troyes. Ce plan est conçut pour être imprimé et plié en respectant les sections prédéfinies et leur sens.",
+                "src": "metro.png",
+                "location": "IUT MMI"
+            },
+            {
+                "name": "WWDC apple",
+                "description": "Affiche (fictive) pour l'évènement d'Apple, la WWDC. Réalisé via Photoshop",
+                "src": "wwdc_apple.jpg",
+                "location": "IUT MMI"
+            }
+        ]
+    },
+    {
+        "name": "Illustrator",
+        "location": "IUT MMI",
+        "src": "illustrator",
+        "content": [
+            {
+                "name": "heisenberg vectorisé",
+                "description": "Vectorisation du célèbre heisenberg depuis une photographie.",
+                "src": "heisenberg.jpg",
+                "location": "IUT MMI"
+            },
+            {
+                "name": "La jungle en dessin",
+                "description": "Vectorisation d'animaux grâce à l'outil plume d'illustror.",
+                "src": "animals.png",
+                "location": "IUT MMI"
+            },
+            {
+                "name": "WebTV Troyes",
+                "description": "Création d'un logo pour une chaîne de streaming (fictive) ",
+                "src": "webtv.png",
+                "location": "IUT MMI"
+            }
+        ]
+    },
+    {
+        "name": "Retouches Photoshop",
+        "location": "IUT MMI",
+        "src": "retouches-photoshop",
+        "content": [
+            {
+                "name": "L'amphi, c'est la jungle !",
+                "description": "Incrustation d'éléments en perspective sur une photographie.",
+                "src": "amphi.jpg",
+                "location": "IUT MMI"
+            },
+            {
+                "name": "L'hiver est là",
+                "description": "Démonstration du détourage et et l'utilisation de masques sur Photoshop.",
+                "src": "hiver.png",
+                "location": "IUT MMI"
+            },
+            {
+                "name": "Fandago",
+                "description": "Détourage et incrustation d'éléments sur un nouveau décors.",
+                "src": "fandago.png",
+                "location": "IUT MMI"
+            },
+            {
+                "name": "Portrait nettoyé",
+                "description": "Nettoyage d'une image, suppression du grain.",
+                "src": "portrait.png",
+                "location": "IUT MMI"
+            },
+            {
+                "name": "Réveils en couleurs",
+                "description": "Equilibrage des balances de couleurs et application de teintes.",
+                "src": "reveils.png",
+                "location": "IUT MMI"
+            },
+            {
+                "name": "Tag on rocks",
+                "description": "Superposition de calques et mode 'incrustation'.",
+                "src": "tag.png",
+                "location": "IUT MMI"
+            }
+        ]
+    },
+    {
+        "name": "épargne éthique",
+        "location": "Stage Trajectoires",
+        "src": "epargne-ethique",
+        "content": [
+            {
+                "name": "Retrouvez de l'autonomie",
+                "description": "Contenu facebook réalisé lors d'un stage en tant qu'assitant de production. ",
+                "src": "autonomie.jpg",
+                "location": "Agence Trajectoires"
+            },
+            {
+                "name": "Epargne utile",
+                "description": "Contenu facebook réalisé lors d'un stage en tant qu'assitant de production. ",
+                "src": "utile.png",
+                "location": "Agence Trajectoires"
+            },
+            {
+                "name": "L'épargne solidaire en france",
+                "description": "Contenu facebook réalisé lors d'un stage en tant qu'assitant de production. ",
+                "src": "representation.png",
+                "location": "Agence Trajectoires"
+            },
+            {
+                "name": "75 milliards",
+                "description": "Contenu facebook réalisé lors d'un stage en tant qu'assitant de production. ",
+                "src": "75milliards.png",
+                "location": "Agence Trajectoires"
+            }
+        ]
+    },
+    {
+        "name": "enchères VO",
+        "location": "Stage Trajectoires",
+        "src": "encheres-vo",
+        "content": [
+            {
+                "name": "Vente aux enchères",
+                "description": "Contenu facebook réalisé pour le compte d'enchères VO, lors d'un stage en tant qu'assitant de production. ",
+                "src": "evenement.jpg",
+                "location": "Agence Trajectoires"
+            },
+            {
+                "name": "Post comparatif de voitures",
+                "description": "Contenu facebook réalisé pour le compte d'enchères VO, lors d'un stage en tant qu'assitant de production. ",
+                "src": "comparatif.jpg",
+                "location": "Agence Trajectoires"
+            },
+            {
+                "name": "Post citation",
+                "description": "Contenu facebook réalisé pour le compte d'enchères VO, lors d'un stage en tant qu'assitant de production. ",
+                "src": "citation.jpg",
+                "location": "Agence Trajectoires"
+            },
+            {
+                "name": "Post 'avis client'",
+                "description": "Contenu facebook réalisé pour le compte d'enchères VO, lors d'un stage en tant qu'assitant de production. ",
+                "src": "avis_client.jpg",
+                "location": "Agence Trajectoires"
+            }
+        ]
+    }
+    
+]

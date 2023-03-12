@@ -1,0 +1,118 @@
+@import '../../../variables.scss';
+@import '../../../mixins.scss';
+
+#works {
+    position: relative;
+    width: 100%;
+    height: $main-container-height;
+    overflow: hidden;
+    .quarter {
+        position: absolute;
+        @include sized(50%, 50%);
+        background: rgba(0, 0, 0, 0.2);
+        transition: $transition-fastest;
+        z-index: 2;
+        overflow: hidden;
+        &:nth-of-type(1) {
+            top: 0;
+            left: 0;
+            border-right: 1px solid $white;
+            border-bottom: 1px solid $white;
+            animation: slideLeft $transition-slow;
+        }
+        &:nth-of-type(2) {
+            top: 0;
+            left: 50%;
+            border-left: 1px solid $white;
+            border-bottom: 1px solid $white;
+            animation: slideDown $transition-slow;
+            &.full { left: 0; }
+        }
+        &:nth-of-type(3) {
+            top: 50%;
+            left: 0;
+            border-right: 1px solid $white;
+            border-top: 1px solid $white;
+            animation: slideUp $transition-slow;
+            &.full { top: 0; }
+        }
+        &:nth-of-type(4) {
+            top: 50%;
+            left: 50%;
+            border-left: 1px solid $white;
+            border-top: 1px solid $white;
+            animation: slideRight $transition-slow;
+            &.full { top: 0; left: 0; }
+        }
+        & a > header {
+            @include sized(100%, 100%);
+            position: relative;
+            cursor: pointer;
+            .Typist {
+                @include positioned(relative, 50%, 50%);
+                transform: translate(-50%, -50%);
+                transition: $transition-fast;
+            }
+            .category-icon {
+                position: absolute;
+                @include sized(68px, 68px);
+                top: 30%;
+                left: 50%;
+                transform: translateX(-50%);
+                opacity: 0;
+                transition: $transition-fastest;
+                color: $white;
+            }
+        }
+        &:hover:not(.full) {
+            background: rgba(0, 0, 0, 0.4);
+            header {
+                .Typist { top: 60%; }
+                .category-icon { opacity: 1; }
+            }
+        }
+        section.quarter-container {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 1s .3s forwards;
+        }
+        .close {
+            position: absolute;
+            @include sized(32px, 32px);
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            z-index: 5;
+            color: $primary;
+            display: none;
+            &.white { color: $white; }
+            &:hover::before { width: 0; }
+        }
+        &.full {
+            @include sized(100%, 100%);
+            @include flex(column nowrap);
+            background: rgb(245, 245, 245);
+            z-index: 10;
+            & > a { width: 100%; &::before { width: 0; background-color: none !important; } }
+            & > a > header {
+                .Typist {
+                    width: calc(100% - 128px);
+                    margin: 0 auto;
+                    color: $primary;
+                    text-shadow: none !important;
+                    top : 0;
+                    left: 0;
+                    transform: translate(0,0);
+                    &, .span.Cursor { color: $primary !important; }
+                }
+                .category-icon { display: none; }
+            }
+            .close { display: block; }
+            .quarter-container {
+                @include flex(row wrap, flex-start, center);
+                @include overflow-y;
+                @include sized(100vw, $main-container-height);
+            }
+        }
+    }
+}

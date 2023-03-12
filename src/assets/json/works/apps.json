@@ -1,0 +1,19 @@
+[
+    {
+        "name": "Jar' it",
+        "description": "lorem ipsum dolor esit amet.",
+        "src": "jar-it",
+        "assets": [
+            {"name": "homepage", "src": "home.png"},
+            {"name": "profilpage", "src": "profil.png"},
+            {"name": "dashboardpage", "src": "dashboard.png"},
+            {"name": "jarpage", "src": "jar.png"},
+            {"name": "adminpage", "src": "admin.png"}
+        ],
+        "links": [
+            {"name": "doc", "ref": "http://louiiuol.github.io/jar-it"},
+            {"name": "source", "ref": "http://github.com/louiiuol/jar-it"}
+        ],
+        "tags": ["angular", "spring", "hibernate & jpa", "MySQL"]
+    }
+]

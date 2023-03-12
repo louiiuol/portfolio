@@ -1,0 +1,50 @@
+/* LAYOUT */
+$nav-height: 50px;
+$sub-nav-height: 40px;
+
+$main-container-height: calc(100vh - 50px);
+$secondary-container-height: calc(100vh - 90px);
+$tertiary-container-height: calc(100vh - 130px);
+
+/* SPACING */
+$pad-bottop-xs: .5rem 0;
+$pad-bottop-sm: 1rem 0;
+$pad-bottop-md: 2rem 0;
+$pad-bottop-lg: 3rem 0;
+
+$pad-xs: .25rem .5rem;
+$pad-sm: .5rem 1rem;
+$pad-md: 1rem 2rem;
+$pad-lg: 2rem 3rem;
+
+$pad-sides-xs: 0 .5rem;
+$pad-sides-sm: 0 1rem;
+$pad-sides-md: 0 2rem;
+$pad-sides-lg: 0 3rem;
+
+/* COLORS */
+$primary: rgb(15, 47, 87);
+$primary-light: rgb(0, 135, 189);
+$accent: rgb(238, 111, 87);
+$white: rgb(255, 255, 255);
+$beige: rgb(246, 245, 245);
+$legend: rgb(123, 123, 123);
+$legend-dark: rgb(56, 56, 56);
+
+/* INDEXES */
+$z-background: 0;
+$z-content: 5;
+$z-nav: 14;
+$z-main-nav: 15;
+$z-front: 10;
+
+/* TRANSITIONS */
+$transition-fastest: .3s ease-in;
+$transition-fast: .6s ease-in;
+$transition-slow: 1s ease-in;
+$transition-slowest: 1.4s ease-in;
+
+/* RADIUS */
+$radius-xs: 4px;
+$radius-md: 8px;
+$radius-lg: 16px;

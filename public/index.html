@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0F3057" />
+    <meta name="description" content="Concepteur & Développeur web Javascript & Java passionné d'UX et de structure de données"/>
+    <meta name="keywords" content="Louis Godlewski, web designer, concepteur, développeur fullstack"/>
+    <meta name="author" content="Louis Godlewski" />
+    <meta name="google-site-verification" content="8AGdLgB_UAUInpjZ_1_6HCNPC1GJzsf3ruCzlGtxDHk" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>Louis Godlewski | Portfolio</title>
+
+    <script type="text/javascript">
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location))
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

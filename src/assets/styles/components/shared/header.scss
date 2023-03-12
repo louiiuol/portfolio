@@ -1,0 +1,68 @@
+@import '../../mixins.scss';
+@import '../../variables.scss';
+
+nav#main-nav {
+    @include positioned(fixed, 0, 0);
+    @include sized(100%, $nav-height);
+    @include flex(row nowrap, space-between);
+    @include shadowed;
+    background: $white;
+    color: $primary;
+    padding: $pad-sides-md;
+    z-index: $z-main-nav;
+    h3 {
+        font-size: 1.5rem;
+        span {
+            max-width: 0;
+            transition: $transition-fast;
+            display: inline-block;
+            overflow: hidden;
+            vertical-align: bottom;
+            opacity: 0;
+            margin-right: 5px;
+        }
+        &:hover span{
+            max-width: 250px;
+            opacity: 1;
+        }
+    }
+    .hamburger { display: none; }
+    @include for-phone-and-tablet {
+        .hamburger {
+            display: block;
+            @include sized(48px, 48px);
+            cursor: pointer;
+            svg #hamburger .dash {
+                transition: all .6s ease;
+                &.center { opacity: 1; }
+                &.top, &.bottom { transform: rotate(0deg) translate(0%, 0%);}
+            }
+            &.toggled svg #hamburger .dash {
+                transition: all .6s ease;
+                &.top { transform: rotate(45deg) translate(25%, -25%);}
+                &.center { opacity: 0;}
+                &.bottom { transform: rotate(-45deg) translate(-50%, 3%);}
+            }
+        }
+        ul.links {
+            @include sized(100%, $main-container-height);
+            position: fixed;
+            left: -150vw;
+            top: 50px;
+            text-align: center;
+            flex-direction: column;
+            background: $primary-light;
+            transition: .6s ease;
+            li {
+                display: block;
+                height: 100px;
+                margin: 2vh 0;
+                font-size: 2rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                a { color: $beige; &::before { background-color: $beige;} }
+            }
+            &.expanded { left: 0; }
+        }
+    }
+}

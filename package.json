@@ -1,52 +1,59 @@
 {
-	"name": "portfolio",
-	"version": "0.0.0",
-	"scripts": {
-		"start": "ng serve",
-		"test": "ng test --watch=false --browsers=ChromeHeadlessCI",
-		"build": "ng build --configuration=production --base-href=/portfolio/",
-		"deploy:gh-pages": "ng build --configuration=production --base-href=/portfolio/ && npx angular-cli-ghpages --dir=dist/portfolio",
-		"lint": "ng lint"
-	},
-	"private": true,
-	"dependencies": {
-		"@angular/animations": "^15.2.1",
-		"@angular/common": "^15.2.1",
-		"@angular/compiler": "^15.2.1",
-		"@angular/core": "^15.2.1",
-		"@angular/forms": "^15.2.1",
-		"@angular/platform-browser": "^15.2.1",
-		"@angular/platform-browser-dynamic": "^15.2.1",
-		"@angular/router": "^15.2.1",
-		"ngx-loading": "^15.0.0",
-		"primeflex": "^3.3.0",
-		"primeicons": "^6.0.1",
-		"primeng": "^15.2.0",
-		"rxjs": "~7.8.0",
-		"tslib": "^2.5.0",
-		"zone.js": "~0.13.0"
-	},
-	"devDependencies": {
-		"@angular-devkit/build-angular": "^15.2.1",
-		"@angular-eslint/builder": "15.2.1",
-		"@angular-eslint/eslint-plugin": "15.2.1",
-		"@angular-eslint/eslint-plugin-template": "15.2.1",
-		"@angular-eslint/schematics": "15.2.1",
-		"@angular-eslint/template-parser": "15.2.1",
-		"@angular/cli": "~15.2.1",
-		"@angular/compiler-cli": "^15.2.1",
-		"@hirez_io/observer-spy": "^2.2.0",
-		"@types/jasmine": "~4.3.1",
-		"@typescript-eslint/eslint-plugin": "5.48.2",
-		"@typescript-eslint/parser": "5.48.2",
-		"angular-cli-ghpages": "^1.0.5",
-		"eslint": "^8.33.0",
-		"jasmine-core": "~4.5.0",
-		"karma": "~6.4.1",
-		"karma-chrome-launcher": "~3.1.1",
-		"karma-coverage": "~2.2.0",
-		"karma-jasmine": "~5.1.0",
-		"karma-jasmine-html-reporter": "~2.0.0",
-		"typescript": "~4.9.4"
-	}
+  "name": "portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://louiiuol.github.io/louiiuol/",
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/isotope-layout": "^3.0.8",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.19.3",
+    "@types/react": "^16.9.55",
+    "@types/react-dom": "^16.9.9",
+    "gh-pages": "^3.1.0",
+    "isotope-layout": "^3.0.6",
+    "masonry-layout": "^4.2.2",
+    "node-sass-chokidar": "^1.5.0",
+    "npm-run-all": "^4.1.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.1",
+    "react-svg": "^11.1.0",
+    "react-typist": "^2.0.5",
+    "typescript": "~3.7.2"
+  },
+  "scripts": {
+    "start": "npm-run-all -p watch-css start-react",
+    "start-react": "react-scripts start",
+    "test": "react-scripts test",
+    "build-css": "node-sass-chokidar src/ -o src/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/assets/styles -o src/assets/styles --watch --recursive",
+    "build-react": "react-scripts build",
+    "build": "npm-run-all -s build-css build-react",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -b prod -d build",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.1.6",
+    "@types/react-typist": "^2.0.1"
+  }
 }

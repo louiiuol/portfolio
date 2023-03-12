@@ -1,101 +1,97 @@
-//* =================
-//* THEME SKELETON STYLES
-//* ================*/
+/*
+GLOBAL LAYOUT STYLES
+Defines skeleton's styles.
+*/
+@import './variables.scss';
+@import './mixins.scss';
 
-.skeleton:empty {
-	display: inline-block;
-	width: 100%;
-	height: 100%;
-	background: #888;
-	&.block {
-		height: 1em;
-		width: 100%;
-		display: block;
-	}
-	&.circle {
-		width: 100%;
-		height: 100%;
-		border-radius: 50%;
-	}
+/* MOUSE SELECTION */
+::selection { background: $accent; color: $beige; }
 
-	&.avatar {
-		display: inline-block;
-		svg {
-			max-width: 100%;
-			height: auto;
-		}
-		rect {
-			fill: #888;
-		}
-		path {
-			fill: #333;
-		}
-	}
+/* GLOBAL SCROLLBARS STYLES */
+::-webkit-scrollbar { width: 5px; z-index: 0;} /* scrollbar width */
+::-webkit-scrollbar-track { border-radius: 10px; background-color: rgba($color: $beige, $alpha: .6) ; } /* Track */
+::-webkit-scrollbar-thumb { background: $accent; border-radius: 10px; } /* Handle */
+::-webkit-scrollbar-thumb:hover { background: $primary-light; } /* Handle on hover */
 
-	&.image {
-		display: inline-block;
-		svg {
-			max-width: 100%;
-			height: auto;
-		}
-		polygon {
-			fill: #888;
-		}
-		path {
-			fill: #333;
-		}
-	}
+/* RESET DEFAULT SYLES GLOBALLY*/
+*, *::after, *::before { margin: 0; padding: 0; box-sizing: inherit; }
+html { box-sizing: border-box; }
+html, body, #root, #app { min-height: 100vh; }
+#app { padding-top: $nav-height; }
+.icon-svg { svg { fill: currentColor; width: 100%; } }
 
-	&.skeleton-text {
-		user-select: none;
-		&,
-		& * {
-			color: var(#888) !important;
-			letter-spacing: -0.03em !important;
-		}
-	}
+ul.links { @include flex; li { margin: 0 1rem; } }
+li { list-style-type: none; }
+a { text-decoration: none; }
+.animated { opacity: 0; }
 
-	&.has-effect {
-		-webkit-mask-image: linear-gradient(
-			to right,
-			transparent 0%,
-			black 25%,
-			black 75%,
-			transparent 100%
-		);
-		mask-image: linear-gradient(
-			to right,
-			transparent 0%,
-			black 25%,
-			black 75%,
-			transparent 100%
-		);
-		-webkit-mask-size: 200% 100%;
-		mask-size: 200% 100%;
-		-webkit-mask-repeat: repeat;
-		mask-repeat: repeat;
-		-webkit-mask-position: 50% top;
-		mask-position: 50% top;
-		animation: skeleton-effect 2s infinite;
-	}
+img, .icon-svg {
+    width: 100%;
+    & > div { @include flex; }
 }
-@keyframes skeleton-effect {
-	0% {
-		-webkit-mask-position: 50% top;
-		mask-position: 50% top;
-		transform: scale(1);
-	}
-	40% {
-		transform: scale(1);
-	}
-	50% {
-		transform: scale(0.9);
-	}
-	90% {
-		transform: scale(1);
-	}
-	100% {
-		-webkit-mask-position: -150% top;
-		mask-position: -150% top;
-	}
+
+/* APPLICATION'S BACKGROUND */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: radial-gradient(ellipse farthest-corner at 90% 90%,$primary-light, $primary 100%);
+    background-size: 300% 300%;
+    animation: gradient 20s ease infinite;
+}
+
+/* UI MAIN ROUTES SECTIONS */
+section.main-container {
+    // padding-top: $sub-nav-height;
+    @include sized(100%, $main-container-height);
+    // @include flex(column nowrap);
+    section.tab, .content {
+        &.cols { flex-flow: column nowrap; &.start { justify-content: start; } }
+        &.wrap { flex-wrap: wrap; align-content: center; }
+    }
+    section.tab {
+        @include flex(column, flex-start);
+        @include sized(100%, $main-container-height);
+        @include overflow-y;
+        padding-top: $sub-nav-height;
+        .Typist { margin: $pad-bottop-sm }
+        ul.list li {
+            margin: .5rem 1.5rem;
+            line-height: 1.8rem;
+            font-weight: bold;
+            list-style-type: disclosure-closed;
+            width: 90%;
+        }
+    }
+    .content {
+        @include flex(row wrap, space-evenly, center);
+        @include sized(100%, $tertiary-container-height);
+    }
+}
+
+// TO delete when no longer needed ...
+.construction {
+    @include sized(40vw, auto);
+    padding: 1rem 2rem;
+    min-width: 300px;
+    margin: 2rem auto;
+    background: $beige;
+    box-shadow: 1px 2px 4px rgba($color: $legend-dark, $alpha: .6);
+    h1 {
+        font-size: 2rem;
+        text-align: center;
+        text-transform: uppercase;
+        color: $primary;
+        border-bottom: 2px solid currentColor;
+    }
+    p {
+        padding: $pad-sm;
+        color: $legend;
+    }
+}
+#algos, #apps {
+    @include sized(100vw, $tertiary-container-height);
+}
+.icon-svg.close, .nav {
+    filter: drop-shadow(1px 2px 4px rgba($color: #000, $alpha: .3)); cursor: pointer;
 }

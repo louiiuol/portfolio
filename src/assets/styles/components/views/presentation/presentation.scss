@@ -1,0 +1,13 @@
+@import '../../../variables.scss';
+@import '../../../mixins.scss';
+
+#presentation ul.sub-nav {
+    @include flex(row nowrap, flex-start);
+    @include for-phone-and-tablet { justify-content: center;}
+    @include sized(100%, $sub-nav-height);
+    position: fixed;
+    background: $white;
+    z-index: $z-nav;
+    animation: slideDown $transition-fast;
+    li { font-size: .85rem; }
+}

@@ -1,0 +1,61 @@
+[
+    {
+        "name": "Agence Trajectoires",
+        "content": [
+            {
+                "name": "Peuple Rohingya menacé",
+                "description": ["Motion Design réalisé lors d'un stage en tant qu'assitant de production pour l'agence digitale Trajectoires.", "Vidéo conçue et adaptée pour un client précis en respectant sa charte graphique et ses besoins spécifiques"],
+                "src": "q-UxCC0L4v8",
+                "cover": "birmanie.png",
+                "date": "mai 2018"
+            },
+            {
+                "name": "Investissement responsable",
+                "description": ["Motion Design réalisé lors d'un stage en tant qu'assitant de production pour l'agence digitale Trajectoires.", "Vidéo conçue et adaptée pour un client précis en respectant sa charte graphique et ses besoins spécifiques"],
+                "src": "IDh9fpwwrUM",
+                "cover": "isr.png",
+                "date": "mai 2018"
+            },
+            {
+                "name": "Valoriser les ressources naturelles",
+                "description": ["Motion Design réalisé lors d'un stage en tant qu'assitant de production pour l'agence digitale Trajectoires.", "Vidéo conçue et adaptée pour un client précis en respectant sa charte graphique et ses besoins spécifiques"],
+                "src": "fBjECqW8JcM",
+                "cover": "local.png",
+                "date": "mai 2018"
+            },
+            {
+                "name": "comparatif de voitures",
+                "description": ["Motion Design réalisé lors d'un stage en tant qu'assitant de production pour l'agence digitale Trajectoires.", "Vidéo conçue et adaptée pour un client précis en respectant sa charte graphique et ses besoins spécifiques"],
+                "src": "-bkLW7NJ-ro",
+                "cover": "vo.png",
+                "date": "mai 2018"
+            }
+        ]
+    },
+    {
+        "name": "DUT MMI",
+        "content": [
+            {
+                "name": "immersion",
+                "description": ["Court métrage réalisé en fin de premier semestre d'un DUT Métier du Multimédia et de l'Internet.", "NB: Jeux Insertion d'éléments fictifs dessinées sur des plans cinéma."],
+                "src": "DQz_YPFxInk",
+                "cover": "immersion.png",
+                "date": "Juillet 2016"
+            },
+            {
+                "name": "interview Conrad",
+                "description": ["Interview de l'artiste Conrad, Youtubeur réalisant des histoires en Step Motion."],
+                "src": "NQSi4OPHoG8",
+                "cover": "conrad.png",
+                "date": "février 2016"
+            },
+            {
+                "name": "Reportage formation MMI",
+                "description":["Reportage réalisé sur la formation MMI. Rush, voix Hover et montages ont étés réalisés par groupe."],
+                "src": "Ceo3KQgePkI",
+                "cover": "mmi.png",
+                "date": "mai 2014"
+            }
+        ]
+    }
+]

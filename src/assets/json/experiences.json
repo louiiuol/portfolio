@@ -1,0 +1,99 @@
+[
+    {
+        "title":"co fondateur du projet Save Yourself",
+        "description":[
+            "Transformez les matériaux que vous avez sous la main en outils de survie. Création du projet lors d'un hackaton sur 48h.",
+            "Poursuite du projet lors de ma formation MMI, en tant que chef de projet:"],
+        "actions": [
+            "Animation de séances agile (sprint review, rétro)",
+            "Intégration de composants web avec angular",
+            "Design des wireframes et du Logo"
+        ],
+        "date": "déc. 2013",
+        "type": "BÉNÉVOLAT",
+        "location": { "city": "Paris", "establishment": "école 42"},
+        "keyword": ["Conception", "Intégration", "brainstorm", "Symfony", "angular", "Gestion de Projet"]
+    },
+    {
+        "title":"Intégrateur Front end pour un site vitrine web",
+        "description":["Réalisation de maquettes en respectant les exigences du client:"],
+        "actions": [
+            "Intégration d'un site statique en HTML5/CSS3 à l'aide de bootstrap pour assurer la responsivité du site.",
+            "Déploiement du projet et référencement naturel de la page",
+            "Prise en compte des retours client et adaption des visuels"
+        ],
+        "date": "juin 2016",
+        "type": "STAGE",
+        "location": { "city": "Paris", "establishment": "Nuxia"},
+        "keyword": ["Référencement naturel", "Intégration", "Relation client"]
+    },
+    {
+        "title":"Organisation de chantiers internationnaux",
+        "description": ["Appui à l'organisation de différents chantiers de volontaires:"],
+        "actions": [
+            "Traitement et orientation des volontaires en fonction des chantiers disponibles et de leurs attentes",
+            "Coordination avec les autres associations internationales",
+            "Animation d'un chantier de volontaires adolescent étrangers au festival Silhouette"
+        ],
+        "date": "sept. 2017",
+        "type": "SERVICE CIVIQUE",
+        "location": { "city": "Paris", "establishment": "Concordia"},
+        "keyword": ["organisation", "écoute", "encadrement", "coordination"]
+    },
+    {
+        "title":"Asssistant chargé de production",
+        "description": ["Production visuelle de l'agence sur une durée de 6 mois:"],
+        "actions": [
+            "Création d'affiches et de Story Board",
+            "Intégration de pages web via wordpress",
+            "Création de motion design via After Effects."
+        ],
+        "date": "mai 2018",
+        "type": "STAGE",
+        "location": { "city": "Paris", "establishment": "Trajectoires"},
+        "keyword": ["Motion Design", "Web Design", "Graphisme", "WordPress", "Suite Adobe"]
+    },
+    {
+        "title": " DUT Métiers du Mutimédia et de l'Internet",
+        "description": ["Formation générale initiant à l'ensemble des métiers du multimédia:"],
+        "actions": [
+            "Communication & Marketing: Gestion de projet, cadre juridique",
+            "Infographie & esthétique: Création d'affiches Photoshop et illustator",
+            "Audiovisuel: Prise de son, d'images, montage, tournages",
+            "Réseaux: Mise en place de serveurs LDAP ..",
+            "Intégration: HTML / CSS / JS (jQuery, bootstrap, SASS)",
+            "Développement: Apprentissage de PHP / MYSQL (symfony, prestashop)"
+        ],
+        "date": "juillet 2018",
+        "type": "FORMATION",
+        "location": { "city": "Troyes", "establishment": "IUT de Troyes"},
+        "keyword": ["DUT", "Infographie", "Gestion de projet", "Intégration web"]
+    },
+    {
+        "title":"Développeur Fullstack JS & JAVA",
+        "description": ["2 années d'alternance très enrichissantes au sein d'une équipe agile de développeurs web & mainframe:"],
+        "actions": [
+            "Résolution de bugs existants sur une application générant des Mandats de prélèvement sous forme de PDF",
+            "implémentation de solutions en JS (angular.js) ou JAVA (springboot) selon les besoins fonctionnels du product owner",
+            "Création d'un component en Vanilla JS & Sass, tableau responsive à affichage dynamique et réutilisable dans les applications du groupe"],
+        "date": "août 2020" ,
+        "type": "ALTERNANCE",
+        "location": { "city": "Paris", "establishment": "Société Générale"},
+        "keyword": ["Angular", "Spring", "Intégration continue", "webpack"]
+    },
+    {
+        "title": "Titre RNCP Concepteur d'application",
+        "description": ["Deux années de formation en alternance de deux ans avec Société Générale & Somplon.co, ponctuée par une certification RNCP concepteur & développeur d'application."],
+        "actions": [
+            "Composants d'interface utilisateur indépendament du framework utilisé",
+            "Persistance des données via une API sécurisée",
+            "Architecture d'application multicouche répartie",
+            "Design patterns & architecture mutlicouche répartie",
+            "Conception & déploiement de modèles de données",
+            "Veille sur les failles de sécurité liés aux langages et aux frameworks utilisés"],
+        "date": "nov. 2020",
+        "type": "FORMATION",
+        "location": { "city": "Paris", "establishment": "Simplon.co"},
+        "keyword": ["OOP", "Conception", "Algorithmique", "Design Patterns", "Qualité Web"]
+    }
+]

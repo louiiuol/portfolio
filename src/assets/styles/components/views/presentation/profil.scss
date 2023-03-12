@@ -1,0 +1,48 @@
+@import '../../../mixins.scss';
+@import '../../../variables.scss';
+
+section#profil {
+    aside#intro-aside {
+        color: $white;
+        @include flex(column);
+        animation: zoomInDown .6s ease forwards .3s;
+        img {
+            @include shadowed;
+            filter: grayscale(1);
+            transition: .6s;
+            border-radius: 50%;
+            width: 70%;
+            &:hover { filter: grayscale(0); }
+        }
+        .socials {
+            text-align: center;
+            padding: $pad-bottop-xs ;
+            ul {
+                justify-content: space-evenly;
+                padding: $pad-sm;
+                li { margin: 0; }
+                li, a { @include sized(48px, 48px); }
+                svg { @include sized(32px, 32px); }
+                li a {
+                    color: $white;
+                    &:hover { color: $primary-light; }
+                    &::before { top: 200%; }
+                    &:hover::before {
+                        width: 46px;
+                    }
+                }
+            }
+        }
+    }
+    #intro {
+        color: $white;
+        padding: $pad-md;
+        @include from-tablet-landscape{ width: 50vw; }
+        min-width: 400px;
+        max-width: 728px;
+        overflow: hidden;
+        ul { animation: fadeInLeft $transition-fast forwards 1.2s;}
+        p.legend-intro { animation: flipInX $transition-fast forwards 1s; }
+        p.outro { animation: flipInX $transition-fast forwards 1.6s; margin-top: 1rem; }
+    }
+}

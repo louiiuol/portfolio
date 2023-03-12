@@ -1,0 +1,11 @@
+#home {
+    #app-logo, h1#intro-typer { max-width: 1024px; width: 80vw; margin: 0 auto; }
+    #app-logo > div, h1#intro-typer { text-align: center; }
+    h1#intro-typer {
+        margin-top: 2rem;
+        height: 130px;
+        @media screen and (max-width: 480px) {
+            & { font-size: 1.5rem;}
+        }
+    }
+}

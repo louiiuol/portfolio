@@ -1,0 +1,126 @@
+@import '../../../variables.scss';
+@import '../../../mixins.scss';
+
+#experiences {
+    overflow: hidden;
+    padding-left: 3rem;
+    animation: timelineOpening 3s forwards ease .4s;
+    opacity: 0;
+    &.scrollable { overflow-y: auto; }
+    .card-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 928px;
+        margin: 0 auto;
+        &::before, &::after {
+            content: '';
+            display: block;
+            @include sized(5px, 27%);
+            position: absolute;
+            left: 0;
+            background: white;
+        }
+        &::before { top: 0; }
+        &::after { bottom: 0; }
+        article.card {
+            border-radius: $radius-md;
+            padding: $pad-sm;
+            background: $white;
+            transition: $transition-slowest;
+            position: relative;
+            margin: .85rem 2rem .85rem 4rem;
+            aside.aside {
+                position: absolute;
+                left: -60px;
+                top: 50%;
+                color: $white;
+                width: 100px;
+                transform: translate(-50%, -50%);
+                text-align: center;
+            }
+            section.card-content {
+                width: 100%;
+                opacity: 0;
+                animation: fadeIn 1s forwards 3.25s;
+                .header {
+                    @include flex(row wrap, space-between, flex-start);
+                    h5 {
+                        font-size: 1.5rem;
+                        flex: 1;
+                        text-align: left;
+                        min-width: 325px;
+                    }
+                }
+                p.location {
+                    color: $legend;
+                    padding-top: 5px;
+                    font-size: 1rem;
+                    text-align: right;
+                    @include flex(column wrap, center, flex-end);
+                    span {
+                        font-style: italic;
+                        &.phone-only { display: none; }
+                    }
+                }
+                .description {
+                    max-height: 0;
+                    overflow: hidden;
+                    transition: $transition-fast;
+                    text-justify: auto;
+                    border-top: 2px solid $primary-light;
+                    border-bottom: 2px solid $primary-light;
+                    padding: $pad-sides-sm;
+                    li { color: $primary; }
+                }
+                footer {
+                    @include from-tablet-landscape { top: -10px; }
+                    @include flex(row wrap, flex-start);
+                    position: relative;
+                    transition: $transition-fast;
+                    .keyword {
+                        margin-left: 1rem;
+                        color: $legend;
+                        &:nth-of-type(1) { margin-left: 0; }
+                    }
+                }
+                &:hover {
+                    .description {
+                        max-height: 600px !important;
+                        opacity: 1 !important;
+                        margin: $pad-bottop-sm;
+                        padding: $pad-sm;
+                    }
+                    @include from-tablet-landscape { footer { top: -10px; } }
+                }
+            }
+            &.accent {
+                background: none;
+                border: 2px solid $beige;
+                .description { border-color: $beige !important; }
+                h5, p, span, li, strong, em { color: $beige !important; }
+            }
+        }
+    }
+    @include for-phone-only {
+        padding-left: 0;
+        .card-wrapper {
+            &::before, &::after { display: none; }
+            article.card {
+                margin: .85rem 1rem;
+                aside.aside { display: none; }
+                header {
+                    h5 { text-align: center !important; }
+                    .location {
+                        width: 100%;
+                        flex-direction: row !important;
+                        justify-content: space-evenly !important;
+                    }
+                }
+                footer {
+                    margin-top: 1rem;
+                    justify-content: space-evenly !important;
+                }
+            }
+        }
+    }
+}
