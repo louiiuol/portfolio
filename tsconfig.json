@@ -1,34 +1,30 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-	"compileOnSave": false,
 	"compilerOptions": {
-		"baseUrl": "./",
-		"outDir": "./dist/out-tsc",
-		"forceConsistentCasingInFileNames": true,
+		"target": "esnext",
+		"module": "esnext",
 		"strict": true,
-		"noImplicitOverride": true,
-		"noPropertyAccessFromIndexSignature": true,
-		"noImplicitReturns": true,
-		"noFallthroughCasesInSwitch": true,
-		"sourceMap": true,
-		"declaration": false,
-		"downlevelIteration": true,
-		"experimentalDecorators": true,
-		"moduleResolution": "node",
+		"jsx": "preserve",
 		"importHelpers": true,
-		"target": "ES2022",
-		"module": "ES2022",
-		"useDefineForClassFields": false,
-		"lib": ["ES2022", "dom"],
+		"moduleResolution": "node",
+		"experimentalDecorators": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true,
+		"sourceMap": true,
+		"baseUrl": ".",
+		"types": ["webpack-env", "@wdio/mocha-framework", "@wdio/sync", "jest"],
 		"paths": {
-			"@assets": ["src/assets/*"],
-			"@core": ["src/app/modules/core/index.ts"]
-		}
+			"@/*": ["src/*"]
+		},
+		"lib": ["esnext", "dom", "dom.iterable", "scripthost"]
 	},
-	"angularCompilerOptions": {
-		"enableI18nLegacyMessageIdFormat": false,
-		"strictInjectionParameters": true,
-		"strictInputAccessModifiers": true,
-		"strictTemplates": true
-	}
+	"include": [
+		"src/**/*.ts",
+		"src/**/*.tsx",
+		"src/**/*.vue",
+		"tests/**/*.ts",
+		"tests/**/*.tsx"
+	],
+	"exclude": ["node_modules"]
 }

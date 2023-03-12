@@ -1,0 +1,32 @@
+//* =======================
+//* GLOBAL SCROLLBAR STYLES
+//* =======================*/
+
+//* Mouse selection
+::selection {
+	background: $accent;
+	color: $beige;
+}
+
+//* Scrollbar's width
+::-webkit-scrollbar {
+	width: 5px;
+	z-index: 0;
+}
+
+//* Track
+::-webkit-scrollbar-track {
+	border-radius: $radius-md;
+	background-color: rgba($beige, 0.6);
+}
+
+//* Handle
+::-webkit-scrollbar-thumb {
+	background: $accent;
+	border-radius: $radius-sm;
+}
+
+//* Handle on hover
+::-webkit-scrollbar-thumb:hover {
+	background: $primary-light;
+}

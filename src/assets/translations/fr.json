@@ -1,0 +1,14 @@
+{
+    "home": {
+        "title":"Bienvenue sur mon portfolio ! \n Vous pouvez y découvrir tout mon univers ...\n Bonne ballade numérique !",
+        "show-more": "plus d'informations"
+    },
+    "about": { "title": "Créateur UI / UX \n Développeur web fullstack JS \n Concepteur d'APIs et de bases de données"},
+    "nav": {
+        "contact": "icône de contact",
+        "about": "à propos",
+        "skills": "compétences",
+        "experiences": "expériences"
+    },
+    "icons-alt": "icône svg de '{icon}'"
+}

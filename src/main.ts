@@ -1,32 +1,37 @@
-import {HttpClientModule} from '@angular/common/http';
-import {importProvidersFrom} from '@angular/core';
-import {bootstrapApplication, BrowserModule} from '@angular/platform-browser';
-import {
-	PreloadAllModules,
-	provideRouter,
-	withPreloading,
-} from '@angular/router';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { createApp } from "vue";
+import { createI18n } from "vue-i18n";
+import VueClickAway from "vue3-click-away";
 
-import {AppComponent} from './app/app.component';
-import {APP_ROUTES} from './app/app.routes';
-import {NgxLoadingModule} from 'ngx-loading';
+import App from "./views/App.vue";
+import "./config/registerServiceWorker";
+import router from "./services/router";
+// import store from "./services/store";
 
-// registerLocaleData(localeFr, 'fr'); // Sets global angular's LOCALE to 'French'
+import en from "./assets/translations/en.json";
+import fr from "./assets/translations/fr.json";
 
-bootstrapApplication(AppComponent, {
-	providers: [
-		importProvidersFrom(HttpClientModule),
-		importProvidersFrom(BrowserModule),
-		importProvidersFrom(BrowserAnimationsModule),
-		importProvidersFrom(
-			NgxLoadingModule.forRoot({
-				backdropBackgroundColour: 'rgba(225, 225, 225, 0.4)',
-				animationType: 'double-bounce',
-				primaryColour: '#334277',
-			})
-		),
-		// TODO Compare with other preloading strategies
-		provideRouter(APP_ROUTES, withPreloading(PreloadAllModules)),
-	],
-}).catch(err => console.error(err));
+/**
+ ** Store every JSON translations files
+ ** and i18n configuration in variable
+ ** to be used in Vue app
+ */
+export const i18n = createI18n({
+	messages: {
+		en: en,
+		fr: fr
+	},
+	locale: "en",
+	fallbackLocale: "en"
+});
+
+/**
+ ** Creates new Vue app
+ ** w/ store, router & i18n used.
+ *! Must be mounted in #portfolio HTML tag.
+ */
+createApp(App)
+	// .use(store) // inject vuex store
+	.use(router) // inject vue router
+	.use(i18n) // inject $t()  in comopnents
+	.use(VueClickAway) // enables v-click-away directive
+	.mount("#portfolio");

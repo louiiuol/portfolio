@@ -1,0 +1,17 @@
+//* ====================
+//* THEME BUTTONS STYLES
+//* ==================*/
+
+.btn {
+	display: inline-block;
+	padding: $pad-md;
+	border-radius: $radius-md;
+	border: 1px solid white;
+	width: fit-content;
+	margin: 0 auto;
+	@include shadowed;
+	&:hover {
+		background-color: white;
+		color: $primary;
+	}
+}

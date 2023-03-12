@@ -1,0 +1,160 @@
+//* ==================
+//* GLOBAL FONT STYLES
+//* ================*/
+
+//* FONTS IMPORT
+@include font-face("open24", "Open-24", normal, normal);
+@include font-face("poppins", "Regular", normal, normal);
+@include font-face("poppins", "Regular-Italic", normal, italic);
+@include font-face("poppins", "Black-Italic", bold, italic);
+@include font-face("poppins", "Black", bold, normal);
+
+//* Replaces default font for every elements
+p,
+strong,
+.is-italic,
+em,
+.content,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a {
+	font-family: poppins, sans-serif;
+	font-style: normal;
+	paint-order: stroke fill;
+	letter-spacing: 1px;
+}
+
+//* Defines fonts styles for content & title
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	&.content,
+	&.title {
+		overflow-wrap: break-word;
+		word-break: break-word;
+		white-space: pre-line;
+		word-spacing: 3px;
+	}
+	&.uppercase {
+		text-transform: uppercase;
+	}
+	&.lowercase {
+		text-transform: lowercase;
+	}
+	&.centered {
+		text-align: center;
+	}
+
+	&.righted {
+		text-align: right;
+	}
+
+	.indented {
+		text-indent: 10%;
+	}
+	.nowrap {
+		white-space: nowrap;
+	}
+}
+
+//* Defines styles for <p> tag
+p {
+	&.justified {
+		text-align: justify;
+		text-align-last: auto;
+		&-left {
+			text-align: justify;
+			text-align-last: left;
+		}
+		&-center {
+			text-align: justify;
+			text-align-last: center;
+		}
+		&-right {
+			text-align: justify;
+			text-align-last: right;
+		}
+	}
+	&.legend {
+		font-style: italic;
+		color: $legend;
+	}
+	&.is-bold,
+	strong {
+		font-weight: bold;
+	}
+	&.is-italic,
+	em {
+		font-style: italic;
+	}
+	&.is-centered,
+	em {
+		text-align: center;
+	}
+}
+
+//* =======================
+//* GLOBAL THEME STYLES
+//* =======================*/
+
+//* Texts' color
+.primary {
+	color: $primary;
+}
+.primary-light {
+	color: $primary-light;
+}
+.accent {
+	color: $accent;
+}
+.white {
+	color: $white;
+}
+.beige {
+	color: $beige;
+}
+.legend-light {
+	color: $legend-light;
+}
+.legend {
+	color: $legend;
+}
+.legend-dark {
+	color: $legend-dark;
+}
+
+//* Backgrounds' color
+.has-bg {
+	&-primary {
+		background-color: $primary;
+	}
+	&-primary-light {
+		background-color: $primary-light;
+	}
+	&-accent {
+		background-color: $accent;
+	}
+	&-white {
+		background-color: $white;
+	}
+	&-beige {
+		background-color: $beige;
+	}
+	&-legend-light {
+		background-color: $legend-light;
+	}
+	&-legend {
+		background-color: $legend;
+	}
+	&-legend-dark {
+		background-color: $legend-dark;
+	}
+}

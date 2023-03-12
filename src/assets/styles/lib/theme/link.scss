@@ -1,0 +1,24 @@
+//* =================
+//* THEME LINKS STYLES
+//* ================*/
+
+.link {
+	cursor: pointer;
+	position: relative;
+	padding: 0.25rem 0;
+	&::before {
+		content: "";
+		@include positioned(absolute, 100%, 50%);
+		@include sized(0, 2px);
+		background: $primary-light;
+		transition: $transition-fastest;
+	}
+	&:hover::before,
+	&.selected::before,
+	&:active::before {
+		width: 80%;
+	}
+	&.selected {
+		color: $primary-light;
+	}
+}

@@ -1,0 +1,22 @@
+//* =================
+//* GLOBAL APP STYLES
+//* ================*/
+
+//* Application's minimum height is 100% of Viewport Height
+html,
+body,
+#portfolio {
+	min-height: $window-height;
+}
+
+//* Application's background
+#portfolio {
+	position: relative;
+	background: radial-gradient(
+		ellipse farthest-corner at 90% 90%,
+		$primary-light,
+		$primary 100%
+	);
+	background-size: 300% 300%;
+	animation: gradient 20s ease infinite;
+}

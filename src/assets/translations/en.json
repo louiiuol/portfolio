@@ -1,0 +1,14 @@
+{
+    "home": {
+        "title":"Welcome ! \n Glad you found this portfolio ! \n You can discover all my universe from here...\n Enjoy the trip !",
+        "show-more": "more informations"
+    },
+    "about": { "title": "UI / UX designer \n Fullstack web JS developer \n APIs and databases designer"},
+    "nav": { 
+        "contact": "contact icon",
+        "about": "about",
+        "skills": "skills",
+        "experiences": "experiences"
+    },
+    "icons-alt": "svg icon of '{icon}'"
+}

@@ -1,0 +1,65 @@
+//* =================
+//* GLOBAL VARIABLES
+//* ===============*/
+
+//* LAYOUT
+$nav-height: 50px;
+$sub-nav-height: 40px;
+
+$main-container-height: calc(100vh - 50px);
+$section-container-height: calc(100vh - 100px);
+$section-container-width: calc(100vw - 50px);
+$tertiary-container-height: calc(100vh - 130px);
+
+//* SPACING
+$pad-bottop-xs: 0.5rem 0;
+$pad-bottop-sm: 1rem 0;
+$pad-bottop-md: 2rem 0;
+$pad-bottop-lg: 3rem 0;
+
+$pad-xs: 0.25rem 0.5rem;
+$pad-sm: 0.5rem 1rem;
+$pad-md: 1rem 2rem;
+$pad-lg: 2rem 3rem;
+
+$pad-sides-xs: 0 0.5rem;
+$pad-sides-sm: 0 1rem;
+$pad-sides-md: 0 2rem;
+$pad-sides-lg: 0 3rem;
+
+//* COLORS
+$primary: rgb(15, 47, 87); // #0f2f57
+$primary-light: rgb(0, 135, 189);
+$accent: rgb(238, 111, 87);
+$white: rgb(255, 255, 255);
+$beige: rgb(245, 245, 245);
+$beige-darker: rgb(205, 205, 205);
+$legend-light: rgb(175, 175, 175);
+$legend: rgb(123, 123, 123);
+$legend-dark: rgb(56, 56, 56);
+
+//* INDEXES
+$z-background: 0;
+$z-content: 5;
+$z-nav: 14;
+$z-main-nav: 15;
+$z-front: 10;
+
+//* TRANSITIONS
+$transition-fastest: 0.3s ease-in;
+$transition-fast: 0.6s ease-in;
+$transition-medium: 1.2s ease-in;
+$transition-slow: 2s ease-in;
+$transition-slowest: 3s ease-in;
+
+//* RADIUS
+$radius-xs: 4px;
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 16px;
+
+/* SIZES */
+$window-height: 100vh;
+$window-width: 100vw;
+
+@import "./lib/mixins.scss";

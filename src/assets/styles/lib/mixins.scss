@@ -1,0 +1,112 @@
+//* ==============
+//* GLOBAL MIXINS
+//* ============*/
+
+//* Dynamic flex design
+@mixin flex($flow: row wrap, $justify: null, $items: null, $content: null) {
+	display: flex;
+	flex-flow: $flow;
+	@if $justify {
+		justify-content: $justify;
+	}
+	@if $items {
+		align-items: $items;
+	}
+	@if $content {
+		align-content: $content;
+	}
+}
+
+//* Dynamic font import
+@mixin font-face($name, $fileName, $weight, $style) {
+	$url: "../assets/fonts/" + $name + "/" + $fileName + ".ttf";
+	@font-face {
+		font-family: $name;
+		src: url($url) format("truetype");
+		font-weight: $weight;
+		font-style: $style;
+	}
+}
+
+//* Viewport breakpoints
+@mixin for-phone-only {
+	@media (max-width: 628px) {
+		@content;
+	}
+}
+@mixin for-phone-and-tablet {
+	@media (max-width: 1024px) {
+		@content;
+	}
+}
+@mixin for-tablet-only {
+	@media (min-width: 1025px) and (max-width: 1324px) {
+		@content;
+	}
+}
+@mixin from-tablet-portrait {
+	@media (min-width: 629px) {
+		@content;
+	}
+}
+@mixin from-tablet-landscape {
+	@media (min-width: 900px) {
+		@content;
+	}
+}
+@mixin from-desktop {
+	@media (min-width: 1200px) {
+		@content;
+	}
+}
+@mixin from-big-desktop {
+	@media (min-width: 1600px) {
+		@content;
+	}
+}
+
+//* Utilitary mixins
+@mixin shadowed($inset: false, $size: 1px 2px 4px, $color: #000, $alpha: 0.6) {
+	@if $inset {
+		box-shadow: -1px -2px 4px inset rgba($color, 0.3),
+			-1px 2px 4px inset rgba($color, 0.3);
+	} @else {
+		box-shadow: $size rgba($color, $alpha);
+	}
+}
+@mixin sized($width: 100%, $height: 100%) {
+	width: $width;
+	height: $height;
+}
+@mixin min-sized($width: 100%, $height: 100%) {
+	min-width: $width;
+	min-height: $height;
+}
+@mixin max-sized($width: 100%, $height: 100%) {
+	max-width: $width;
+	max-height: $height;
+}
+@mixin overflow-y {
+	overflow: hidden;
+	overflow-y: auto;
+}
+
+//* Positioned element with top and left properties
+@mixin positioned($position: relative, $top: 50%, $left: 50%) {
+	position: $position;
+	top: $top;
+	left: $left;
+	transform: translate(-($left), -($top));
+}
+
+//* Centered element with specified width
+@mixin widthCentered($width, $top-bottom: 0, $left-right: auto) {
+	max-width: $width;
+	margin: $top-bottom $left-right;
+}
+
+@mixin stroke($color, $dash) {
+	stroke: $color;
+	stroke-dasharray: $dash;
+	stroke-dashoffset: $dash;
+}

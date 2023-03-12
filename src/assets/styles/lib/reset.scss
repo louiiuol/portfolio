@@ -1,0 +1,29 @@
+//* ===================
+//* GLOBAL RESET STYLES
+//* ===================*/
+
+//* Removes all default spaces and sizing
+*,
+*::after,
+*::before {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit;
+}
+
+//* Root is the box of reference
+html {
+	box-sizing: border-box;
+}
+
+//* Removes purple color & basic link style
+a,
+span.link {
+	color: $primary;
+	transition: color $transition-fastest;
+	text-decoration: none;
+	font-weight: 600;
+	&:hover {
+		color: $primary-light;
+	}
+}
