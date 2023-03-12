@@ -38,7 +38,7 @@ export class HomeComponent {
 	@HostBinding('class') class = 'user-view';
 
 	introTexts = [
-		'Welcome to my portfolio !',
+		'Welcome to my portfolio,',
 		"I'm a web developer that loves building clean, intuitive and useful UIs ",
 		'I can help you designing your wireframes, business logic, or architecture',
 		'I want to create useful apps, that helps peoples and society, not another wasting time toy ..',
