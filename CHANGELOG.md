@@ -14,6 +14,8 @@
 - [x] TDD workflow (karma configured)
 - [x] Layout CSS (custom SCSS library in assets)
 - [x] PWA manifest & icons
+- [x] CI / CD integration
+- [x] Deployment on Github Pages
 
 ### New components
 
