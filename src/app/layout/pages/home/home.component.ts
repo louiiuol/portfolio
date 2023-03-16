@@ -23,7 +23,6 @@ import {IconComponent, TypistComponent} from '../../atoms';
 				class="w-12 mx-auto sm:w-8 max-w-screen "></lou-icon>
 			<lou-typist
 				class="invisible fadein animation-duration-1000 animation-delay-4 animation-forwards text-xl sm:text-5xl"
-				style="width: 80vw;"
 				[toType]="introTexts"
 				[startingDelay]="5"
 				[newTextDelay]="2"></lou-typist>
