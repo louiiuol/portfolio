@@ -1,0 +1,24 @@
+<button
+	pButton
+	(click)="showDialog = true"
+	class="p-button-sm p-button-secondary">
+	contact
+</button>
+
+<p-dialog
+	[(visible)]="showDialog"
+	[modal]="true"
+	class="w-full"
+	[breakpoints]="{'640px': '100vw', '960px': '75vw'}">
+	<ng-template pTemplate="header">
+		<h2 class="w-full text-niconne text-3xl px-2 text-center">Let's chat !</h2>
+	</ng-template>
+	<p class="text-500 font-italic text-center text-sm">
+		You can send me a message directly with this form !
+	</p>
+	<lou-form
+		[form]="contactForm"
+		[fields]="fields"
+		[isLoading]="isLoading"
+		(submitted)="sendFormValueAndHandleResponse()"></lou-form>
+</p-dialog>
