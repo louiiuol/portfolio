@@ -1,0 +1,64 @@
+<form
+	[formGroup]="form"
+	(ngSubmit)="onSubmit()"
+	class="py-1 px-2 md:py-2 md:px-6 form-grid grid">
+	<div
+		*ngFor="let field of fields"
+		class="field col col-12"
+		[class]="field.col">
+		<label *ngIf="field.label" class="mr-4">
+			{{ field.label }}
+			<span class="text-accent">{{ field.required && ' *' }}</span>
+		</label>
+		<span
+			*ngIf="field.type === 'text'"
+			[class]="field.icon && 'p-input-icon-left'"
+			class="w-full">
+			<i *ngIf="field.icon" class="pi" [class]="'pi-' + field.icon"></i>
+			<input
+				type="text"
+				class="field.required"
+				pInputText
+				[autofocus]="field.autofocus"
+				[formControlName]="field.name"
+				[placeholder]="field.placeholder ?? ''" />
+		</span>
+		<textarea
+			class="w-full"
+			pInputTextarea
+			[formControlName]="field.name"
+			[placeholder]="field.placeholder ?? ''"
+			[autofocus]="field.autofocus"
+			*ngIf="field.type === 'textarea'"></textarea>
+		<small
+			*ngIf="!form?.untouched && form.get(field.name)?.invalid"
+			class="p-error block fadein animation-duration-200 pt-1 my-0">
+			{{ getErrorMessage(form.get(field.name)) }}
+		</small>
+	</div>
+	<footer class="w-full my-2 flex gap-5 justify-content-around">
+		<div
+			class="w-full h-full flex justify-content-center align-items-center gap-2">
+			<button
+				pButton
+				(click)="form.reset()"
+				[disabled]="form.pristine"
+				class="p-button-outlined p-button-primary">
+				reset
+			</button>
+			<span
+				pTooltip="Form is invalid"
+				[tooltipDisabled]="form.valid"
+				tooltipPosition="top">
+				<button
+					pButton
+					type="submit"
+					[disabled]="form.invalid"
+					class="p-button-primary">
+					send
+				</button>
+			</span>
+		</div>
+	</footer>
+</form>
+<ngx-loading [show]="isLoading"></ngx-loading>
