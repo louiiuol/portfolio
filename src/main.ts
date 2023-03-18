@@ -21,7 +21,7 @@ bootstrapApplication(AppComponent, {
 		importProvidersFrom(BrowserAnimationsModule),
 		importProvidersFrom(
 			NgxLoadingModule.forRoot({
-				backdropBackgroundColour: 'rgba(225, 225, 225, 0.4)',
+				backdropBackgroundColour: 'rgba(#334277, 0.4)',
 				animationType: 'double-bounce',
 				primaryColour: '#334277',
 			})
