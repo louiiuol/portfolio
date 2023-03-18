@@ -28,7 +28,7 @@ export class TypistComponent implements OnChanges {
 	/**
 	 * Defines Typing speed (bigger number means slower)
 	 */
-	@Input() typingSpeed = 80;
+	@Input() typingSpeed = 50;
 
 	/**
 	 * Defines erasing speed (bigger number means slower)
