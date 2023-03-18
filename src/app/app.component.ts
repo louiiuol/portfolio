@@ -1,6 +1,7 @@
 import {Component, HostBinding} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {PrimeNGConfig} from 'primeng/api';
+import {MessageService, PrimeNGConfig} from 'primeng/api';
+import {ToastModule} from 'primeng/toast';
 
 import {HeaderComponent} from './layout';
 
@@ -9,14 +10,16 @@ import {HeaderComponent} from './layout';
  * * Sets basic layout
  * * Configure PrimeNG
  * @author louiiuol
- * @version 0.1.0
+ * @version 0.1.1
  */
 @Component({
 	standalone: true,
 	selector: 'lou-root',
-	imports: [RouterOutlet, HeaderComponent],
+	imports: [RouterOutlet, HeaderComponent, ToastModule],
+	providers: [MessageService],
 	template: ` <!-- Root Component -->
 		<lou-header></lou-header>
+		<p-toast key="root" position="top-right"></p-toast>
 		<router-outlet></router-outlet>`,
 })
 export class AppComponent {
