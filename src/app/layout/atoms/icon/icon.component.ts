@@ -40,12 +40,12 @@ export class IconComponent implements OnChanges {
 	constructor(private _httpClient: HttpClient) {}
 
 	ngOnChanges(): void {
-		if (!this.name) return;
-		this.svgIconTag$ = this._httpClient.get(
-			`${this._ASSETS_ROOT}/${this.name}.svg`,
-			{
-				responseType: 'text',
-			}
-		);
+		if (this.name)
+			this.svgIconTag$ = this._httpClient.get(
+				`${this._ASSETS_ROOT}/${this.name}.svg`,
+				{
+					responseType: 'text',
+				}
+			);
 	}
 }

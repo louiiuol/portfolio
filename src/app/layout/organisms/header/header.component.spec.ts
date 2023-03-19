@@ -2,6 +2,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ChangeDetectionStrategy} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MessageService} from 'primeng/api';
 import {HeaderComponent} from './header.component';
 
 describe('HeaderComponent', () => {
@@ -12,7 +13,7 @@ describe('HeaderComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			imports: [RouterTestingModule, HeaderComponent, HttpClientTestingModule],
-			declarations: [],
+			providers: [MessageService],
 		})
 			.overrideComponent(HeaderComponent, {
 				set: {changeDetection: ChangeDetectionStrategy.Default},
