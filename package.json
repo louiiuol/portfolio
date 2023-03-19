@@ -4,8 +4,8 @@
 	"scripts": {
 		"start": "ng serve",
 		"test": "ng test --watch=false --browsers=ChromeHeadlessCI",
-		"build": "ng build --configuration=production --base-href=/portfolio/",
-		"deploy:gh-pages": "ng build --configuration=production --base-href=/portfolio/ && npx angular-cli-ghpages --dir=dist/portfolio",
+		"build": "ng build --configuration=production --base-href='https://louiiuol.github.io/portfolio/'",
+		"deploy:gh-pages": "ng build --configuration=production --base-href='https://louiiuol.github.io/portfolio/' && npx angular-cli-ghpages --dir=dist/portfolio",
 		"lint": "ng lint"
 	},
 	"private": true,
