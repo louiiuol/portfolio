@@ -4,7 +4,7 @@ import {HomeComponent} from './layout/pages/home/home.component';
 
 export const APP_ROUTES: Routes = [
 	{
-		path: 'home',
+		path: '',
 		component: HomeComponent,
 	},
 	{
@@ -13,6 +13,6 @@ export const APP_ROUTES: Routes = [
 	},
 	{
 		path: '**',
-		redirectTo: 'home',
+		redirectTo: '',
 	},
 ];
