@@ -53,28 +53,35 @@ export class ContactService {
 	sendEmail(
 		form: Partial<{fullName: string; email: string; subject: string}>
 	): Observable<boolean> {
-		return this._http.post<unknown>('https://mailthis.to/louiiuol', form).pipe(
-			catchError(error => of(error)),
-			map(res => {
-				if (res.status === 200) {
-					this._messageService.add({
-						key: 'root',
-						severity: 'success',
-						summary: 'Email sent !',
-						sticky: true,
-						detail: "Thank you for reaching out ! I'll try to answer ASAP 🙌 ",
-					});
-					return true;
-				} else {
-					this._messageService.add({
-						key: 'root',
-						severity: 'error',
-						summary: 'Internal Server Error',
-						detail: 'Failed to send email ! Please, try again later ! 🙊 ',
-					});
-					return false;
-				}
+		return this._http
+			.post<unknown>('https://mailthis.to/louiiuol', {
+				_subject: `You have a new form submission on your portfolio, from ${form.fullName} !`,
+				_replyto: form.email,
+				name: form.fullName,
+				message: form.subject,
 			})
-		);
+			.pipe(
+				catchError(error => of(error)),
+				map(res => {
+					if (res.status === 200) {
+						this._messageService.add({
+							key: 'root',
+							severity: 'success',
+							summary: 'Thank you for reaching out !',
+							detail:
+								' You will be redirected in order to confirm you are not a bot 🙊 ',
+						});
+						return true;
+					} else {
+						this._messageService.add({
+							key: 'root',
+							severity: 'error',
+							summary: 'Internal Server Error',
+							detail: 'Failed to send email ! Please, try again later ! 🙊 ',
+						});
+						return false;
+					}
+				})
+			);
 	}
 }
