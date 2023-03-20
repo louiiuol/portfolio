@@ -1,0 +1,25 @@
+lou-about {
+	max-width: 90vw;
+	@media (min-width: 728px) {
+		.p-tabview-nav {
+			display: flex;
+			justify-content: space-evenly;
+		}
+	}
+	.p-tabview-panels {
+		background: none !important;
+		position: relative;
+		isolation: isolate;
+		height: 100%;
+
+		overflow: hidden;
+		&:after {
+			content: '';
+			position: absolute;
+			inset: -100px;
+			background: rgba($color: #fff, $alpha: 0.4);
+			filter: blur(100px);
+			z-index: -1;
+		}
+	}
+}
