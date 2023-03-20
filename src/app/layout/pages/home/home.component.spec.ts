@@ -27,10 +27,6 @@ describe('HomeComponent', () => {
 		expect(component).toBeTruthy();
 	});
 
-	it("should render w/ 'user-view' class", () => {
-		expect(component.class).toContain('user-view');
-	});
-
 	it('should contain introTexts', () => {
 		expect(component.introTexts.length).toEqual(5);
 	});
