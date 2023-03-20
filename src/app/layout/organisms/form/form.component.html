@@ -6,29 +6,31 @@
 	<div
 		*ngFor="let field of fields"
 		class="field col col-12"
-		[class]="field.col">
-		<label *ngIf="field.label" class="mr-4">
-			{{ field.label }}
-			<span class="text-accent">{{ field.required && ' *' }}</span>
+		[class]="field.column">
+		<label *ngIf="field.content.label" class="mr-4">
+			{{ field.content.label }}
 		</label>
 		<span
 			*ngIf="field.type === 'text'"
-			[class]="field.icon && 'p-input-icon-left'"
+			[class]="field.content.icon && 'p-input-icon-left'"
 			class="w-full">
-			<i *ngIf="field.icon" class="pi" [class]="'pi-' + field.icon"></i>
+			<i
+				*ngIf="field.content.icon"
+				class="pi"
+				[class]="'pi-' + field.content.icon"></i>
 			<input
 				type="text"
 				class="field.required"
 				pInputText
 				[autofocus]="field.autofocus"
 				[formControlName]="field.name"
-				[placeholder]="field.placeholder ?? ''" />
+				[placeholder]="field.content.placeholder" />
 		</span>
 		<textarea
 			class="w-full"
 			pInputTextarea
 			[formControlName]="field.name"
-			[placeholder]="field.placeholder ?? ''"
+			[placeholder]="field.content.placeholder"
 			[autofocus]="field.autofocus"
 			*ngIf="field.type === 'textarea'"></textarea>
 		<small

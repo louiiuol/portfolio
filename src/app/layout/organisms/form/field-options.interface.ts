@@ -1,12 +1,16 @@
+import {ValidatorFn} from '@angular/forms';
+
 export interface FieldOptions {
 	name: string;
 	type: 'text' | 'textarea';
-	label?: string;
-	placeholder?: string;
-	icon?: string;
-	errorMessages?: {type: string; value: string}[];
+	content: {
+		placeholder: string;
+		label?: string;
+		icon?: string;
+		hint?: string;
+	};
+	constraints?: ValidatorFn[];
 	autofocus?: true;
-	required?: boolean;
-	mask?: string;
-	col?: string;
+	errorMessages?: {type: string; value: string}[];
+	column?: `col-${3 | 4 | 6 | 8 | 9 | 12}`;
 }
