@@ -11,15 +11,18 @@ body {
 	);
 	background-size: 100% 100%;
 	animation: gradient 60s ease infinite;
-	.user-view {
-		display: block;
-		height: calc(90dvh - 64px);
-		width: 90%;
-		max-width: 1280px;
-		overflow-y: auto;
+	lou-root main#global-container {
 		position: relative;
-		margin-block: 5dvh;
-		margin-inline: auto;
+		height: calc(100dvh - 64px);
+		overflow-x: hidden;
+		overflow-y: auto;
+		#page-content {
+			max-width: 1440px;
+			height: 80dvh;
+			display: flex;
+			width: 90vw;
+			margin-inline: auto;
+		}
 	}
 }
 
