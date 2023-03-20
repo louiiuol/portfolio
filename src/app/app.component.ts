@@ -11,7 +11,7 @@ import {HeaderComponent} from './layout/organisms';
  * * Sets basic layout
  * * Configure PrimeNG
  * @author louiiuol
- * @version 0.1.1
+ * @version 0.1.2
  */
 @Component({
 	standalone: true,
@@ -26,9 +26,13 @@ import {HeaderComponent} from './layout/organisms';
 	template: `
 		<lou-header></lou-header>
 		<p-toast key="root" position="top-right"></p-toast>
-		<main>
+		<main
+			id="global-container"
+			class="flex flex-wrap-reverse align-items-center">
 			<lou-scroll-indicators></lou-scroll-indicators>
-			<router-outlet></router-outlet>
+			<div id="page-content" class="mt-3">
+				<router-outlet></router-outlet>
+			</div>
 		</main>
 	`,
 })

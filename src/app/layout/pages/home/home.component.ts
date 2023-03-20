@@ -15,27 +15,27 @@ import {IconComponent, TypistComponent} from '@layout/atoms';
 	selector: 'lou-home',
 	styleUrls: ['./home.component.scss'],
 	encapsulation: ViewEncapsulation.None,
-	template: `<!-- Introduction Page -->
-		<main
-			class="h-full flex flex-column justify-content-evenly align-items-center">
-			<lou-icon
-				id="intro-loader"
-				name="logo-expanded"
-				class="w-12 mx-auto sm:w-8 max-w-screen "></lou-icon>
-			<lou-typist
-				class="invisible fadein animation-duration-1000 animation-delay-4 animation-forwards text-xl sm:text-5xl"
-				[toType]="introTexts"
-				[startingDelay]="5"
-				[newTextDelay]="2"></lou-typist>
-			<a [routerLink]="['/about']">
-				<i
-					class="pi pi-arrow-circle-down text-6xl text-50 invisible fadein animation-duration-2000 animation-iteration-2 animation-delay-10 animation-forwards">
-				</i>
-			</a>
-		</main> `,
+	template: `
+		<!-- Introduction Page -->
+		<lou-icon
+			id="intro-loader"
+			name="logo-expanded"
+			class="w-12 mx-auto sm:w-8 max-w-screen "></lou-icon>
+		<lou-typist
+			class="invisible fadein animation-duration-1000 animation-delay-4 animation-forwards text-xl sm:text-5xl"
+			[toType]="introTexts"
+			[startingDelay]="5"
+			[newTextDelay]="2"></lou-typist>
+		<a [routerLink]="['/about']">
+			<i
+				class="pi pi-arrow-circle-down text-6xl text-50 invisible fadein animation-duration-2000 animation-iteration-2 animation-delay-10 animation-forwards">
+			</i>
+		</a>
+	`,
 })
 export class HomeComponent {
-	@HostBinding('class') class = 'user-view';
+	@HostBinding('class') class =
+		'flex-1 md:h-full flex flex-column justify-content-evenly align-items-center';
 
 	introTexts = [
 		'Welcome to my portfolio,',
