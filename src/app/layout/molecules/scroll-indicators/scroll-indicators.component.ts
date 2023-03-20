@@ -35,7 +35,7 @@ import {RouterModule} from '@angular/router';
 })
 export class ScrollIndicatorsComponent {
 	@HostBinding('class') class =
-		'block w-full h-2rem mb-4 md:mb-0 md:h-full md:w-2rem ml-4 py-5 flex md:flex-column justify-content-center align-items-center gap-3';
+		'block w-full h-2rem mb-4 md:mb-0 md:h-full md:w-auto py-5 flex md:flex-column justify-content-center gap-3';
 
 	readonly routes = ['/', '/about', '/projects'];
 }

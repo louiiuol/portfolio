@@ -28,7 +28,7 @@ import {HeaderComponent} from './layout/organisms';
 		<p-toast key="root" position="top-right"></p-toast>
 		<main
 			id="global-container"
-			class="flex flex-wrap-reverse align-items-center">
+			class="flex flex-wrap-reverse align-items-end mx-3 gap-3">
 			<lou-scroll-indicators></lou-scroll-indicators>
 			<div id="page-content" class="mt-3">
 				<router-outlet></router-outlet>
@@ -38,7 +38,7 @@ import {HeaderComponent} from './layout/organisms';
 })
 export class AppComponent {
 	@HostBinding('class') class =
-		'h-screen sm:block relative flex flex-column-reverse';
+		'h-screen sm:block relative flex flex-column-reverse gap-2';
 
 	constructor(primengConfig: PrimeNGConfig) {
 		primengConfig.ripple = true;

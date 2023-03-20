@@ -35,7 +35,7 @@ import {IconComponent, TypistComponent} from '@layout/atoms';
 })
 export class HomeComponent {
 	@HostBinding('class') class =
-		'flex-1 md:h-full flex flex-column justify-content-evenly align-items-center';
+		'flex-1 md:h-full flex flex-column justify-content-evenly align-items-center gap-5';
 
 	introTexts = [
 		'Welcome to my portfolio,',
