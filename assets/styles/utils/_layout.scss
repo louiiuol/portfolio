@@ -14,14 +14,12 @@ body {
 	lou-root main#global-container {
 		position: relative;
 		height: calc(100dvh - 64px);
-		overflow-x: hidden;
-		overflow-y: auto;
 		#page-content {
 			max-width: 1440px;
 			height: 80dvh;
 			display: flex;
-			width: 90vw;
-			margin-inline: auto;
+			flex: 1;
+			margin-left: auto;
 		}
 	}
 }
