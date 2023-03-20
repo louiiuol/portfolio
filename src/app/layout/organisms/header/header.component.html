@@ -6,7 +6,9 @@
 		<a
 			pButton
 			id="logo"
-			routerLink="/home"
+			routerLink="/"
+			routerLinkActive="active"
+			[routerLinkActiveOptions]="{exact: true}"
 			class="p-button-text p-button-sm line-height-1 spaceless">
 			<span class="hidden sm:inline-block text-niconne text-4xl">
 				Louis Godlewski
@@ -15,7 +17,11 @@
 		</a>
 	</li>
 	<li *ngFor="let link of navigationLinks">
-		<a pButton [routerLink]="'/' + link" class="p-button-text p-button-sm">
+		<a
+			pButton
+			[routerLink]="'/' + link"
+			class="p-button-text p-button-sm"
+			routerLinkActive="active">
 			{{ link }}
 		</a>
 	</li>

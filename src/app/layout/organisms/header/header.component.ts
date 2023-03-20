@@ -1,5 +1,10 @@
 import {CommonModule} from '@angular/common';
-import {Component, HostBinding} from '@angular/core';
+import {
+	ChangeDetectionStrategy,
+	Component,
+	HostBinding,
+	ViewEncapsulation,
+} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {ButtonModule} from 'primeng/button';
 
@@ -22,6 +27,15 @@ import {ContactComponent} from '@modules/contact';
 	],
 	selector: 'lou-header',
 	templateUrl: './header.component.html',
+	styles: [
+		`
+			lou-header a.active {
+				font-weight: bold !important;
+			}
+		`,
+	],
+	encapsulation: ViewEncapsulation.None,
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
 	readonly navigationLinks = ['about'];
