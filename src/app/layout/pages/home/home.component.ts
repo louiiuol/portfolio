@@ -1,7 +1,8 @@
 import {CommonModule} from '@angular/common';
 import {Component, HostBinding, ViewEncapsulation} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {IconComponent, TypistComponent} from '../../atoms';
+
+import {IconComponent, TypistComponent} from '@layout/atoms';
 
 /**
  * Introduction Page: greets user w/ custom animations and redirect to 'about' page

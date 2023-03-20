@@ -1,5 +1,5 @@
 import {Validators} from '@angular/forms';
-import {FieldOptions} from '../form/field-options.interface';
+import {FieldOptions} from '../core/types/field-options.interface';
 
 export const CONTACT_FIELDS: FieldOptions[] = [
 	{

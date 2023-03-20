@@ -21,8 +21,10 @@
 		"useDefineForClassFields": false,
 		"lib": ["ES2022", "dom"],
 		"paths": {
-			"@assets": ["src/assets/*"],
-			"@core": ["src/app/modules/core/index.ts"]
+			"@assets/*": ["src/assets/*"],
+			"@core": ["src/app/modules/core/index.ts"],
+			"@modules/*": ["src/app/modules/*"],
+			"@layout/*": ["src/app/layout/*"]
 		}
 	},
 	"angularCompilerOptions": {

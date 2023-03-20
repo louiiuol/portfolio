@@ -8,6 +8,7 @@ import {
 	ChangeDetectionStrategy,
 } from '@angular/core';
 import {Observable} from 'rxjs';
+
 import {TrustHtmlPipe} from '@core';
 
 /**

@@ -11,8 +11,8 @@ const primeModules = [DialogModule, ButtonModule];
 
 import {CONTACT_FIELDS} from './contact.form';
 import {ContactService} from './contact.service';
-import {FormComponent} from '../form/form.component';
-import {buildFormGroup} from '../form/build-form.fn';
+import {FormComponent} from '../../layout/organisms/form/form.component';
+import {buildFormGroup} from '../core/helpers/build-form.fn';
 
 /**
  * Modal including custom form to send email to professional inbox.

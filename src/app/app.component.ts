@@ -3,7 +3,8 @@ import {RouterOutlet} from '@angular/router';
 import {MessageService, PrimeNGConfig} from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
 
-import {HeaderComponent} from './layout';
+import {ScrollIndicatorsComponent} from './layout/molecules';
+import {HeaderComponent} from './layout/organisms';
 
 /**
  * Root component of the application
@@ -15,12 +16,21 @@ import {HeaderComponent} from './layout';
 @Component({
 	standalone: true,
 	selector: 'lou-root',
-	imports: [RouterOutlet, HeaderComponent, ToastModule],
+	imports: [
+		RouterOutlet,
+		HeaderComponent,
+		ToastModule,
+		ScrollIndicatorsComponent,
+	],
 	providers: [MessageService],
-	template: ` <!-- Root Component -->
+	template: `
 		<lou-header></lou-header>
 		<p-toast key="root" position="top-right"></p-toast>
-		<router-outlet></router-outlet>`,
+		<main>
+			<lou-scroll-indicators></lou-scroll-indicators>
+			<router-outlet></router-outlet>
+		</main>
+	`,
 })
 export class AppComponent {
 	@HostBinding('class') class =

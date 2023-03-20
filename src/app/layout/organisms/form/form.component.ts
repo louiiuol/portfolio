@@ -22,7 +22,7 @@ const primeModules = [
 	TooltipModule,
 ];
 
-import {FieldOptions} from './field-options.interface';
+import {FieldOptions} from '@core';
 
 /**
  * Generic Form Component that makes building form UI easy !

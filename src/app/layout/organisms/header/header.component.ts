@@ -2,8 +2,9 @@ import {CommonModule} from '@angular/common';
 import {Component, HostBinding} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {ButtonModule} from 'primeng/button';
-import {IconComponent} from '../../atoms';
-import {ContactComponent} from '../contact/contact.component';
+
+import {IconComponent} from '@layout/atoms';
+import {ContactComponent} from '@modules/contact';
 
 /**
  * Header section of the entire application
