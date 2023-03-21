@@ -16,9 +16,11 @@
 	<p class="text-500 font-italic text-center text-sm">
 		You can send me a message directly with this form !
 	</p>
-	<lou-form
-		[form]="contactForm"
-		[fields]="fields"
-		[isLoading]="isLoading"
-		(submitted)="sendFormValueAndHandleResponse()"></lou-form>
+	<ng-template pTemplate="content">
+		<lou-form
+			[form]="contactForm"
+			[fields]="fields"
+			[isLoading]="isLoading"
+			(submitted)="sendFormValueAndHandleResponse()"></lou-form>
+	</ng-template>
 </p-dialog>

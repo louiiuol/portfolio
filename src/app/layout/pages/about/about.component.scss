@@ -1,9 +1,12 @@
 lou-about {
-	max-width: 90vw;
+	max-width: 95vw;
 	@media (min-width: 728px) {
 		.p-tabview-nav {
 			display: flex;
 			justify-content: space-evenly;
+			li .p-tabview-nav-link:not(.p-disabled):focus {
+				box-shadow: none !important;
+			}
 		}
 	}
 	.p-tabview-panels {
@@ -17,7 +20,7 @@ lou-about {
 			content: '';
 			position: absolute;
 			inset: -100px;
-			background: rgba($color: #fff, $alpha: 0.4);
+			background: rgba($color: #fff, $alpha: 0.25);
 			filter: blur(100px);
 			z-index: -1;
 		}

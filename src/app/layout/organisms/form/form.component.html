@@ -5,8 +5,8 @@
 	class="py-1 px-2 md:py-2 md:px-6 form-grid grid">
 	<div
 		*ngFor="let field of fields"
-		class="field col col-12"
-		[class]="field.column">
+		class="field col"
+		[class]="field.column ?? 'col-12'">
 		<label *ngIf="field.content.label" class="mr-4">
 			{{ field.content.label }}
 		</label>

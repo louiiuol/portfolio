@@ -30,7 +30,7 @@ import {HeaderComponent} from './layout/organisms';
 			id="global-container"
 			class="flex flex-wrap-reverse align-items-end mx-3 gap-3">
 			<lou-scroll-indicators></lou-scroll-indicators>
-			<div id="page-content" class="mt-3">
+			<div id="page-content" class="mt-6 md:mt-3">
 				<router-outlet></router-outlet>
 			</div>
 		</main>

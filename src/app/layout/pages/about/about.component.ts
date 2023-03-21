@@ -15,5 +15,5 @@ import {TabViewModule} from 'primeng/tabview';
 	encapsulation: ViewEncapsulation.None,
 })
 export class AboutComponent {
-	@HostBinding('class') class = 'flex-1 md:h-full mt-3 mx-auto';
+	@HostBinding('class') class = '';
 }
