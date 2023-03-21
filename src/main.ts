@@ -27,6 +27,6 @@ bootstrapApplication(AppComponent, {
 			})
 		),
 		// TODO Compare with other preloading strategies
-		provideRouter(APP_ROUTES, withPreloading(PreloadAllModules)),
+		provideRouter(APP_ROUTES),
 	],
 }).catch(err => console.error(err));
