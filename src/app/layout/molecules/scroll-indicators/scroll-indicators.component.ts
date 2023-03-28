@@ -8,7 +8,7 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 
 /**
- * Simple components to indicate sections and redirect to their routerLink.
+ * Simple component to indicate sections and redirect to their routerLink.
  * @author louiiuol
  * @version 1.0.0
  */
