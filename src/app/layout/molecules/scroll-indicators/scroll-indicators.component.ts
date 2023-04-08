@@ -10,7 +10,7 @@ import {RouterModule} from '@angular/router';
 /**
  * Simple component to indicate sections and redirect to their routerLink.
  * @author louiiuol
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Component({
 	selector: 'lou-scroll-indicators',
@@ -35,7 +35,7 @@ import {RouterModule} from '@angular/router';
 })
 export class ScrollIndicatorsComponent {
 	@HostBinding('class') class =
-		'block w-full md:mb-0 md:h-full md:w-auto py-5 flex md:flex-column justify-content-center gap-3';
+		'hidden md:flex w-full md:mb-0 md:h-full md:w-auto py-5 md:flex-column justify-content-center gap-3';
 
 	readonly routes = ['/', '/about', '/projects'];
 }
