@@ -1,0 +1,53 @@
+<header
+	class="flex flex-wrap gap-3 justify-content-center md:justify-content-between align-items-stretch">
+	<img
+		src="assets/images/svg/logo-rectangle.svg"
+		alt=""
+		class="h-6rem border-round overflow-hidden" />
+	<h1
+		class="p-component text-niconne text-5xl sm:text-5xl md:text-5xl lg:text-6xl surface-0 text-primary my-0 p-2 md:flex-1 text-center border-round w-full inline-flex justify-content-center align-items-center">
+		Fullstack developer Typescript
+	</h1>
+</header>
+<section class="flex flex-wrap gap-3">
+	<div class="md:w-6">
+		<p class="surface-card px-4 py-3 text-justify border-round">
+			Confirmed Web developer that loves to design and develop all sort of web
+			projects ! Mainly working on a weird language that is Javascript, and more
+			recently discovering peace with Typescript ! 🕊
+		</p>
+		<div class="flex flex-wrap">
+			<ul
+				id="contact-info"
+				class="surface-card py-4 px-3 border-round lg:w-8 flex-1">
+				<li class="flex align-items-center align-items-center gap-2 mb-2">
+					<i class="pi pi-envelope text-md text-primary"></i>
+					<span class="text-primary">louis.godlewski@gmail.com</span>
+				</li>
+				<li class="flex align-items-center align-items-center gap-2 mb-2">
+					<i class="pi pi-compass text-md text-primary"> </i>
+					<span class="text-primary">Paris 19</span>
+				</li>
+				<li class="flex align-items-center align-items-center gap-2 mb-2">
+					<i class="pi pi-comments text-md text-primary"> </i>
+					<span class="text-primary">Native french & fluent english</span>
+				</li>
+				<li>
+					<button pButton class="p-button ml-4">Let's meet</button>
+				</li>
+			</ul>
+			<div
+				class="flex flex-wrap gap-2 flex-1 lg:w-4 align-content-center justify-content-evenly">
+				<a
+					[href]="social.link"
+					class="w-4rem text-center h-4rem line-height-4 pt-3"
+					*ngFor="let social of socialLinks">
+					<i
+						[class]="'text-4xl text-200 pi pi-' + social.network.toLowerCase()">
+					</i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="flex-1 md:w-6">Q&A</div>
+</section>

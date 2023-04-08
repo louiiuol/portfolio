@@ -3,3 +3,4 @@
  */
 export {HeaderComponent} from './header/header.component';
 export {FormComponent} from './form/form.component';
+export {SummaryComponent} from './summary/summary.component';
