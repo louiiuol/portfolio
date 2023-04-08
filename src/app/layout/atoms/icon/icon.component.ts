@@ -6,6 +6,7 @@ import {
 	Input,
 	ViewEncapsulation,
 	ChangeDetectionStrategy,
+	HostBinding,
 } from '@angular/core';
 import {Observable} from 'rxjs';
 
@@ -15,7 +16,7 @@ import {TrustHtmlPipe} from '@core';
  * Embedded SVG icon fetched locally from custom assets.
  * Check property "name" for technical information.
  * @author louiiuol
- * @version 0.1.1
+ * @version 0.1.2
  */
 @Component({
 	standalone: true,
@@ -33,6 +34,8 @@ export class IconComponent implements OnChanges {
 	 * * Check assets/images/svg folder for available icons
 	 */
 	@Input() name?: string;
+
+	@HostBinding('class') class = 'inline-block w-full min-w-2rem';
 
 	svgIconTag$?: Observable<string | undefined>;
 
