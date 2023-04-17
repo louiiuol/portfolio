@@ -11,8 +11,7 @@ import {SummaryComponent} from '@layout/organisms';
 	standalone: true,
 	imports: [TabViewModule, SummaryComponent],
 	selector: 'lou-about',
-	template: `<p-tabView
-		styleClass="h-full border-round overflow-hidden shadow-4">
+	template: `<p-tabView styleClass="h-full border-round shadow-4">
 		<p-tabPanel
 			header="Introduction"
 			leftIcon="pi pi-user"

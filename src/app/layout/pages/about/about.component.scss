@@ -1,28 +1,26 @@
 lou-about {
 	max-width: 95vw;
-	@media (min-width: 728px) {
-		.p-tabview-nav {
-			display: flex;
-			justify-content: space-evenly;
-			li .p-tabview-nav-link:not(.p-disabled):focus {
-				box-shadow: none !important;
+	.p-tabview {
+		max-width: 1440px;
+		margin-inline: auto;
+		display: flex;
+		flex-direction: column-reverse;
+		li .p-tabview-nav-link:not(.p-disabled):focus {
+			box-shadow: none !important;
+		}
+		@media (min-width: 576px) {
+			flex-direction: column;
+			.p-tabview-nav {
+				display: flex;
+				justify-content: space-evenly;
 			}
 		}
-	}
-	.p-tabview-panels {
-		background: none !important;
-		position: relative;
-		isolation: isolate;
-		max-height: 80vh;
-		overflow: hidden;
-		overflow-y: auto;
-		&:after {
-			content: '';
-			position: absolute;
-			inset: -150px;
-			background: rgba($color: #fff, $alpha: 0.25);
-			filter: blur(100px);
-			z-index: -1;
+		.p-tabview-panels {
+			flex: 1;
+			overflow-x: hidden;
+			overflow-y: auto;
+			background: rgba(#fff, 0.15) !important;
+			padding: 1.25rem 1.75rem;
 		}
 	}
 }

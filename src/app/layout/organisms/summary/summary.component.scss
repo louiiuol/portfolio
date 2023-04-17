@@ -1,5 +1,8 @@
-:host {
-	display: block;
-	max-height: 70vh;
-	overflow-y: auto;
+#qas {
+	max-height: 74vh;
+	.card:hover {
+		h2 {
+			top: -200% !important;
+		}
+	}
 }
