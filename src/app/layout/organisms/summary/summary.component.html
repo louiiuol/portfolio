@@ -1,5 +1,5 @@
 <header
-	class="flex flex-wrap gap-3 justify-content-center md:justify-content-between align-items-stretch">
+	class="flex flex-wrap gap-3 justify-content-center md:justify-content-between">
 	<img
 		src="assets/images/svg/logo-rectangle.svg"
 		alt=""
@@ -9,73 +9,47 @@
 		Fullstack developer Typescript
 	</h1>
 </header>
+<section class="w-full flex flex-wrap justify-content-between gap-3 mt-3">
+	<div class="w-full lg:w-7">
+		<p
+			class="text-100 px-2 py-3 text-justify border-round inline-block m-0 line-height-3">
+			Confirmed Web developer that loves to
+			<strong>design and develop</strong> all sort of web projects ! <br />I can
+			help you with the following tasks:
+		</p>
+		<ul class="pl-5">
+			<li class="text-100 text-md list-disc my-1" *ngFor="let task of tasks">
+				{{ task }}
+			</li>
+		</ul>
+	</div>
+	<div class="p-3 w-full lg:w-4 flex flex-wrap justify-content-center gap-5">
+		<a
+			[href]="contact.link"
+			class="flex align-items-center gap-2 text-0 py-2"
+			*ngFor="let contact of contactLinks">
+			<i [class]="'text-3xl text-200 pi pi-' + contact.network.toLowerCase()">
+			</i>
+			<span class="border-bottom-1 border-0 text-sm text-100">{{
+				contact.label
+			}}</span>
+		</a>
+	</div>
+</section>
 <section
-	class="h-full flex flex-wrap align-items-stretch lg:justify-content-between">
-	<div class="w-full lg:w-6 lg:pr-3">
-		<p class="surface-card px-6 py-5 text-justify border-round">
-			Confirmed Web developer that loves to design and develop all sort of web
-			projects ! Mainly working on a weird language that is Javascript, and more
-			recently discovering peace with Typescript ! 🕊
-			<span class="block mt-2">
-				Confirmed Web developer that loves to design and develop all sort of web
-				projects ! Mainly working on a weird language that is Javascript, and
-				more recently discovering peace with Typescript ! 🕊
-			</span>
-			<span class="block p-2 font-italic">
-				You can find my contact below ...
-			</span>
+	id="qas"
+	class="w-full flex flex-wrap gap-3 justify-content-between mt-3">
+	<article
+		style="min-width: 450px"
+		class="card relative h-5rem overflow-hidden flex-1"
+		*ngFor="let qa of qas">
+		<h2
+			class="absolute z-2 w-full h-full text-center surface-card text-primary font-normal line-height-4 border-round transition-all transition-duration-500 m-0 top-0 p-2 text-4xl text-niconne">
+			{{ qa.question }}
+		</h2>
+		<p
+			class="absolute z-1 h-full w-full text-0 bg-primary border-round p-3 m-0">
+			{{ qa.answer }}
 		</p>
-		<div class="flex flex-wrap gap-3 align-items-stretch">
-			<ul
-				id="contact-info"
-				class="surface-card py-4 px-3 border-round sm:w-8 flex-2 w-full">
-				<li class="flex align-items-center align-items-center gap-4 mb-4 mx-3">
-					<i class="pi pi-envelope text-md text-primary"></i>
-					<span class="text-primary">louis.godlewski@gmail.com</span>
-				</li>
-				<li class="flex align-items-center align-items-center gap-4 mb-4 mx-3">
-					<i class="pi pi-compass text-md text-primary"> </i>
-					<span class="text-primary">Paris 19</span>
-				</li>
-				<li class="flex align-items-center align-items-center gap-4 mb-4 mx-3">
-					<i class="pi pi-comments text-md text-primary"> </i>
-					<span class="text-primary">Native french & fluent english</span>
-				</li>
-				<li>
-					<button pButton class="p-button ml-6 p-button-secondary">
-						Let's meet
-					</button>
-				</li>
-			</ul>
-			<div
-				class="flex-1 sm:w-4 flex flex-wrap gap-2 align-items-center justify-content-evenly m-2 min-h-full">
-				<a
-					[href]="social.link"
-					class="w-3rem text-center h-3rem line-height-4 pt-3"
-					*ngFor="let social of socialLinks">
-					<i
-						[class]="'text-4xl text-200 pi pi-' + social.network.toLowerCase()">
-					</i>
-				</a>
-			</div>
-		</div>
-		<p class="surface-card px-6 py-5 text-justify border-round">
-			Confirmed Web developer that loves to design and develop all sort of web
-			projects ! Mainly working on a weird language that is Javascript, and more
-			recently discovering peace with Typescript ! 🕊
-		</p>
-	</div>
-	<div id="qas" class="w-full lg:w-6 lg:pl-3 h-full overflow-auto">
-		<div
-			class="card relative w-full h-5rem overflow-hidden my-3"
-			*ngFor="let qa of qas">
-			<h2
-				class="absolute z-2 w-full h-full text-center text-0 bg-primary line-height-4 border-round transition-all transition-duration-300 m-0 top-0 p-2 text-xl">
-				{{ qa.question }}
-			</h2>
-			<p class="absolute z-1 h-full w-full surface-card border-round p-3 m-0">
-				{{ qa.answer }}
-			</p>
-		</div>
-	</div>
+	</article>
 </section>

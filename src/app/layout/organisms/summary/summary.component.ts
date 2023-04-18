@@ -7,6 +7,14 @@ import {
 import {CommonModule} from '@angular/common';
 import {IconComponent} from '@layout/atoms';
 
+import qas from '@assets/json/q&as.json';
+import contactLinks from '@assets/json/contacts.json';
+
+/**
+ * Presentation of myself and contact information
+ * @author louiiuol
+ * @version 1.0.0
+ */
 @Component({
 	selector: 'lou-summary',
 	standalone: true,
@@ -18,48 +26,13 @@ import {IconComponent} from '@layout/atoms';
 })
 export class SummaryComponent {
 	@HostBinding('class') class = 'block h-full';
-	socialLinks = [
-		{network: 'Twitter', link: '#'},
-		{network: 'LinkedIn', link: '#'},
-		{network: 'Github', link: '#'},
-		{network: 'Discord', link: '#'},
-		{network: 'Twitter', link: '#'},
-		{network: 'LinkedIn', link: '#'},
-		{network: 'Github', link: '#'},
-		{network: 'Discord', link: '#'},
-	];
-	qas = [
-		{
-			question: 'Why am I doing this ?',
-			answer: 'I love to design new interfaces ...',
-		},
-		{
-			question: 'Another question, a bit longer this time ?',
-			answer: 'I love to design new interfaces ...',
-		},
-		{
-			question: 'Why am I doing this ?',
-			answer: 'I love to design new interfaces ...',
-		},
-		{
-			question: 'Another question, a bit longer this time ?',
-			answer: 'I love to design new interfaces ...',
-		},
-		{
-			question: 'Why am I doing this ?',
-			answer: 'I love to design new interfaces ...',
-		},
-		{
-			question: 'Another question, a bit longer this time ?',
-			answer: 'I love to design new interfaces ...',
-		},
-		{
-			question: 'Why am I doing this ?',
-			answer: 'I love to design new interfaces ...',
-		},
-		{
-			question: 'Another question, a bit longer this time ?',
-			answer: 'I love to design new interfaces ...',
-		},
+	readonly contactLinks = contactLinks;
+	readonly qas = qas;
+	readonly tasks = [
+		'Understand your needs and creating CDC',
+		'Design database schema',
+		'Develop a Restful API to manipulate database',
+		'Design wireframes and website UX',
+		'Develop web interface',
 	];
 }
