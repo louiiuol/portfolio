@@ -18,11 +18,10 @@
 ### Components
 
 - [ ] Scroll indicators
-- [ ] AboutComponent
-  - [ ] TabComponent
-    - [ ] ProfileComponent
-    - [ ] SkillsComponent
-    - [ ] ExperiencesComponent
+- [x] AboutComponent
+  - [x] ProfileComponent
+  - [ ] SkillsComponent
+  - [ ] ExperiencesComponent
 - [ ] ProjectsComponent
 - [ ] ContactComponent
 
