@@ -1,0 +1,34 @@
+//* =================
+//* Tailwind colors:
+//* Creates and overrides colors available in the theme. */
+//* ================*/
+
+@theme {
+
+  // Primary
+  --color-primary-50: #dde1ff;
+  --color-primary-100: #b8c3ff;
+  --color-primary-200: #99a7ee;
+  --color-primary-300: #7f8dd2;
+  --color-primary-400: #6573b6;
+  --color-primary-500: #4c5a9b;
+  --color-primary-600: #404e8e;
+  --color-primary-700: #344282;
+  --color-primary-800: #283675;
+  --color-primary-900: #1b2b6a;
+  --color-primary-950: #001355;
+
+  // Accent
+  --color-accent-50: #ffdbcb;
+  --color-accent-100: #ffb691;
+  --color-accent-200: #ff8d4d;
+  --color-accent-300: #e66e24;
+  --color-accent-400: #c55505;
+  --color-accent-500: #9e4200;
+  --color-accent-600: #8b3a00;
+  --color-accent-700: #793100;
+  --color-accent-800: #672800;
+  --color-accent-900: #552000;
+  --color-accent-950: #341100;
+
+}

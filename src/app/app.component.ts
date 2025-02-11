@@ -3,11 +3,15 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
 	selector: 'app-root',
+	template: `
+		<div class="bg-primary flex pt-12">
+			<h1 class="text-primary-500 w-full text-center text-2xl font-medium">
+				Welcome to my {{ title }}
+			</h1>
+			<router-outlet />
+		</div>
+	`,
 	imports: [RouterOutlet],
-	template: `<div class="flex bg-primary pt-12">
-		<h1 class="text-2xl font-medium text-center">Welcome to my {{ title }}</h1>
-		<router-outlet></router-outlet>
-	</div>`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
