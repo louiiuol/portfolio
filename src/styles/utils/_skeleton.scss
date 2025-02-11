@@ -1,0 +1,101 @@
+//* =================
+//* THEME SKELETON STYLES
+//* ================*/
+
+.skeleton:empty {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	background: #888;
+	&.block {
+		height: 1em;
+		width: 100%;
+		display: block;
+	}
+	&.circle {
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+	}
+
+	&.avatar {
+		display: inline-block;
+		svg {
+			max-width: 100%;
+			height: auto;
+		}
+		rect {
+			fill: #888;
+		}
+		path {
+			fill: #333;
+		}
+	}
+
+	&.image {
+		display: inline-block;
+		svg {
+			max-width: 100%;
+			height: auto;
+		}
+		polygon {
+			fill: #888;
+		}
+		path {
+			fill: #333;
+		}
+	}
+
+	&.skeleton-text {
+		user-select: none;
+		&,
+		& * {
+			color: var(#888) !important;
+			letter-spacing: -0.03em !important;
+		}
+	}
+
+	&.has-effect {
+		-webkit-mask-image: linear-gradient(
+			to right,
+			transparent 0%,
+			black 25%,
+			black 75%,
+			transparent 100%
+		);
+		mask-image: linear-gradient(
+			to right,
+			transparent 0%,
+			black 25%,
+			black 75%,
+			transparent 100%
+		);
+		-webkit-mask-size: 200% 100%;
+		mask-size: 200% 100%;
+		-webkit-mask-repeat: repeat;
+		mask-repeat: repeat;
+		-webkit-mask-position: 50% top;
+		mask-position: 50% top;
+		animation: skeleton-effect 2s infinite;
+	}
+}
+@keyframes skeleton-effect {
+	0% {
+		-webkit-mask-position: 50% top;
+		mask-position: 50% top;
+		transform: scale(1);
+	}
+	40% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(0.9);
+	}
+	90% {
+		transform: scale(1);
+	}
+	100% {
+		-webkit-mask-position: -150% top;
+		mask-position: -150% top;
+	}
+}
