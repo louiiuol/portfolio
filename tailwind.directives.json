@@ -1,0 +1,35 @@
+{
+  "version": 1.1,
+  "atDirectives": [
+    {
+      "name": "@tailwind",
+      "description": "Use the `@tailwind` directive to insert Tailwind's `base`, `components`, `utilities` and `screens` styles into your CSS.",
+      "references": [
+        {
+          "name": "Tailwind Documentation",
+          "url": "https://tailwindcss.com/docs/functions-and-directives#tailwind"
+        }
+      ]
+    },
+    {
+      "name": "@theme",
+      "description": "Override the default theme values via css variables.",
+      "references": [
+        {
+          "name": "Tailwind Documentation | Default theme variable reference",
+          "url": "https://tailwindcss.com/docs/theme#default-theme-variable-reference"
+        }
+      ]
+    },
+    {
+      "name": "@apply",
+      "description": "Apply css class right inside you selector.",
+      "references": [
+        {
+          "name": "Tailwind Documentation | Extracting classes with @apply",
+          "url": "https://tailwindcss.com/docs/reusing-styles#extracting-classes-with-apply"
+        }
+      ]
+    }
+  ]
+}
