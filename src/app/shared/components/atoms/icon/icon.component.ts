@@ -14,7 +14,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
  * @author louiiuol
  */
 @Component({
-	selector: 'app-icon',
+	selector: 'app-icon-material',
 	standalone: true,
 	host: {
 		'class': 'material-symbols-outlined inline-block',
