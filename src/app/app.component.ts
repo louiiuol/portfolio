@@ -1,17 +1,24 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { FooterComponent } from './shared/components/organisms/footer.component';
+import { HeaderComponent } from './shared/components/organisms/header.component';
 
 @Component({
 	selector: 'app-root',
+  host: {class: 'flex flex-col h-screen'},
 	template: `
-		<div class="bg-primary flex pt-12">
-			<h1 class="text-primary-500 w-full text-center text-2xl font-medium">
-				Welcome to my {{ title }}
-			</h1>
-			<router-outlet />
-		</div>
+    <app-header />
+    <main class="pt-3 flex-1 overflow-y-auto">
+      <h1 class="text-primary-500 w-full text-center text-2xl font-medium">
+        Welcome to my {{ title }}
+      </h1>
+      <router-outlet />
+      <div style="height: 220vh"></div>
+      <p>Back here</p>
+    </main>
+    <app-footer />
 	`,
-	imports: [RouterOutlet],
+	imports: [RouterOutlet, HeaderComponent, FooterComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
