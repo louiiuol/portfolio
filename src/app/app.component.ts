@@ -13,8 +13,6 @@ import { HeaderComponent } from './shared/components/organisms/header.component'
         Welcome to my {{ title }}
       </h1>
       <router-outlet />
-      <div style="height: 220vh"></div>
-      <p>Back here</p>
     </main>
     <app-footer />
 	`,
