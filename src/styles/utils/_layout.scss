@@ -15,7 +15,12 @@ html {
     display: flex;
     flex-direction: column;
     height: 100%;
+    width: 100%;
     padding-inline: 3rem;
     padding-block: 2rem;
   }
+}
+
+.invisible {
+  opacity: 0;
 }
