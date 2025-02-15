@@ -1,0 +1,14 @@
+@keyframes drawing {
+  30% {
+    fill: transparent;
+  }
+
+  85% {
+    stroke-dashoffset: 0;
+    fill: white;
+  }
+
+  100% {
+    fill: white;
+  }
+}
