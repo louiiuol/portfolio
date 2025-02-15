@@ -36,21 +36,23 @@ type TypistState = {
 	selector: 'app-typist',
 	host: {
 		class:
-			'w-full max-w-screen inline-flex items-center px-4 py-2 bg-slate-200 text-slate-600 border-accent border hover:shadow-sm transition-all shadow-xl mx-auto rounded-lg text-caveat',
+			'w-full max-w-xl inline-flex items-center px-4 py-2 bg-white text-primary-600 outline-accent-500 outline-2 transition-all mx-auto rounded-lg',
 	},
 	template: `
+  @let isTyping = (typingState$ | async)?.isTyping;
+  @let isDoneTyping = (typingState$ | async)?.isDoneTyping;
+
 		<span class="text-accent font-semibold" id="lambda">~</span>
-		<span class="mx-3">
+		<p class="mx-3">
 			{{ (typingState$ | async)?.typingValue }}
-		</span>
-		<span
-			class="inline-block mt-2 mb-3 font-semibold rounded-lg w-0.5 h-full bg-current animate-blink "
-			id="cursor"
-			style="transition: opacity 0.3s ease 0.6s"
-			[class.animation-none]="(typingState$ | async)?.isTyping"
-			[class.opacity-0]="(typingState$ | async)?.isDoneTyping">
-			&nbsp;
-		</span>
+      <span
+        class="inline-block font-semibold rounded-full w-[0.175rem] h-6 bg-current animate-blink"
+        style="transition: opacity 0.3s ease 0.6s"
+        [class.animation-none]="!isTyping"
+        [class.invisible]="isDoneTyping">
+        &nbsp;
+      </span>
+		</p>
 	`,
 	imports: [AsyncPipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,

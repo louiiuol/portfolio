@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { FooterComponent } from './shared/components/organisms/footer.component';
 import { HeaderComponent } from './shared/components/organisms/header.component';
 
 @Component({
@@ -11,10 +10,9 @@ import { HeaderComponent } from './shared/components/organisms/header.component'
     <main class="flex-1 overflow-y-auto">
       <router-outlet />
     </main>
-    <app-footer />
+    <!-- <app-footer /> -->
 	`,
-	imports: [RouterOutlet, HeaderComponent, FooterComponent],
+	imports: [RouterOutlet, HeaderComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-}
+export class AppComponent {}

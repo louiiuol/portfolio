@@ -9,7 +9,9 @@ export const routes: Routes = [
 	{ path: '**', redirectTo: '' },
 ];
 
-export const APP_LINKS = routes.map(({ path, title }) => ({
-	path,
-	label: title,
-}));
+export const APP_LINKS = routes
+	.filter(r => r.path !== '**')
+	.map(({ path, title }) => ({
+		path,
+		label: title,
+	}));

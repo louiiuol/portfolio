@@ -1,3 +1,7 @@
+.animation-none {
+  animation: none !important;
+}
+
 @keyframes drawing {
   30% {
     fill: transparent;
@@ -11,4 +15,18 @@
   100% {
     fill: white;
   }
+}
+
+@keyframes blink {
+  49% {
+    background-color: currentColor;
+  }
+
+  99% {
+    background-color: transparent;
+  }
+}
+
+.animate-blink {
+  animation: blink 0.6s infinite;
 }
