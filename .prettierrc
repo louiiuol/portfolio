@@ -17,7 +17,19 @@
   "trailingComma": "es5",
   "useTabs": true,
   "vueIndentScriptAndStyle": false,
+  "attributeSort": "ASC",
+  "attributeGroups": [
+    "^class$",
+    "^(id|name)$",
+    "$DEFAULT",
+    "^aria-",
+    "$ANGULAR_OUTPUT",
+    "$ANGULAR_TWO_WAY_BINDING",
+    "$ANGULAR_INPUT",
+    "$ANGULAR_STRUCTURAL_DIRECTIVE"
+  ],
   "plugins": [
-    "prettier-plugin-tailwindcss"
+    "prettier-plugin-tailwindcss",
+    "prettier-plugin-organize-attributes"
   ]
 }
