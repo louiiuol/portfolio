@@ -1,7 +1,6 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { IconLogoComponent } from '../../shared/components/atoms/icon/icon-logo.component';
 import { HomePage } from './home.page';
 
 describe('HomePage', () => {
@@ -10,7 +9,7 @@ describe('HomePage', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [HomePage, IconLogoComponent],
+			imports: [HomePage],
 		}).compileComponents();
 	});
 
