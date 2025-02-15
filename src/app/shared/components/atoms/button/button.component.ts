@@ -61,7 +61,7 @@ export class ButtonComponent {
 	/**
 	 * Color of the button.
 	 */
-	readonly color = input<'primary' | 'accent' | 'red'>('primary');
+	readonly color = input<'primary' | 'accent' | 'red' | 'white'>('primary');
 
 	/**
 	 * Size of the button. Changes the font size and the padding applied.
@@ -76,10 +76,10 @@ export class ButtonComponent {
 	readonly full = input(false, { transform: booleanAttribute });
 
 	/**
-	 * Whether the button should have rounded corners or not.
-	 * @default false
+	 * Whether the button should have rounded shape or not.
+	 * @default true
 	 */
-	readonly rounded = input(false, { transform: booleanAttribute });
+	readonly rounded = input(true, { transform: booleanAttribute });
 
 	/**
 	 * Whether the button should be disabled; Prevents triggering the click event.

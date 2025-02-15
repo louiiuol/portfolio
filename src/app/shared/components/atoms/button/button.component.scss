@@ -29,6 +29,10 @@
     }
   }
 
+  &[data-color="white"] {
+    --button-theme: #fff;
+  }
+
   &[data-appearance="flat"],
   &[data-appearance="fab"] {
     background-color: var(--button-theme);
