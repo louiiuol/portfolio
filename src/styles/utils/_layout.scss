@@ -10,4 +10,12 @@ html {
     margin: 0;
     font-family: Poppins, "Helvetica Neue", sans-serif;
   }
+
+  .page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding-inline: 3rem;
+    padding-block: 2rem;
+  }
 }

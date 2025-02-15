@@ -5,7 +5,8 @@
   &[data-color="primary"] {
     --button-theme: var(--color-primary-500);
 
-    &:hover {
+    &:hover,
+    &.active {
       --button-theme: var(--color-primary-700);
     }
   }
@@ -13,7 +14,8 @@
   &[data-color="accent"] {
     --button-theme: var(--color-accent-500);
 
-    &:hover {
+    &:hover,
+    &.active {
       --button-theme: var(--color-accent-700);
     }
   }
@@ -21,7 +23,8 @@
   &[data-color="red"] {
     --button-theme: var(--color-red-500);
 
-    &:hover {
+    &:hover,
+    &.active {
       --button-theme: var(--color-red-700);
     }
   }
@@ -39,7 +42,8 @@
     background-color: transparent;
     color: var(--button-theme);
 
-    &:hover:before {
+    &:hover:before,
+    &.active:before {
       background-color: var(--button-theme);
     }
   }
@@ -49,7 +53,9 @@
   &[data-appearance="stroked"],
   &[data-appearance="icon"],
   &[data-appearance="icon-stroked"] {
-    &:hover:before {
+
+    &:hover:before,
+    &.active:before {
       position: absolute;
       inset: 0;
       opacity: 0.1;
