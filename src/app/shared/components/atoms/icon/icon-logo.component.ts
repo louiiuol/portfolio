@@ -149,7 +149,22 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 		:host svg {
 			max-width: 100%;
 			height: auto;
+      &#logo-expanded {
+        path {
+          fill: transparent;
+          stroke: white;
+          stroke-dasharray: 2000;
+          stroke-dashoffset: 2000;
+          animation: drawing 1s forwards;
+          @for $i from 2 to 15 {
+            &:nth-child(#{$i}) {
+              animation-delay: #{0.15 * $i}s;
+            }
+          }
+        }
+      }
 		}
+
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
