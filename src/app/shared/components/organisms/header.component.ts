@@ -20,7 +20,6 @@ import { IconLogoComponent } from '../atoms/icon/icon-logo.component';
 				<li>
 					<a
             app-button
-            rounded
             appearance="basic"
             color="primary"
             [routerLink]="'/' + link.path"
