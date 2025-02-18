@@ -1,0 +1,72 @@
+[
+  {
+    "name": "HTML5",
+    "slug": "html5",
+    "description": "HyperText Markup Language (HTML) est le langage de balisage standard pour les documents conçus pour être affichés dans un navigateur web.",
+    "icon": "html5",
+    "level": "advanced"
+  },
+  {
+    "name": "CSS",
+    "slug": "css",
+    "description": "Les feuilles de style en cascade (CSS) sont un langage de feuilles de style utilisé pour décrire la présentation d'un document écrit en HTML ou en XML.",
+    "icon": "css3",
+    "level": "advanced"
+  },
+  {
+    "name": "Adobe CC",
+    "slug": "adobe-cc",
+    "description": "Adobe Creative Cloud (CC) est une suite d'applications et de services en ligne proposée par Adobe Systems.",
+    "icon": "adobe",
+    "level": "advanced"
+  },
+  {
+    "name": "Scrum",
+    "slug": "scrum",
+    "description": "Scrum est une méthode agile de gestion de projet.",
+    "icon": "scrum",
+    "level": "advanced"
+  },
+  {
+    "name": "Bootstrap",
+    "slug": "bootstrap",
+    "description": "Bootstrap est une collection d'outils utiles à la création de sites et d'applications web.",
+    "icon": "bootstrap",
+    "level": "advanced"
+  },
+  {
+    "name": "JavaScript",
+    "slug": "javascript",
+    "description": "JavaScript est un langage de programmation de scripts principalement employé dans les pages web interactives.",
+    "icon": "javascript",
+    "level": "intermediate"
+  },
+  {
+    "name": "React",
+    "slug": "react",
+    "description": "React est une bibliothèque JavaScript libre développée par Facebook.",
+    "icon": "react",
+    "level": "intermediate"
+  },
+  {
+    "name": "Vue.js",
+    "slug": "vuejs",
+    "description": "Vue.js est un framework JavaScript open-source utilisé pour construire des interfaces utilisateur et des applications web monopages.",
+    "icon": "vuejs",
+    "level": "intermediate"
+  },
+  {
+    "name": "Angular",
+    "slug": "angular",
+    "description": "Angular est un framework open-source développé par Google.",
+    "icon": "angular",
+    "level": "intermediate"
+  },
+  {
+    "name": "Node.js",
+    "slug": "nodejs",
+    "description": "Node.js est une plateforme logicielle libre et événementielle en JavaScript orientée vers les applications réseau.",
+    "icon": "nodejs",
+    "level": "intermediate"
+  }
+]
