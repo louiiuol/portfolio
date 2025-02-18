@@ -3,12 +3,12 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import type { Observable } from 'rxjs';
 import { concat, defer, from, of, timer } from 'rxjs';
 import {
-  concatMap,
-  map,
-  repeat,
-  shareReplay,
-  switchMap,
-  tap,
+	concatMap,
+	map,
+	repeat,
+	shareReplay,
+	switchMap,
+	tap,
 } from 'rxjs/operators';
 
 type TypistState = {
@@ -29,6 +29,7 @@ type TypistState = {
  *  [erasingSpeed]="45"
  *  [newTextDelay]="1.5"
  *  [startingDelay]="1.5"
+ * [prefixSymbol]="'~'"
  * />
  */
 @Component({
@@ -36,22 +37,24 @@ type TypistState = {
 	selector: 'app-typist',
 	host: {
 		class:
-			'w-full max-w-xl inline-flex items-center px-4 py-2 bg-white text-primary-600 outline-accent-500 outline-2 transition-all mx-auto rounded-lg',
+			'w-full max-w-xl inline-flex items-center px-4 py-2 bg-white text-primary-600 outline-primary-500 outline-2 transition-all mx-auto rounded-lg',
 	},
 	template: `
-  @let isTyping = (typingState$ | async)?.isTyping;
-  @let isDoneTyping = (typingState$ | async)?.isDoneTyping;
+		@let typingState = typingState$ | async;
+		@let isTyping = typingState?.isTyping;
+		@let isDoneTyping = typingState?.isDoneTyping;
+		@let typingValue = typingState?.typingValue;
 
-		<span class="text-accent font-semibold" id="lambda">~</span>
+		<span class="text-accent font-semibold">{{ prefixSymbol() }}</span>
 		<p class="mx-3">
-			{{ (typingState$ | async)?.typingValue }}
-      <span
-        class="inline-block font-semibold rounded-full w-[0.175rem] h-6 bg-current animate-blink"
-        style="transition: opacity 0.3s ease 0.6s"
-        [class.animation-none]="!isTyping"
-        [class.invisible]="isDoneTyping">
-        &nbsp;
-      </span>
+			{{ typingValue }}
+			<span
+				class="inline-block font-semibold rounded-full w-[0.175rem] h-6 bg-current animate-blink"
+				style="transition: opacity 0.3s ease 0.6s"
+				[class.animation-none]="!isTyping"
+				[class.invisible]="isDoneTyping">
+				&nbsp;
+			</span>
 		</p>
 	`,
 	imports: [AsyncPipe],
@@ -61,35 +64,40 @@ export class TypistComponent {
 	/**
 	 * Array of sentences to be displayed. Required
 	 */
-	toType = input.required<string[]>();
+	readonly toType = input.required<string[]>();
 
 	/**
 	 * Defines if typing animation should restart from begin when finished. Default: false
 	 */
-	infinite = input(false);
+	readonly infinite = input(false);
 
 	/**
 	 * Defines typing speed (larger number means slower). Default: 50
 	 */
-	typingSpeed = input(50);
+	readonly typingSpeed = input(50);
 
 	/**
 	 * Defines erasing speed (larger number means slower). Default: 45
 	 */
-	erasingSpeed = input(45);
+	readonly erasingSpeed = input(45);
 
 	/**
 	 * Defines delay between each sentence (larger number means slower). Default: 1.5
 	 */
-	newTextDelay = input(1.5);
+	readonly newTextDelay = input(1.5);
 
 	/**
 	 * Defines delay before starting typing (larger number means slower). Default: 1.5
 	 */
-	startingDelay = input(1.5);
+	readonly startingDelay = input(1.5);
+
+	/**
+	 * Defines the prefix symbol. Default: '~'
+	 */
+	readonly prefixSymbol = input('~');
 
 	// Observable that emits the typing state
-	typingState$: Observable<TypistState> = this.createTypingProcess().pipe(
+	protected readonly typingState$ = this.createTypingProcess().pipe(
 		shareReplay(1)
 	);
 
