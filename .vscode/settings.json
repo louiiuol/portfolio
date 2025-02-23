@@ -1,8 +1,8 @@
 {
-	"typescript.preferences.importModuleSpecifier": "relative",
+	"typescript.preferences.importModuleSpecifier": "project-relative",
 	"github.copilot.editor.enableAutoCompletions": true,
 	"css.customData": ["./tailwind.directives.json"],
-	"tailwindCSS.experimental.configFile": "./.postcssrc.json",
+	"tailwindCSS.experimental.configFile": "./src/styles/styles.scss",
 	"tailwindCSS.classAttributes": ["class", "ngClass"],
 	"eslint.workingDirectories": [
 		{

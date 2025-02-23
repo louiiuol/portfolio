@@ -20,7 +20,8 @@
 		"paths": {
 			"@shared/*": ["./src/app/shared/*"],
 			"@mocks/*": ["./src/mocks/*"],
-			"@feat/*": ["./src/app/features/*"]
+			"@feat/*": ["./src/app/features/*"],
+			"@env": ["./src/environments/environment"]
 		}
 	},
 	"angularCompilerOptions": {
