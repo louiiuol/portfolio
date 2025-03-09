@@ -3,8 +3,8 @@ export type AppEnvironment = {
 	contenftull: {
 		space: string;
 		accessToken: string;
-		contentTypeIds: {
-			[key: string]: string;
-		};
+		// contentTypeIds: {
+		// 	[key: string]: string;
+		// };
 	};
 };

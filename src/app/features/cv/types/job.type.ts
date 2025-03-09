@@ -1,27 +1,23 @@
-import type { Skill } from '@feat/skills/types/skill.type';
-import type { Asset } from '../../../shared/types/asset.type';
+import { isSchemaType } from '@shared/fns/type-checker/is-schema-type.fn';
+import { z } from 'zod';
+import { formattedRichTextSchema } from '../modules/contentfull/types/rich-text.type';
+import { assetSchema } from './asset.type';
+import { companySchema } from './company.type';
+import { entrySchema } from './entry.type';
+import { skillSchema } from './skill.type';
 
-export type Job = {
-	company: Company;
-	remotePolicy: 'à distance' | 'hybride' | 'sur site';
-	contractType: 'cdi' | 'cdd' | 'freelance' | 'alternance' | 'stage';
-	experiences: Experience[];
-	assets: Asset[];
-	skills: Skill[];
-};
-
-export type Company = {
-	slug: string;
-	name: string;
-	city: string;
-	country: string;
-	logo: boolean;
-	url?: string;
-};
-
-export type Experience = {
-	jobTitle: string;
-	description: string;
-	startDate: string;
-	endDate?: Date;
-};
+// JOB
+export const jobSchema = entrySchema.extend({
+	company: companySchema,
+	remotePolicy: z.enum(['à distance', 'hybride', 'sur site']),
+	contractType: z.enum(['cdi', 'cdd', 'freelance', 'alternance', 'stage']),
+	title: z.string(),
+	description: formattedRichTextSchema,
+	startDate: z.coerce.date(),
+	endDate: z.coerce.date().nullish(),
+	assets: z.array(assetSchema).nullish(),
+	skills: z.array(skillSchema),
+});
+export type Job = z.infer<typeof jobSchema>;
+export const isJob = (entry: unknown): entry is Job =>
+	isSchemaType(entry, jobSchema, 'Job');
