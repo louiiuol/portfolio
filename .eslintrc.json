@@ -38,7 +38,14 @@
 				"@angular-eslint/component-class-suffix": [
 					"error",
 					{
-						"suffixes": ["Component", "Page", "Dialog", "Form", "Card"]
+						"suffixes": [
+							"Component",
+							"Page",
+							"Dialog",
+							"Form",
+							"Card",
+							"Overlay"
+						]
 					}
 				],
 				"@angular-eslint/prefer-on-push-component-change-detection": ["error"],
@@ -82,7 +89,6 @@
 				],
 				"@angular-eslint/template/prefer-control-flow": ["error"],
 				"@angular-eslint/template/prefer-self-closing-tags": ["error"],
-				"@angular-eslint/template/attributes-order": ["error"],
 				"@angular-eslint/no-empty-lifecycle-method": ["warn"]
 			}
 		}

@@ -22,9 +22,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 		'[style.height]': 'size()',
 		'[style.fontSize]': 'size()',
 	},
-	template: `
-		{{ name() }}
-	`,
+	template: ` {{ name() }} `,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IconMaterialComponent {
