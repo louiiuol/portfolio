@@ -6,8 +6,8 @@ describe('TypistComponent', () => {
 	let component: TypistComponent;
 	let fixture: ComponentFixture<TypistComponent>;
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({
+	beforeEach(async () => {
+		await TestBed.configureTestingModule({
 			imports: [TypistComponent],
 		}).compileComponents();
 
