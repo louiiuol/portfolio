@@ -1,14 +1,16 @@
 import { computed, inject, Injectable, resource } from '@angular/core';
 import { environment } from '@env';
+import type { Company } from '@feat/cv/types/company.type';
+import { isJob, type Job } from '@feat/cv/types/job.type';
+import { isSkill, type Skill } from '@feat/cv/types/skill.type';
+import { sleep } from '@shared/fns/sleep.fn';
+import { isEmptyObject } from '@shared/fns/type-checker/is-not-empty-object.fn';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 import {
 	isUnknownRecord,
 	type UnknownRecord,
 } from '@shared/types/unknown-record.type';
 import { createClient } from 'contentful';
-import type { Company } from '../../../types/company.type';
-import { isJob, type Job } from '../../../types/job.type';
-import { isSkill, type Skill } from '../../../types/skill.type';
 import { isRichTextDocument } from '../types/rich-text.type';
 import { RichTextService } from './rich-text.service';
 
@@ -27,10 +29,13 @@ type StoredEntriesRecord = (EntriesRecord & { updatedAt: Date }) | null;
 
 @Injectable()
 export class ContentfullService {
-	readonly resourceState = computed(() => ({
-		isLoading: this.contentResource.isLoading(),
-		error: this.contentResource.error(),
-	}));
+	readonly resourceState = computed(() => {
+		const error = this.contentResource.error();
+		return {
+			isLoading: this.contentResource.isLoading(),
+			error: error && isEmptyObject(error) ? error : null,
+		};
+	});
 
 	readonly jobs = computed(() =>
 		(this.contentResource.value()?.exprience ?? []).filter(isJob)
@@ -44,6 +49,7 @@ export class ContentfullService {
 		loader: async () => {
 			const localEntries = this.getLocalEntries();
 			if (localEntries) {
+				await sleep(1000);
 				return localEntries;
 			}
 			const { items } = await this.cdaClient.getEntries();
