@@ -6,11 +6,20 @@ import { companySchema } from './company.type';
 import { entrySchema } from './entry.type';
 import { skillSchema } from './skill.type';
 
+export const contractTypes = [
+	'cdi',
+	'cdd',
+	'freelance',
+	'alternance',
+	'stage',
+] as const;
+export type ContractType = (typeof contractTypes)[number] | '**';
+
 // JOB
 export const jobSchema = entrySchema.extend({
 	company: companySchema,
 	remotePolicy: z.enum(['à distance', 'hybride', 'sur site']),
-	contractType: z.enum(['cdi', 'cdd', 'freelance', 'alternance', 'stage']),
+	contractType: z.enum(contractTypes),
 	title: z.string(),
 	description: formattedRichTextSchema,
 	startDate: z.coerce.date(),
@@ -19,5 +28,6 @@ export const jobSchema = entrySchema.extend({
 	skills: z.array(skillSchema),
 });
 export type Job = z.infer<typeof jobSchema>;
+export type JobField = keyof Job;
 export const isJob = (entry: unknown): entry is Job =>
 	isSchemaType(entry, jobSchema, 'Job');

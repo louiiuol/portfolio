@@ -11,6 +11,7 @@ import type { Job } from '../types/job.type';
 	template: `
 		@let jobCompany = job().company;
 
+		{{ filter() }}
 		<!-- Company Section -->
 		<div class="flex h-full items-center justify-start min-w-24">
 			@if (jobCompany.logo) {
@@ -101,5 +102,7 @@ import type { Job } from '../types/job.type';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JobCard {
+	filter = input<'string'>();
+
 	job = input.required<Job>();
 }
