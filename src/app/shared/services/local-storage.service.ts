@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
 
-// @todo make it type safe
+// @todo make it type safe: safeParse with branded types
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
 	getItem<T>(key: string): T | null {
 		const item = localStorage.getItem(key);
-		if (item) {
-			return JSON.parse(item) as T;
-		}
-		return null;
+		return item ? (JSON.parse(item) as T) : null;
 	}
 
 	setItem<T>(key: string, value: T): void {

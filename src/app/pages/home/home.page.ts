@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IconLogoComponent } from '../../shared/components/atoms/icon/icon-logo.component';
-import { TypistComponent } from '../../shared/components/molecules/typist.component';
+import { IconLogoComponent } from '@shared/components/atoms/icon/icon-logo.component';
+import { TypistComponent } from '@shared/components/molecules/typist/typist.component';
 
 @Component({
 	selector: 'app-home-page',
