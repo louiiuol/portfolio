@@ -1,0 +1,65 @@
+// TIMELINE
+p-timeline {
+  --p-timeline-event-connector-color: var(--color-primary-100);
+
+  .p-timeline-event-opposite {
+    flex: 0.25 !important;
+    margin-inline: 2rem !important;
+  }
+
+  .p-timeline-event-content,
+  .p-timeline-event-opposite {
+
+    margin-bottom: 1.75rem;
+  }
+
+  .p-timeline-event-separator {
+    flex: 0.125 !important;
+
+    .p-timeline-event-marker {
+      align-self: center !important;
+    }
+  }
+
+  // Mobile only
+  @media screen and (max-width: 64rem) {
+    .p-timeline-event-opposite {
+      display: none !important;
+    }
+  }
+
+  @media screen and (max-width: 32rem) {
+    .p-timeline-event-separator {
+      flex: 0 !important;
+      display: none !important;
+    }
+  }
+}
+
+// DIALOG
+:root {
+  --p-timeline-vertical-event-content-padding: 0 !important;
+}
+
+.p-dialog {
+  max-height: unset !important;
+  box-shadow: none !important;
+  border: none !important;
+  background: none !important;
+
+  @media screen and (max-width: 48rem) {
+    & {
+      max-width: 100vw;
+      width: 100%;
+      height: 100dvh;
+    }
+  }
+}
+
+// TOOLTIP
+.p-tooltip {
+  --p-tooltip-max-width: 64rem;
+  --p-tooltip-background: whitesmoke;
+  --p-tooltip-color: var(--color-slate-800);
+  @apply text-balance p-3;
+}

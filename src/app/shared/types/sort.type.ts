@@ -1,6 +1,6 @@
 export type SortDirection = 'asc' | 'desc';
 
 export type SortField<T> = {
-	value: T;
+	sortBy: T;
 	direction: SortDirection;
 };

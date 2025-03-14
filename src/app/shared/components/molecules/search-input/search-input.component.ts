@@ -7,9 +7,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { IconMaterialComponent } from '@shared/components/atoms/icon/icon.component';
-import type { nullish } from '@shared/types/nullish.type';
-import { isNotNullish } from '@shared/types/nullish.type';
+import { isNotNullish, type nullish } from '@shared/types';
 import { debounceTime, filter, map, shareReplay, startWith } from 'rxjs';
 
 @Component({
@@ -19,7 +17,7 @@ import { debounceTime, filter, map, shareReplay, startWith } from 'rxjs';
 			'flex items-center gap-2 outline-2 outline-primary-300 text-primary-800 py-0.5 px-1 rounded-lg',
 	},
 	template: `
-		<app-icon-material name="search" />
+		<!-- <app-icon-material name="search" /> -->
 		<div>
 			<input
 				class="appearance-none bg-transparent border-none focus:outline-none"
@@ -31,11 +29,11 @@ import { debounceTime, filter, map, shareReplay, startWith } from 'rxjs';
 				[style.minWidth]="minWidth()"
 				[style.width]="inputWidth()" />
 			@if (hint()) {
-				<p class="text-xs text-gray-500 mt-2">{{ hint() }}</p>
+				<p class="text-xs text-slate-500 mt-2">{{ hint() }}</p>
 			}
 		</div>
 	`,
-	imports: [ReactiveFormsModule, IconMaterialComponent],
+	imports: [ReactiveFormsModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchInputComponent {

@@ -37,7 +37,7 @@ type TypistState = {
 	selector: 'app-typist',
 	host: {
 		class:
-			'w-full max-w-xl inline-flex items-center px-4 py-2 bg-white text-primary-600 outline-primary-500 outline-2 transition-all mx-auto rounded-lg',
+			'w-full max-w-xl inline-flex items-center px-4 py-2 bg-white text-primary-800 outline-primary-500 outline-2 transition-all mx-auto rounded-lg',
 	},
 	template: `
 		@let typingState = typingState$ | async;
@@ -161,26 +161,25 @@ export class TypistComponent {
 					}))
 				)
 			);
-		} else {
-			// For the last sentence when infinite is false, do not erase, emit final state
-			return concat(
-				type$,
-				// Delay after typing
-				timer(this.newTextDelay() * 1000).pipe(
-					map(() => ({
-						typingValue: sentence,
-						isTyping: false,
-						isDoneTyping: false,
-					}))
-				),
-				// Emit final state with isDoneTyping: true
-				of({
+		}
+		// For the last sentence when infinite is false, do not erase, emit final state
+		return concat(
+			type$,
+			// Delay after typing
+			timer(this.newTextDelay() * 1000).pipe(
+				map(() => ({
 					typingValue: sentence,
 					isTyping: false,
-					isDoneTyping: true,
-				})
-			);
-		}
+					isDoneTyping: false,
+				}))
+			),
+			// Emit final state with isDoneTyping: true
+			of({
+				typingValue: sentence,
+				isTyping: false,
+				isDoneTyping: true,
+			})
+		);
 	}
 
 	private typeSentence(sentence: string): Observable<TypistState> {

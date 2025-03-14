@@ -1,22 +1,32 @@
-import type { Routes } from '@angular/router';
+import type { Route } from '@angular/router';
 
-export const routes: Routes = [
+type ExtendedRoute = Route & { label?: string };
+const hasLabel = (
+	route: ExtendedRoute
+): route is { label: string; path: string } =>
+	'label' in route && !!route.label && route.path !== undefined;
+
+export const routes: ExtendedRoute[] = [
 	{
 		path: '',
-		loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage),
+
+		loadComponent: () =>
+			import('./features/home/home.page').then(m => m.HomePage),
 		title: 'Louis Godlewski | Accueil',
+		label: 'Accueil',
 	},
 	{
 		path: 'cv',
-		loadComponent: () => import('./pages/cv/cv.page').then(m => m.CVPage),
-		title: 'Louis Godlewski | CV',
+		loadComponent: () =>
+			import('./features/cv/pages/cv.page').then(m => m.CvPage),
+		title: 'Louis Godlewski | Curriculum Vitae',
+		label: 'CV',
 	},
 	{ path: '**', redirectTo: '' },
 ];
 
-export const APP_LINKS = routes
-	.filter(r => r.path !== '**')
-	.map(({ path, title }) => ({
-		path,
-		label: title?.toString().replaceAll('Louis Godlewski | ', ''),
-	}));
+export const APP_LINKS = routes.filter(hasLabel).map(({ path, label }) => ({
+	path: `/${path}`,
+	label,
+}));
+export type AppLink = (typeof APP_LINKS)[number];

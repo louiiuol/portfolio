@@ -12,10 +12,10 @@ import { CapitalizePipe } from '@shared/pipes/capitalize.pipe';
 	selector: 'app-loader',
 	host: {
 		class:
-			'absolute inset-0 bg-gray-100 flex flex-col gap-4 items-center justify-center rounded-lg',
+			'absolute inset-0 bg-slate-100 flex flex-col gap-4 items-center justify-center rounded-lg z-20',
 	},
 	template: ` <span
-			class="text-primary-900 text-base italic text-center leading-loose my-6 inline-flex items-center gap-2">
+			class="text-primary-800 text-base italic text-center leading-loose my-6 inline-flex items-center gap-2">
 			{{ message() | capitalize }} <span class="text-xs">⏳</span>
 		</span>
 		<span

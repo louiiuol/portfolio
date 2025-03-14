@@ -1,0 +1,19 @@
+import type { PipeTransform } from '@angular/core';
+import { Pipe } from '@angular/core';
+import { formatDuration } from '../functions';
+import type { nullish, TimeUnit } from '../types';
+
+@Pipe({
+	name: 'timeDiff',
+})
+export class TimeDifferencePipe implements PipeTransform {
+	transform = (
+		dates: { startDate: Date; endDate?: Date | nullish },
+		smallestUnit: TimeUnit = 'month'
+	): string =>
+		formatDuration(
+			(dates.endDate ? new Date(dates.endDate) : new Date()).getTime() -
+				new Date(dates.startDate).getTime(),
+			{ outputUnit: smallestUnit }
+		);
+}

@@ -6,6 +6,7 @@ import {
 	signal,
 } from '@angular/core';
 
+// @todo add active state to menu item
 export type MenuItem = {
 	label: string;
 	action?: () => void;
@@ -14,8 +15,9 @@ export type MenuItem = {
 @Component({
 	selector: 'app-menu',
 	template: `
+		<!-- @todo cdkPosition export as input -->
 		<button
-			class="appearance-none"
+			class="appearance-none cursor-pointer"
 			#trigger="cdkOverlayOrigin"
 			cdkOverlayOrigin
 			(click)="toggleDropdown()"
@@ -28,16 +30,26 @@ export type MenuItem = {
 			[cdkConnectedOverlayHasBackdrop]="true"
 			[cdkConnectedOverlayOpen]="isOpen()"
 			[cdkConnectedOverlayOrigin]="trigger"
+			[cdkConnectedOverlayPositions]="[
+				{
+					originX: 'end',
+					originY: 'bottom',
+					overlayX: 'end',
+					overlayY: 'top',
+				},
+			]"
 			(backdropClick)="closeDropdown()"
 			(detach)="closeDropdown()">
 			<div
-				class="w-fit min-w-36 border border-gray-300 bg-white rounded-lg shadow my-1">
+				class="w-fit min-w-36 border border-slate-300 bg-white rounded-lg shadow my-1">
 				<ul>
 					@for (filter of menuItems(); track $index) {
-						<li class="px-4 py-2 bg-gray-100 hover:bg-gray-200  text-gray-800">
+						<li class="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-800">
 							@let action = filter.action;
 							@if (action) {
-								<button (click)="closeDropdown() && action()">
+								<button
+									class="cursor-pointer"
+									(click)="closeDropdown() && action()">
 									{{ filter.label }}
 								</button>
 							} @else {

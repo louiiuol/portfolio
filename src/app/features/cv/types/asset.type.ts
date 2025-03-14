@@ -1,6 +1,6 @@
-import { isSchemaType } from '@shared/fns/type-checker/is-schema-type.fn';
+import { entrySchema } from '@feat/contentfull/types';
+import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { entrySchema } from './entry.type';
 
 // ASSET
 export const assetSchema = entrySchema.extend({
