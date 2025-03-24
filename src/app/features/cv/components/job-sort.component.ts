@@ -5,11 +5,14 @@ import {
 	output,
 	signal,
 } from '@angular/core';
-import type { MenuItem } from '@shared/components';
-import { MenuOverlay } from '@shared/components';
-import { IconMaterialComponent } from '@shared/components/atoms/icon/icon.component';
-import type { SortField } from '@shared/types/sort.type';
-import type { JobField } from '../types/job.type';
+
+import type { JobField } from '@feat/cv/types';
+import {
+	IconMaterialComponent,
+	MenuOverlay,
+	type MenuItem,
+} from '@shared/components';
+import type { SortField } from '@shared/types';
 
 const sortableFields: (MenuItem & SortField<JobField>)[] = [
 	{ label: 'Ordre alphabétique', field: 'title', direction: 'asc' },
@@ -17,7 +20,6 @@ const sortableFields: (MenuItem & SortField<JobField>)[] = [
 		label: 'Du plus récent au plus ancien',
 		field: 'startDate',
 		direction: 'asc',
-		action: () => {},
 	},
 	{
 		label: 'Du plus ancien au plus récent',
@@ -25,18 +27,13 @@ const sortableFields: (MenuItem & SortField<JobField>)[] = [
 		direction: 'desc',
 	},
 ];
-export type SortableField = (typeof sortableFields)[number];
+export type JobSortableField = (typeof sortableFields)[number];
 
 @Component({
 	selector: 'app-job-sort',
-	host: { class: '' },
 	template: `
 		<app-menu [menuItems]="sortableFields">
-			<app-icon-material
-				class="text-accent-400 size-6"
-				name="sort"
-				size="small"
-				trigger />
+			<app-icon-material class="text-accent-400" name="sort" trigger />
 		</app-menu>
 	`,
 	imports: [IconMaterialComponent, MenuOverlay],
@@ -48,9 +45,9 @@ export class JobSortComponent {
 		action: () => this.activeSort.set(f),
 	}));
 
-	private readonly activeSort = signal<SortableField | null>(null);
+	private readonly activeSort = signal<JobSortableField | null>(null);
 
-	readonly sortChanged = output<SortableField | null>();
+	readonly sortChanged = output<JobSortableField | null>();
 
 	constructor() {
 		effect(() => this.sortChanged.emit(this.activeSort()));

@@ -1,8 +1,8 @@
 import {
-  booleanAttribute,
-  ChangeDetectionStrategy,
-  Component,
-  input
+	booleanAttribute,
+	ChangeDetectionStrategy,
+	Component,
+	input,
 } from '@angular/core';
 
 /**
@@ -40,21 +40,18 @@ export type ButtonAppearance =
 	selector: 'button[app-button], a[app-button]',
 	standalone: true,
 	host: {
-		'class':
-			'inline-flex justify-center items-center gap-2 cursor-pointer',
+		'class': 'inline-flex justify-center items-center gap-2 cursor-pointer',
 		'[attr.data-color]': 'color()',
-    '[attr.data-size]': 'size()',
-    '[attr.data-rounded]': 'rounded()',
-    '[attr.data-disabled]': 'disabled()',
-    '[attr.data-appearance]': 'appearance()',
+		'[attr.data-size]': 'size()',
+		'[attr.data-rounded]': 'rounded()',
+		'[attr.data-disabled]': 'disabled()',
+		'[attr.data-appearance]': 'appearance()',
 		'[class.w-full]': 'full()',
 		'[class.w-fit]': '!full()',
 		'[attr.type]': 'type()',
 	},
-	template: `
-		<ng-content />
-	`,
-  styleUrl: './button.component.scss',
+	template: ` <ng-content /> `,
+	styleUrl: './button.component.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {

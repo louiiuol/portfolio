@@ -1,4 +1,4 @@
-import { isSchemaType } from '@shared/fns/type-checker/is-schema-type.fn';
+import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
 import { assetSchema } from './asset.type';
 import { entrySchema } from './entry.type';

@@ -1,4 +1,4 @@
-import { isSchemaType } from '@shared/fns/type-checker/is-schema-type.fn';
+import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
 import { formattedRichTextSchema } from '../modules/contentfull/types/rich-text.type';
 import { assetSchema } from './asset.type';
@@ -6,20 +6,35 @@ import { companySchema } from './company.type';
 import { entrySchema } from './entry.type';
 import { skillSchema } from './skill.type';
 
-export const contractTypes = [
-	'cdi',
-	'cdd',
-	'freelance',
-	'alternance',
-	'stage',
+export const CONTRACT_TYPES = [
+	{ value: 'cdi', label: 'CDI' },
+	{ value: 'cdd', label: 'CDD' },
+	{ value: 'freelance', label: 'Freelance' },
+	{ value: 'alternance', label: 'Alternance' },
+	{ value: 'stage', label: 'Stage' },
 ] as const;
-export type ContractType = (typeof contractTypes)[number] | '**';
+export type ContractType = (typeof CONTRACT_TYPES)[number]['value'];
+const contractTypesKeys = CONTRACT_TYPES.map(({ value }) => value) as [
+	ContractType,
+	...ContractType[],
+];
+
+export const REMOTE_POLICIES = [
+	{ value: 'à distance', label: 'À distance' },
+	{ value: 'hybride', label: 'Hybride' },
+	{ value: 'sur site', label: 'sur site' },
+] as const;
+export type RemotePolicy = (typeof REMOTE_POLICIES)[number]['value'];
+const RemotePolicyKeys = REMOTE_POLICIES.map(p => p.value) as [
+	RemotePolicy,
+	...RemotePolicy[],
+];
 
 // JOB
 export const jobSchema = entrySchema.extend({
 	company: companySchema,
-	remotePolicy: z.enum(['à distance', 'hybride', 'sur site']),
-	contractType: z.enum(contractTypes),
+	remotePolicy: z.enum(RemotePolicyKeys),
+	contractType: z.enum(contractTypesKeys),
 	title: z.string(),
 	description: formattedRichTextSchema,
 	startDate: z.coerce.date(),

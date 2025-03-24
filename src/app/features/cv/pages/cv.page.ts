@@ -8,23 +8,31 @@ import {
 	model,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { JobCard } from '@feat/cv/components/job-card.component';
+
+import {
+	JobCard,
+	JobFiltersComponent,
+	JobSortComponent,
+	type JobSortableField,
+} from '@feat/cv/components';
 import type { JobFilters } from '@feat/cv/components/job-filters.component';
-import { JobFiltersComponent } from '@feat/cv/components/job-filters.component';
-import type { SortableField } from '@feat/cv/components/job-sort.component';
-import { JobSortComponent } from '@feat/cv/components/job-sort.component';
 import { ContentfullModule } from '@feat/cv/modules/contentfull/contentfull.module';
 import { CVService } from '@feat/cv/services/cv.service';
-import type { ContractType, JobField } from '@feat/cv/types/job.type';
-
+import type { ContractType, JobField, Skill } from '@feat/cv/types';
 import {
 	ButtonComponent,
 	IconMaterialComponent,
 	LoaderComponent,
 } from '@shared/components';
-import { removeNullishProps } from '@shared/fns/format/remove-nullish-props.fn';
-import type { nullish } from '@shared/types/nullish.type';
-import type { SortDirection } from '@shared/types/sort.type';
+import {
+	deepEqualObjects,
+	isEmpty,
+	multiTypeSort,
+	removeNullishProps,
+} from '@shared/functions';
+import { isNotNullish, type SortDirection, type nullish } from '@shared/types';
+
+const initialFilters = { search: null, contractType: null, skills: [] };
 
 @Component({
 	selector: 'app-cv-page',
@@ -51,10 +59,14 @@ import type { SortDirection } from '@shared/types/sort.type';
 				<app-job-filters
 					[filters]="filters()"
 					(filtersChanged)="updateFilters($event)" />
-				<app-job-sort (sortChanged)="updateSort($event)" />
-				<!-- <span>skills</span>
-					<span>sort</span>
-					<span>Job type (cdi, stage ..)</span> -->
+
+				@if (!filtersEqualsInitialOne()) {
+					<button app-button appearance="icon" (click)="resetFilters()">
+						<app-icon-material class="text-accent-400" name="restart_alt" />
+					</button>
+				}
+
+				<app-job-sort class="ml-auto" (sortChanged)="updateSort($event)" />
 			</nav>
 
 			<section class="h-full flex flex-col gap-4 relative">
@@ -69,12 +81,12 @@ import type { SortDirection } from '@shared/types/sort.type';
 						</p>
 					} @else {
 						<section
-							class="flex flex-col items-center justify-start gap-4 w-full h-full overflow-y-auto flex-1">
+							class="flex items-start gap-4 w-full h-full overflow-y-auto flex-1">
 							@for (job of filteredJobs(); track $index) {
 								<app-job-card [job]="job" />
 							} @empty {
 								<div class="flex flex-col gpa-2 items-center p-2 gap-4 flex-1">
-									<p>
+									<p class="text-sm">
 										Aucune expérience ne semble correspondre à ces filtres... 🤔
 									</p>
 									<button app-button (click)="resetFilters()">
@@ -103,74 +115,82 @@ import type { SortDirection } from '@shared/types/sort.type';
 export class CVPage {
 	search = model<string | nullish>();
 	sortBy = model<JobField | nullish>();
+	skills = model<Skill['name'][]>();
 	sortDirection = model<SortDirection | nullish>();
 	contractType = input<ContractType | nullish>();
 
 	protected readonly cvService = inject(CVService);
 	protected readonly router = inject(Router);
 
-	protected readonly filters = linkedSignal(() => ({
-		search: this.search(),
-		contractType: this.contractType(),
-	}));
+	protected readonly filters = linkedSignal(() => {
+		const skills = this.skills();
+		return {
+			search: this.search(),
+			contractType: this.contractType(),
+			skills: removeNullishProps(
+				Array.isArray(skills) ? skills : [skills]
+			).filter(isNotNullish),
+		};
+	});
 
 	protected readonly filteredJobs = computed(() => {
-		const { search, contractType } = this.filters();
+		const { search, contractType, skills } = this.filters();
 		let filtered = this.cvService.jobs();
 
 		if (search) {
 			const searchTerm = search.toLocaleLowerCase();
-			filtered = filtered.filter(
-				job =>
-					job.title.toLocaleLowerCase().includes(searchTerm) ||
-					job.company.name.toLocaleLowerCase().includes(searchTerm)
+			filtered = filtered.filter(job =>
+				[job.title, job.company.name]
+					.map(el => el.toLocaleLowerCase())
+					.some(term => term.includes(searchTerm))
 			);
 		}
 
-		if (contractType && contractType !== '**') {
+		if (contractType) {
 			filtered = filtered.filter(job => job.contractType === contractType);
 		}
 
-		const field = this.sortBy();
-		const direction = this.sortDirection();
-		if (field && direction) {
-			filtered = filtered.sort((a, b) => {
-				const current = (direction === 'asc' ? a : b)[field];
-				const next = (direction === 'asc' ? b : a)[field];
-				if (typeof current === 'string' && typeof next === 'string') {
-					return current.localeCompare(next);
-				}
-				if (typeof current === 'number' && typeof next === 'number') {
-					return current - next;
-				}
-
-				return 0;
-			});
+		if (skills) {
+			filtered = filtered.filter(job =>
+				skills.every(s => job.skills.map(s => s.name).includes(s))
+			);
 		}
-		return filtered;
+
+		return multiTypeSort(
+			filtered,
+			this.sortBy() ?? 'title',
+			this.sortDirection() ?? 'asc'
+		);
 	});
 
-	updateFilters(filters: Partial<JobFilters>) {
+	protected readonly filtersEqualsInitialOne = computed(
+		() =>
+			deepEqualObjects(this.filters(), initialFilters) ||
+			isEmpty(this.filters())
+	);
+
+	protected updateFilters(filters: Partial<JobFilters>) {
 		const currentFilters = this.filters();
-		this.filters.set({
-			...currentFilters,
-			...filters,
-		});
+		this.filters.set(
+			removeNullishProps({
+				...currentFilters,
+				...filters,
+			})
+		);
 		this.updateUrl();
 	}
 
-	resetFilters() {
-		this.updateFilters({ search: '', contractType: null });
-		this.updateUrl();
+	protected resetFilters() {
+		this.updateFilters(initialFilters);
 	}
 
-	updateSort(sortBy: SortableField | null) {
+	protected updateSort(sortBy: JobSortableField | null) {
 		this.sortBy.set(sortBy?.field);
 		this.sortDirection.set(sortBy?.direction);
 		this.updateUrl();
 	}
 
-	updateUrl() {
+	private updateUrl() {
 		this.router
 			.navigate(['/cv'], {
 				queryParams: removeNullishProps({
