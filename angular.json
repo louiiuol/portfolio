@@ -107,7 +107,13 @@
             "scripts": []
           }
         }
+      },
+      "i18n": {
+        "sourceLocale": "fr"
       }
     }
+  },
+  "cli": {
+    "analytics": "1a828251-e7ac-4f82-a905-583b27aedb1f"
   }
 }

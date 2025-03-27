@@ -1,5 +1,5 @@
-import { isSchemaType } from '@shared/fns/type-checker/is-schema-type.fn';
-import type { UnknownRecord } from '@shared/types/unknown-record.type';
+import { isSchemaType } from '@shared/functions';
+import type { UnknownRecord } from '@shared/types';
 import { z } from 'zod';
 
 // RICH TEXT (FORMATTED)

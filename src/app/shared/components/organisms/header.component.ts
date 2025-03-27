@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ButtonComponent, IconLogoComponent } from '@shared/components/atoms';
 import { APP_LINKS } from '../../../app.routes';
-import { ButtonComponent } from '../atoms/button/button.component';
-import { IconLogoComponent } from '../atoms/icon/icon-logo.component';
 
 @Component({
 	selector: 'app-header',

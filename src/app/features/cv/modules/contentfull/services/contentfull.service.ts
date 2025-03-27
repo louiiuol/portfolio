@@ -3,8 +3,7 @@ import { environment } from '@env';
 import type { Company } from '@feat/cv/types/company.type';
 import { isJob, type Job } from '@feat/cv/types/job.type';
 import { isSkill, type Skill } from '@feat/cv/types/skill.type';
-import { sleep } from '@shared/fns/sleep.fn';
-import { isEmptyObject } from '@shared/fns/type-checker/is-not-empty-object.fn';
+import { isEmptyObject, sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 import {
 	isUnknownRecord,
@@ -110,7 +109,7 @@ export class ContentfullService {
 		return entry as T;
 	}
 
-	private hasFields(record: UnknownRecord): record is { fields: unknown } {
+	private hasFields(record: UnknownRecord): record is { fields: unknown[] } {
 		return 'fields' in record;
 	}
 

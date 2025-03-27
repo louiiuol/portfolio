@@ -161,26 +161,25 @@ export class TypistComponent {
 					}))
 				)
 			);
-		} else {
-			// For the last sentence when infinite is false, do not erase, emit final state
-			return concat(
-				type$,
-				// Delay after typing
-				timer(this.newTextDelay() * 1000).pipe(
-					map(() => ({
-						typingValue: sentence,
-						isTyping: false,
-						isDoneTyping: false,
-					}))
-				),
-				// Emit final state with isDoneTyping: true
-				of({
+		}
+		// For the last sentence when infinite is false, do not erase, emit final state
+		return concat(
+			type$,
+			// Delay after typing
+			timer(this.newTextDelay() * 1000).pipe(
+				map(() => ({
 					typingValue: sentence,
 					isTyping: false,
-					isDoneTyping: true,
-				})
-			);
-		}
+					isDoneTyping: false,
+				}))
+			),
+			// Emit final state with isDoneTyping: true
+			of({
+				typingValue: sentence,
+				isTyping: false,
+				isDoneTyping: true,
+			})
+		);
 	}
 
 	private typeSentence(sentence: string): Observable<TypistState> {

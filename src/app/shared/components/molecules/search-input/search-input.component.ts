@@ -7,9 +7,8 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { IconMaterialComponent } from '@shared/components/atoms/icon/icon.component';
-import type { nullish } from '@shared/types/nullish.type';
-import { isNotNullish } from '@shared/types/nullish.type';
+import { IconMaterialComponent } from '@shared/components/atoms';
+import { isNotNullish, type nullish } from '@shared/types';
 import { debounceTime, filter, map, shareReplay, startWith } from 'rxjs';
 
 @Component({
