@@ -3,7 +3,7 @@ import { environment } from '@env';
 import type { Company } from '@feat/cv/types/company.type';
 import { isJob, type Job } from '@feat/cv/types/job.type';
 import { isSkill, type Skill } from '@feat/cv/types/skill.type';
-import { isEmptyObject, sleep } from '@shared/functions';
+import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 import {
 	isUnknownRecord,
@@ -28,14 +28,6 @@ type StoredEntriesRecord = (EntriesRecord & { updatedAt: Date }) | null;
 
 @Injectable()
 export class ContentfullService {
-	readonly resourceState = computed(() => {
-		const error = this.contentResource.error();
-		return {
-			isLoading: this.contentResource.isLoading(),
-			error: error && isEmptyObject(error) ? error : null,
-		};
-	});
-
 	readonly jobs = computed(() =>
 		(this.contentResource.value()?.exprience ?? []).filter(isJob)
 	);
@@ -44,12 +36,12 @@ export class ContentfullService {
 		(this.contentResource.value()?.skill ?? []).filter(isSkill)
 	);
 
-	private readonly contentResource = resource({
+	readonly contentResource = resource({
 		loader: async () => {
 			const localEntries = this.getLocalEntries();
+			await sleep(500);
 			if (localEntries) {
-				await sleep(1000);
-				return localEntries;
+				return Promise.resolve(localEntries);
 			}
 			const { items } = await this.cdaClient.getEntries();
 			const entries = items.reduce((acc: EntriesRecord, el) => {

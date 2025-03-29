@@ -30,7 +30,7 @@ import {
 	multiTypeSort,
 	removeNullishProps,
 } from '@shared/functions';
-import { isNotNullish, type SortDirection, type nullish } from '@shared/types';
+import { isNotNullish, type nullish, type SortDirection } from '@shared/types';
 
 const initialFilters = { search: null, contractType: null, skills: [] };
 
@@ -69,32 +69,32 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 				<app-job-sort class="ml-auto" (sortChanged)="updateSort($event)" />
 			</nav>
 
-			<section class="h-full flex flex-col gap-4 relative">
-				@if (cvService.resourceState().isLoading) {
+			<!-- Content -->
+			<section
+				class="flex flex-col items-start gap-4 w-full h-full overflow-y-auto flex-1 relative">
+				@if (cvService.resourceState.isLoading()) {
 					<app-loader message="chargement des informations du CV" />
 				} @else {
-					@if (cvService.resourceState().error) {
+					@if (cvService.resourceState.error()) {
 						<p>
 							Impossible de récupérer les informations du CV. Merci de réessayer
 							plus tard... 🙏
 							<!-- {{ cvService.resourceState().error | json }} -->
 						</p>
 					} @else {
-						<section
-							class="flex items-start gap-4 w-full h-full overflow-y-auto flex-1">
-							@for (job of filteredJobs(); track $index) {
-								<app-job-card [job]="job" />
-							} @empty {
-								<div class="flex flex-col gpa-2 items-center p-2 gap-4 flex-1">
-									<p class="text-sm">
-										Aucune expérience ne semble correspondre à ces filtres... 🤔
-									</p>
-									<button app-button (click)="resetFilters()">
-										Réinitialiser les filtres
-									</button>
-								</div>
-							}
-						</section>
+						@for (job of filteredJobs(); track $index) {
+							<app-job-card [job]="job" />
+						} @empty {
+							<div
+								class="flex flex-col gpa-2 items-center p-2 gap-4 flex-1 w-full">
+								<p class="text-sm">
+									Aucune expérience ne semble correspondre à ces filtres... 🤔
+								</p>
+								<button app-button (click)="resetFilters()">
+									Réinitialiser les filtres
+								</button>
+							</div>
+						}
 					}
 				}
 			</section>

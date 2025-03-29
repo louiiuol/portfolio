@@ -5,7 +5,7 @@ import { ContentfullService } from '../modules/contentfull/services/contentfull.
 export class CVService {
 	private readonly contentfullService = inject(ContentfullService);
 
-	readonly resourceState = this.contentfullService.resourceState;
+	readonly resourceState = this.contentfullService.contentResource;
 
 	readonly jobs = this.contentfullService.jobs;
 	readonly skills = this.contentfullService.skills;
