@@ -14,7 +14,6 @@ import { CONTRACT_TYPES, type ContractType, type Skill } from '@feat/cv/types';
 import { deepEqualObjects, isEmpty } from '@shared/functions';
 import { isNotNullish, type nullish } from '@shared/types';
 
-import { ButtonComponent } from '@shared/components';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
@@ -76,7 +75,6 @@ export type JobFilters = {
 		InputIconModule,
 		InputText,
 		MultiSelectModule,
-		ButtonComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

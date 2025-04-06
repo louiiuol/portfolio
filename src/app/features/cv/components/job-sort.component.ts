@@ -8,7 +8,6 @@ import {
 
 import type { JobField } from '@feat/cv/types';
 import {
-	ButtonComponent,
 	IconMaterialComponent,
 	MenuOverlay,
 	type MenuItem,
@@ -34,12 +33,10 @@ export type JobSortableField = (typeof sortableFields)[number];
 	selector: 'app-job-sort',
 	template: `
 		<app-menu [menuItems]="sortableFields">
-			<button app-button appearance="icon" trigger>
-				<app-icon-material class="text-accent-400" name="sort" />
-			</button>
+			<app-icon-material class="text-accent-400" name="sort" trigger />
 		</app-menu>
 	`,
-	imports: [IconMaterialComponent, MenuOverlay, ButtonComponent],
+	imports: [IconMaterialComponent, MenuOverlay],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JobSortComponent {

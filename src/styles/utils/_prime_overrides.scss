@@ -1,0 +1,24 @@
+// TIMELINE
+
+p-timeline {
+  --p-timeline-event-connector-color: var(--color-primary-100);
+
+  .p-timeline-event-opposite {
+    flex: 0.25 !important;
+  }
+
+  .p-timeline-event-content,
+  .p-timeline-event-opposite {
+
+    margin-bottom: 1.75rem;
+  }
+
+  // Mobile only
+  @media screen and (max-width: 64rem) {
+
+    .p-timeline-event-opposite {
+      display: none !important;
+    }
+
+  }
+}

@@ -64,7 +64,7 @@ export class ButtonComponent {
 	 * Size of the button. Changes the font size and the padding applied.
 	 * @default 'medium'
 	 */
-	readonly size = input<'small' | 'medium' | 'large'>('medium');
+	readonly size = input<'extra-small' | 'small' | 'medium' | 'large'>('medium');
 
 	/**
 	 * Whether the button should take the full width or not.

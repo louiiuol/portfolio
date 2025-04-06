@@ -1,3 +1,5 @@
+import { Dialog } from '@angular/cdk/dialog';
+import { DatePipe } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -18,7 +20,7 @@ import {
 import type { JobFilters } from '@feat/cv/components/job-filters.component';
 import { ContentfullModule } from '@feat/cv/modules/contentfull/contentfull.module';
 import { CVService } from '@feat/cv/services/cv.service';
-import type { ContractType, JobField, Skill } from '@feat/cv/types';
+import type { ContractType, Job, JobField, Skill } from '@feat/cv/types';
 import {
 	ButtonComponent,
 	IconMaterialComponent,
@@ -30,7 +32,10 @@ import {
 	multiTypeSort,
 	removeNullishProps,
 } from '@shared/functions';
+import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
 import { isNotNullish, type nullish, type SortDirection } from '@shared/types';
+import { DialogModule } from 'primeng/dialog';
+import { Timeline } from 'primeng/timeline';
 import { Tooltip } from 'primeng/tooltip';
 
 const initialFilters = { search: null, contractType: null, skills: [] };
@@ -40,23 +45,24 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 	host: { class: 'page' },
 	template: `
 		<div
-			class="bg-white p-4 rounded-lg shadow-lg min-h-full flex flex-col gap-6">
-			<header class="">
-				<div class="flex gap-4 justify-between items-center">
-					<h1 class="text-2xl font-semibold text-primary-700">
-						Curriculum Vitae
-					</h1>
-					<button app-button appearance="icon-stroked">
-						<app-icon-material name="download" size="2rem" />
-					</button>
-				</div>
+			class="bg-white p-2 sm:p-4 rounded-lg shadow-lg min-h-full flex flex-col gap-4 max-w-[1024px] w-full mx-auto">
+			<header class="flex gap-4 justify-between items-center">
+				<h1 class="text-2xl font-semibold text-primary-700">
+					Curriculum Vitae
+				</h1>
+				<button app-button appearance="icon-stroked">
+					<app-icon-material
+						class="size-[1rem] sm:size-[2rem]"
+						name="download" />
+				</button>
+				<!--
 				<p class="text-sm italic text-gray-500 max-w-prose text-balance">
 					Retrouvez l'ensemble de mes expériences et compétences accumulées au
 					cours de ces dernières années.. ⏳
-				</p>
+				</p> -->
 			</header>
 
-			<nav class="w-full flex justify-start items-start gap-6">
+			<nav class="w-full flex justify-between items-center gap-4">
 				<app-job-filters
 					[filters]="filters()"
 					(filtersChanged)="updateFilters($event)">
@@ -80,7 +86,7 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 
 			<!-- Content -->
 			<section
-				class="flex flex-col items-start justify-start gap-4 w-full h-full overflow-y-auto flex-1 relative px-3 md:px-8">
+				class="flex flex-col items-start justify-start gap-4 w-full h-full overflow-y-auto flex-1 relative inset-shadow-sm  bg-gray-50 rounded-lg p-2 sm:p-4b">
 				@if (cvService.resourceState.isLoading()) {
 					<app-loader message="chargement des informations du CV" />
 				} @else {
@@ -92,9 +98,92 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 							<!-- {{ cvService.resourceState().error | json }} -->
 						</p>
 					} @else {
-						@for (job of filteredJobs(); track $index) {
-							<app-job-card [job]="job" />
-						} @empty {
+						<p-timeline class="mt-3" align="left" [value]="filteredJobs()">
+							<ng-template #opposite let-job>
+								<section
+									class="mt-3 hidden lg:flex p-2 text-primary-900 text-center flex-col gap-1">
+									<h4 class=" font-semibold">{{ job.company.name }}</h4>
+									<p
+										class="text-xs flex flex-wrap gap-2 items-center justify-end">
+										<span>{{
+											job.startDate | date: 'MMM yyyy' | capitalize
+										}}</span>
+										@if (job.endDate) {
+											-
+											<span>{{
+												job.endDate | date: 'MMMM yyyy' | capitalize
+											}}</span>
+										}
+									</p>
+
+									<p class="text-xs italic text-center">
+										{{ job.contractType }} - {{ job.remotePolicy }}
+									</p>
+
+									<button
+										class="mx-auto mt-1"
+										app-button
+										size="small"
+										(click)="setActiveJob(job)">
+										<app-icon-material name="visibility" size="1.25rem" />
+										Voir plus
+									</button>
+								</section>
+							</ng-template>
+
+							<ng-template #content let-job>
+								<article
+									class="flex flex-col justify-start gap-2 mt-3 p-3 bg-white rounded-lg shadow-md text-start">
+									<div
+										class="block lg:hidden w-full text-primary-950 border-b border-offset-200 pb-2 border-primary-200">
+										<h4 class="text-md font-semibold">
+											{{ job.company.name }}
+										</h4>
+										<p class="text-xs flex gap-2 justify-start mt-1 flex-wrap">
+											<span>{{
+												job.startDate | date: 'MMMM yyyy' | capitalize
+											}}</span>
+											@if (job.endDate) {
+												-
+												<span>{{
+													job.endDate | date: 'MMMM yyyy' | capitalize
+												}}</span>
+												<span class="font-bold">({{ job | timeDiff }})</span>
+											}
+										</p>
+									</div>
+
+									<h3 class="text-xl font-semibold text-primary-500 w-full">
+										{{ job.title }}
+									</h3>
+
+									<p
+										class="w-full leading-tight tracking-tight max-w-prose leading-9">
+										{{ job.description[0].content }}
+									</p>
+									<div
+										class="flex gap-2 flex-wrap justify-start items-start w-full">
+										@for (skill of job.skills; track $index) {
+											<span
+												class="text-accent-400 border border-accent-400 px-3 py-1 text-xs rounded-lg">
+												{{ skill.name }}
+											</span>
+										}
+									</div>
+									<button
+										class="mx-auto mt-1 lg:hidden"
+										app-button
+										color="primary"
+										full
+										size="small"
+										(click)="setActiveJob(job)">
+										<app-icon-material name="visibility" size="1rem" />
+										Voir plus
+									</button>
+								</article>
+							</ng-template>
+						</p-timeline>
+						@if (!filteredJobs().length) {
 							<div
 								class="flex flex-col items-center p-2 gap-4 flex-1 w-full mt-3">
 								<p class="text-lg text-pretty font-medium">
@@ -109,16 +198,35 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 				}
 			</section>
 		</div>
+		@if (activeJob(); as activeJob) {
+			<p-dialog modal [visible]="true">
+				<ng-template #headless>
+					<button
+						class="ml-auto mr-1 mt-1"
+						app-button
+						appearance="icon"
+						(click)="setActiveJob(null)">
+						<app-icon-material name="close" size="large" />
+					</button>
+					<app-job-card [job]="activeJob" />
+				</ng-template>
+			</p-dialog>
+		}
 	`,
 	imports: [
 		IconMaterialComponent,
 		ButtonComponent,
-		JobCard,
 		JobFiltersComponent,
 		ContentfullModule,
 		LoaderComponent,
 		JobSortComponent,
 		Tooltip,
+		Timeline,
+		DatePipe,
+		TimeDifferencePipe,
+		CapitalizePipe,
+		DialogModule,
+		JobCard,
 	],
 	providers: [CVService],
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -129,9 +237,11 @@ export class CVPage {
 	readonly skills = model<Skill['name'][]>();
 	readonly sortDirection = model<SortDirection | nullish>();
 	readonly contractType = input<ContractType | nullish>();
+	readonly jobId = input<string>();
 
 	protected readonly cvService = inject(CVService);
 	protected readonly router = inject(Router);
+	protected readonly dialog = inject(Dialog);
 
 	protected readonly filters = linkedSignal(() => {
 		const skills = this.skills();
@@ -199,6 +309,27 @@ export class CVPage {
 		this.sortBy.set(sortBy?.field);
 		this.sortDirection.set(sortBy?.direction);
 		this.updateUrl();
+	}
+
+	protected readonly activeJob = linkedSignal<Job | null>(
+		() => this.cvService.jobs().find(job => job.id === this.jobId()) ?? null
+	);
+
+	setActiveJob(job: Job | null) {
+		this.activeJob.set(job);
+
+		this.router
+			.navigate(['/cv'], {
+				queryParams: {
+					...removeNullishProps({
+						sortBy: this.sortBy(),
+						sortDirection: this.sortDirection(),
+						...this.filters(),
+					}),
+					jobId: job?.id ?? null,
+				},
+			})
+			.catch(console.error);
 	}
 
 	private updateUrl() {

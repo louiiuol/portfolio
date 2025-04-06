@@ -4,6 +4,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import type { Job } from '@feat/cv/types';
 import { IconMaterialComponent } from '@shared/components';
 import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
+import { RichTextComponent } from '../modules/contentfull/components/rich-text.component';
 
 @Component({
 	selector: 'app-job-card',
@@ -19,8 +20,9 @@ import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
 					<h4 class="font-semibold text-xl text-primary-500 leading-loose">
 						{{ job().title }}
 					</h4>
-					<p>{{ job().description[0].content }}</p>
-					<!-- <app-rich-text [content]="job().description" /> -->
+					<hr />
+
+					<app-rich-text [content]="job().description" />
 				</div>
 
 				<!-- Skills Section -->
@@ -73,7 +75,7 @@ import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
 		</div>
 
 		<!-- Assets Section -->
-		<!-- <section
+		<section
 			class="flex flex-col items-end justify-start text-end py-3 empty:hidden">
 			@for (asset of job().assets; track $index) {
 				<div
@@ -91,13 +93,14 @@ import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
 					</div>
 				</div>
 			}
-		</section> -->
+		</section>
 	`,
 	imports: [
 		IconMaterialComponent,
 		DatePipe,
 		CapitalizePipe,
 		TimeDifferencePipe,
+		RichTextComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

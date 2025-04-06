@@ -6,7 +6,7 @@ import { APP_LINKS } from '../../../app.routes';
 @Component({
 	selector: 'app-header',
 	host: {
-		class: 'flex justify-between items-center px-6 py-3 shadow',
+		class: 'flex justify-between items-center px-3 sm:px-6 py-1 sm:py-3 shadow',
 	},
 	template: `
 		<app-icon-logo class="size-12" />
