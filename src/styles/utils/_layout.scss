@@ -16,8 +16,9 @@ html {
     flex-direction: column;
     height: 100%;
     width: 100%;
-    padding-inline: 3rem;
-    padding-block: 2rem;
+    max-width: 1468px;
+    margin-inline: auto;
+    @apply px-5 sm:px-7 lg:px-9 py-3 sm:py-6 lg:py-8;
   }
 }
 

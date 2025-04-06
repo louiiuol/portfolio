@@ -17,7 +17,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 	selector: 'app-icon-material',
 	standalone: true,
 	host: {
-		'class': 'material-symbols-outlined inline-block',
+		'class': 'material-symbols-outlined inline-block select-none',
 		'[style.width]': 'size()',
 		'[style.height]': 'size()',
 		'[style.fontSize]': 'size()',

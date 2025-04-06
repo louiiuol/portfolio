@@ -4,7 +4,7 @@ import { TypistComponent } from '@shared/components/molecules/typist/typist.comp
 
 @Component({
 	selector: 'app-home-page',
-	host: { class: 'page py-12 gap-16 items-center justify-start' },
+	host: { class: 'page gap-16 items-center justify-start' },
 	template: `
 		<app-typist class="max-w-xl" [toType]="introTexts" />
 		<app-icon-logo

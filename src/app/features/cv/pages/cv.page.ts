@@ -31,6 +31,7 @@ import {
 	removeNullishProps,
 } from '@shared/functions';
 import { isNotNullish, type nullish, type SortDirection } from '@shared/types';
+import { Tooltip } from 'primeng/tooltip';
 
 const initialFilters = { search: null, contractType: null, skills: [] };
 
@@ -39,44 +40,53 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 	host: { class: 'page' },
 	template: `
 		<div
-			class="bg-white p-4 rounded-lg shadow-lg min-h-full flex flex-col gap-4">
-			<header class="flex justify-between items-start gap-4">
-				<div class="flex flex-wrap items-start gap-8">
+			class="bg-white p-4 rounded-lg shadow-lg min-h-full flex flex-col gap-6">
+			<header class="">
+				<div class="flex gap-4 justify-between items-center">
 					<h1 class="text-2xl font-semibold text-primary-700">
 						Curriculum Vitae
 					</h1>
-					<p class="text-sm italic text-gray-500 max-w-prose text-balance">
-						Retrouvez l'ensemble de mes expériences et compétences accumulées au
-						cours de ces dernières années.. ⏳
-					</p>
+					<button app-button appearance="icon-stroked">
+						<app-icon-material name="download" size="2rem" />
+					</button>
 				</div>
-				<button app-button appearance="icon-stroked">
-					<app-icon-material name="download" size="2rem" />
-				</button>
+				<p class="text-sm italic text-gray-500 max-w-prose text-balance">
+					Retrouvez l'ensemble de mes expériences et compétences accumulées au
+					cours de ces dernières années.. ⏳
+				</p>
 			</header>
 
-			<nav class="w-full flex justify-start items-center gap-3">
+			<nav class="w-full flex justify-start items-start gap-6">
 				<app-job-filters
 					[filters]="filters()"
-					(filtersChanged)="updateFilters($event)" />
-
-				@if (!filtersEqualsInitialOne()) {
-					<button app-button appearance="icon" (click)="resetFilters()">
-						<app-icon-material class="text-accent-400" name="restart_alt" />
-					</button>
-				}
+					(filtersChanged)="updateFilters($event)">
+					@if (!filtersEqualsInitialOne()) {
+						<button
+							class="sm:!block !hidden"
+							app-button
+							appearance="stroked"
+							color="red"
+							pTooltip="Réinitialiser les filtres"
+							suffix
+							tooltipPosition="bottom"
+							(click)="resetFilters()">
+							Réinitialiser
+						</button>
+					}
+				</app-job-filters>
 
 				<app-job-sort class="ml-auto" (sortChanged)="updateSort($event)" />
 			</nav>
 
 			<!-- Content -->
 			<section
-				class="flex flex-col items-start gap-4 w-full h-full overflow-y-auto flex-1 relative">
+				class="flex flex-col items-start justify-start gap-4 w-full h-full overflow-y-auto flex-1 relative px-3 md:px-8">
 				@if (cvService.resourceState.isLoading()) {
 					<app-loader message="chargement des informations du CV" />
 				} @else {
 					@if (cvService.resourceState.error()) {
-						<p>
+						<p
+							class="text-gray-700 italic max-w-prose text-pretty text-center mt-6 mx-auto">
 							Impossible de récupérer les informations du CV. Merci de réessayer
 							plus tard... 🙏
 							<!-- {{ cvService.resourceState().error | json }} -->
@@ -86,8 +96,8 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 							<app-job-card [job]="job" />
 						} @empty {
 							<div
-								class="flex flex-col gpa-2 items-center p-2 gap-4 flex-1 w-full">
-								<p class="text-sm">
+								class="flex flex-col items-center p-2 gap-4 flex-1 w-full mt-3">
+								<p class="text-lg text-pretty font-medium">
 									Aucune expérience ne semble correspondre à ces filtres... 🤔
 								</p>
 								<button app-button (click)="resetFilters()">
@@ -108,16 +118,17 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 		ContentfullModule,
 		LoaderComponent,
 		JobSortComponent,
+		Tooltip,
 	],
 	providers: [CVService],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CVPage {
-	search = model<string | nullish>();
-	sortBy = model<JobField | nullish>();
-	skills = model<Skill['name'][]>();
-	sortDirection = model<SortDirection | nullish>();
-	contractType = input<ContractType | nullish>();
+	readonly search = model<string | nullish>();
+	readonly sortBy = model<JobField | nullish>();
+	readonly skills = model<Skill['name'][]>();
+	readonly sortDirection = model<SortDirection | nullish>();
+	readonly contractType = input<ContractType | nullish>();
 
 	protected readonly cvService = inject(CVService);
 	protected readonly router = inject(Router);

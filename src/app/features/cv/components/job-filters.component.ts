@@ -14,6 +14,7 @@ import { CONTRACT_TYPES, type ContractType, type Skill } from '@feat/cv/types';
 import { deepEqualObjects, isEmpty } from '@shared/functions';
 import { isNotNullish, type nullish } from '@shared/types';
 
+import { ButtonComponent } from '@shared/components';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
@@ -29,42 +30,45 @@ export type JobFilters = {
 
 @Component({
 	selector: 'app-job-filters',
-	host: { class: 'inline-flex justify-start items-center gap-3' },
+	host: { class: 'inline-flex items-center gap-4 flex-1' },
 	template: `
-		<form class="flex gap-3 items-center" [formGroup]="filtersForm">
-			<p-iconfield>
+		<form
+			class="flex gap-2 items-center flex-1 md:flex-0"
+			[formGroup]="filtersForm">
+			<p-iconfield class="w-full md:w-auto">
 				<p-inputicon styleClass="pi pi-search" />
 				<input
+					class="w-full flex-1 md:!w-52"
 					pInputText
 					placeholder="Rechercher par mot clé"
-					pSize="small"
 					type="search"
 					[formControl]="filtersForm.controls.search" />
 			</p-iconfield>
 
 			<p-select
-				class="w-full md:w-56"
+				class="md:w-52 !hidden md:!flex"
 				optionLabel="label"
 				optionValue="value"
 				placeholder="Type de contrat"
 				showClear
-				size="small"
 				[formControl]="filtersForm.controls.contractType"
 				[options]="contractOptions" />
 
 			<p-multiselect
-				class="max-w-xs"
+				class="lg:w-52 !hidden lg:!flex"
 				filter="false"
 				optionLabel="name"
 				optionValue="name"
 				placeholder="Compétences"
 				showClear
 				showToggleAll="false"
-				size="small"
 				[formControl]="filtersForm.controls.skills"
 				[options]="cvService.skills()" />
 		</form>
+
+		<ng-content select="[suffix]" />
 	`,
+
 	imports: [
 		ReactiveFormsModule,
 		SelectModule,
@@ -72,6 +76,7 @@ export type JobFilters = {
 		InputIconModule,
 		InputText,
 		MultiSelectModule,
+		ButtonComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

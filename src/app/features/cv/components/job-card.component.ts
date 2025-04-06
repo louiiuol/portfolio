@@ -8,36 +8,19 @@ import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
 @Component({
 	selector: 'app-job-card',
 	host: {
-		class: 'py-4 px-6 shadow-xl rounded-2xl flex-1 mx-6',
+		class: 'py-4 px-6 shadow-xl rounded-2xl',
 	},
 	template: `
-		<div class="flex justify-between items-start gap-4">
+		<div class="flex flex-wrap-reverse justify-between items-start gap-4">
 			<!-- Description Section -->
-			<section class="inline-flex flex-col justify-start text-end gap-4 flex-1">
+			<section class="inline-flex flex-col justify-start gap-4 flex-1">
 				<!-- Experience Section -->
 				<div class="flex flex-col items-end justify-start">
 					<h4 class="font-semibold text-xl text-primary-500 leading-loose">
 						{{ job().title }}
 					</h4>
-					<div
-						class="text-gray-800 text-sm max-w-prose text-balance leading-relaxed">
-						@for (description of job().description; track $index) {
-							@switch (description.type) {
-								@case ('text') {
-									<p class="empty:hidden">
-										{{ description.content }}
-									</p>
-								}
-								@case ('list') {
-									<ul class="text-xs italic empty:hidden">
-										@for (item of description.content; track $index) {
-											<li>{{ item }}</li>
-										}
-									</ul>
-								}
-							}
-						}
-					</div>
+					<p>{{ job().description[0].content }}</p>
+					<!-- <app-rich-text [content]="job().description" /> -->
 				</div>
 
 				<!-- Skills Section -->
@@ -51,7 +34,8 @@ import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
 			</section>
 
 			<!-- Company Section -->
-			<section class="inline-flex items-center justify-start min-w-24">
+			<section
+				class="inline-flex flex-col items-center justify-start min-w-24 text-center md:text-end">
 				@let jobCompany = job().company;
 				@if (jobCompany.logo) {
 					<img
@@ -89,7 +73,7 @@ import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
 		</div>
 
 		<!-- Assets Section -->
-		<section
+		<!-- <section
 			class="flex flex-col items-end justify-start text-end py-3 empty:hidden">
 			@for (asset of job().assets; track $index) {
 				<div
@@ -107,7 +91,7 @@ import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
 					</div>
 				</div>
 			}
-		</section>
+		</section> -->
 	`,
 	imports: [
 		IconMaterialComponent,
