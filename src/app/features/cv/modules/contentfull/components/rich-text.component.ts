@@ -4,7 +4,7 @@ import type { FormattedRichText } from '../types/rich-text.type';
 @Component({
 	selector: 'app-rich-text',
 	host: {
-		class: 'text-gray-800 text-sm max-w-prose text-balance leading-relaxed',
+		class: 'text-gray-800 text-sm leading-relaxed flex flex-col gap-2',
 	},
 	template: `
 		@for (description of content(); track $index) {
@@ -15,9 +15,9 @@ import type { FormattedRichText } from '../types/rich-text.type';
 					</p>
 				}
 				@case ('list') {
-					<ul class="text-xs italic empty:hidden">
+					<ul class="italic empty:hidden list-disc pl-3">
 						@for (item of description.content; track $index) {
-							<li>{{ item }}</li>
+							<li class="py-1">{{ item }}</li>
 						}
 					</ul>
 				}

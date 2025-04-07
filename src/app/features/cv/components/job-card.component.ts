@@ -1,59 +1,93 @@
-import { DatePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import type { Job } from '@feat/cv/types';
-import { IconMaterialComponent } from '@shared/components';
-import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
+import { IconMaterialComponent } from '../../../shared/components/atoms/icon/icon.component';
+import { TimeDifferencePipe } from '../../../shared/pipes';
 import { RichTextComponent } from '../modules/contentfull/components/rich-text.component';
 
 @Component({
 	selector: 'app-job-card',
 	host: {
-		class: 'py-4 px-6 shadow-xl rounded-2xl',
+		class: 'py-4 px-6 flex flex-col gap-6',
 	},
 	template: `
-		<div class="flex flex-wrap-reverse justify-between items-start gap-4">
-			<!-- Description Section -->
-			<section class="inline-flex flex-col justify-start gap-4 flex-1">
-				<!-- Experience Section -->
-				<div class="flex flex-col items-end justify-start">
-					<h4 class="font-semibold text-xl text-primary-500 leading-loose">
-						{{ job().title }}
-					</h4>
-					<hr />
+		<header class="flex justify-between items-start gap-4">
+			@let jobCompany = job().company;
+			<h2
+				class="font-semibold text-2xl text-primary-500 leading-snug flex gap-4 items-center justify-start">
+				<img
+					class="size-12"
+					[alt]="'Logo de ' + jobCompany.name"
+					[src]="jobCompany.logo.file.url" />
+				{{ job().title }}
+			</h2>
+			<ng-content select="[close-button]" />
+		</header>
 
-					<app-rich-text [content]="job().description" />
-				</div>
-
-				<!-- Skills Section -->
-				<div class="flex gap-2 flex-wrap justify-start items-center">
-					@for (skill of job().skills; track $index) {
-						<span class="bg-accent-300 text-white px-3 py-1 text-xs rounded-lg">
-							{{ skill.name }}
-						</span>
+		<ul
+			class="flex gap-4 flex-wrap justify-start items-center w-full text-primary-500">
+			<li class="flex gap-2 items-center justify-start">
+				<app-icon-material name="apartment" />
+				<span class="font-semibold">
+					{{ jobCompany.name }}
+					@if (jobCompany.url) {
+						<a class="text-blue-500" target="_blank" [href]="jobCompany.url">
+							<app-icon-material name="link" size="small" />
+						</a>
 					}
-				</div>
-			</section>
+				</span>
+			</li>
+			<li class="flex gap-2 items-center justify-start">
+				<app-icon-material name="location_on" />
+				<span class="text-sm font-semibold text-primary-400">
+					{{ jobCompany.city }}
+				</span>
+			</li>
+			<li class="flex gap-2 items-center justify-start">
+				<app-icon-material name="label" />
+				<span class="text-sm font-semibold text-primary-400">
+					{{ job().contractType }}
+				</span>
+			</li>
+			<li class="flex gap-2 items-center justify-start">
+				<app-icon-material name="directions_bike" />
+				<span class="text-sm font-semibold text-primary-400">
+					{{ job().remotePolicy }}
+				</span>
+			</li>
+			<li class="flex gap-2 items-center justify-start">
+				<app-icon-material name="calendar_month" />
+				<span class="text-sm font-semibold text-primary-400">
+					{{ job() | timeDiff }}
+				</span>
+			</li>
+		</ul>
 
+		<app-rich-text [content]="job().description" />
+
+		<!-- Skills Section -->
+		<div class="flex gap-2 flex-wrap justify-start items-center">
+			@for (skill of job().skills; track $index) {
+				<span
+					class="border-accent-300 border text-accent-300 px-3 py-1 text-xs rounded-lg">
+					{{ skill.name }}
+				</span>
+			}
+		</div>
+
+		<div class="flex justify-between items-start gap-4">
 			<!-- Company Section -->
-			<section
+			<!-- <section
 				class="inline-flex flex-col items-center justify-start min-w-24 text-center md:text-end">
 				@let jobCompany = job().company;
 				@if (jobCompany.logo) {
 					<img
-						class="size-24"
+						class="size-18 ml-auto"
 						[alt]="'Logo de ' + jobCompany.name"
 						[src]="jobCompany.logo.file.url" />
 				}
 				<div class="flex flex-col justify-between gap-2">
-					<h3 class="text-lg font-semibold text-accent-400">
-						{{ jobCompany.name }}
-						@if (jobCompany.url) {
-							<a class="text-blue-500" target="_blank" [href]="jobCompany.url">
-								<app-icon-material name="link" size="small" />
-							</a>
-						}
-					</h3>
+
 					<p class="text-sm italic">
 						{{ jobCompany.city }} - {{ job().remotePolicy }}
 					</p>
@@ -71,7 +105,7 @@ import { RichTextComponent } from '../modules/contentfull/components/rich-text.c
 						</span>
 					</p>
 				</div>
-			</section>
+			</section> -->
 		</div>
 
 		<!-- Assets Section -->
@@ -95,13 +129,7 @@ import { RichTextComponent } from '../modules/contentfull/components/rich-text.c
 			}
 		</section>
 	`,
-	imports: [
-		IconMaterialComponent,
-		DatePipe,
-		CapitalizePipe,
-		TimeDifferencePipe,
-		RichTextComponent,
-	],
+	imports: [RichTextComponent, IconMaterialComponent, TimeDifferencePipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JobCard {
