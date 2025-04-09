@@ -5,12 +5,9 @@ import {
 	input,
 	output,
 } from '@angular/core';
+import { ButtonComponent, VisibilityIcon } from '@shared/components';
+import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
 import { Timeline } from 'primeng/timeline';
-import {
-	ButtonComponent,
-	IconMaterialComponent,
-} from '../../../shared/components';
-import { CapitalizePipe, TimeDifferencePipe } from '../../../shared/pipes';
 import type { Job } from '../types';
 
 @Component({
@@ -37,7 +34,7 @@ import type { Job } from '../types';
 						app-button
 						size="small"
 						(click)="setActiveJob.emit(job)">
-						<app-icon-material name="visibility" size="1.25rem" />
+						<app-icon-visibility />
 						Voir plus
 					</button>
 				</section>
@@ -65,10 +62,12 @@ import type { Job } from '../types';
 						{{ job.title }}
 					</h3>
 
-					<p class="w-full leading-tight tracking-tight max-w-prose leading-9">
+					<p
+						class="w-full leading-tight tracking-tight max-w-prose leading-9 text-pretty">
 						{{ job.description[0].content }}
 					</p>
-					<div class="flex gap-2 flex-wrap justify-start items-start w-full">
+					<div
+						class="flex gap-2 flex-wrap justify-start items-start w-full mt-1">
 						@for (skill of job.skills; track $index) {
 							<span
 								class="text-accent-400 border border-accent-400 px-3 py-1 text-xs rounded-lg">
@@ -83,7 +82,7 @@ import type { Job } from '../types';
 						full
 						size="small"
 						(click)="setActiveJob.emit(job)">
-						<app-icon-material name="visibility" size="1rem" />
+						<app-icon-visibility />
 						Voir plus
 					</button>
 				</article>
@@ -100,12 +99,12 @@ import type { Job } from '../types';
 			</div>
 		}`,
 	imports: [
-		IconMaterialComponent,
 		DatePipe,
 		CapitalizePipe,
 		TimeDifferencePipe,
 		Timeline,
 		ButtonComponent,
+		VisibilityIcon,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

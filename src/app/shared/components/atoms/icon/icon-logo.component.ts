@@ -167,6 +167,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IconLogoComponent {
+export class LogoIcon {
 	variant = input<'compact' | 'expanded'>('compact');
 }

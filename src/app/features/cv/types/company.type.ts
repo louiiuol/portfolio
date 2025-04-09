@@ -8,6 +8,7 @@ export const companySchema = entrySchema.extend({
 	name: z.string(),
 	city: z.string(),
 	country: z.string(),
+	// description: z.string(),
 	logo: assetSchema,
 	url: z.string().optional(),
 });

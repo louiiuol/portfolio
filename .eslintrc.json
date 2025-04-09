@@ -44,7 +44,8 @@
 							"Dialog",
 							"Form",
 							"Card",
-							"Overlay"
+							"Overlay",
+							"Icon"
 						]
 					}
 				],

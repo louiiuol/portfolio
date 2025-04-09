@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IconLogoComponent } from '@shared/components/atoms/icon/icon-logo.component';
+import { LogoIcon } from '@shared/components/atoms/icon/icon-logo.component';
 import { TypistComponent } from '@shared/components/molecules/typist/typist.component';
 
 @Component({
@@ -11,7 +11,7 @@ import { TypistComponent } from '@shared/components/molecules/typist/typist.comp
 			class="w-full max-w-[60%] lg:max-w-3xl my-auto"
 			variant="expanded" />
 	`,
-	imports: [IconLogoComponent, TypistComponent],
+	imports: [LogoIcon, TypistComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage {

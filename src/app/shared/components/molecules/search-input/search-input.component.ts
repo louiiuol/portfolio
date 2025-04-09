@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { IconMaterialComponent } from '@shared/components/atoms';
+import { MaterialIcon } from '@shared/components/atoms';
 import { isNotNullish, type nullish } from '@shared/types';
 import { debounceTime, filter, map, shareReplay, startWith } from 'rxjs';
 
@@ -34,7 +34,7 @@ import { debounceTime, filter, map, shareReplay, startWith } from 'rxjs';
 			}
 		</div>
 	`,
-	imports: [ReactiveFormsModule, IconMaterialComponent],
+	imports: [ReactiveFormsModule, MaterialIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchInputComponent {

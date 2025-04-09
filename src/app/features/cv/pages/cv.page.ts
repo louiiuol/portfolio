@@ -22,7 +22,7 @@ import { CVService } from '@feat/cv/services/cv.service';
 import type { ContractType, Job, JobField, Skill } from '@feat/cv/types';
 import {
 	ButtonComponent,
-	IconMaterialComponent,
+	CloseIcon,
 	LoaderComponent,
 } from '@shared/components';
 import {
@@ -48,11 +48,9 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 				<h1 class="text-2xl font-semibold text-primary-700">
 					Curriculum Vitae
 				</h1>
-				<button app-button appearance="icon-stroked">
-					<app-icon-material
-						class="size-[1rem] sm:size-[2rem]"
-						name="download" />
-				</button>
+				<!-- <button app-button appearance="icon-stroked">
+					<app-icon-download class="size-[1rem] sm:size-[2rem] text-2xl" />
+				</button> -->
 			</header>
 
 			<nav class="w-full flex justify-between items-center gap-4">
@@ -91,12 +89,10 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 							<!-- {{ cvService.resourceState().error | json }} -->
 						</p>
 					} @else {
-						@if (!cvService.resourceState.isLoading()) {
-							<app-jobs-timeline
-								[jobs]="filteredJobs()"
-								(resetFilters)="resetFilters()"
-								(setActiveJob)="setActiveJob($event)" />
-						}
+						<app-jobs-timeline
+							[jobs]="filteredJobs()"
+							(resetFilters)="resetFilters()"
+							(setActiveJob)="setActiveJob($event)" />
 					}
 				}
 			</section>
@@ -113,7 +109,7 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 							appearance="icon"
 							close-button
 							(click)="setActiveJob(null)">
-							<app-icon-material name="close" size="large" />
+							<app-icon-close name="close" />
 						</button>
 					</app-job-card>
 				</ng-template>
@@ -121,7 +117,6 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 		}
 	`,
 	imports: [
-		IconMaterialComponent,
 		ButtonComponent,
 		JobFiltersComponent,
 		ContentfullModule,
@@ -131,6 +126,7 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 		DialogModule,
 		JobCard,
 		JobsTimelineComponent,
+		CloseIcon,
 	],
 	providers: [CVService],
 	changeDetection: ChangeDetectionStrategy.OnPush,

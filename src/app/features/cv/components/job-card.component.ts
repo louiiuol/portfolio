@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import type { Job } from '@feat/cv/types';
-import { IconMaterialComponent } from '../../../shared/components/atoms/icon/icon.component';
-import { TimeDifferencePipe } from '../../../shared/pipes';
+import { MaterialIcon } from '@shared/components';
+import { TimeDifferencePipe } from '@shared/pipes';
 import { RichTextComponent } from '../modules/contentfull/components/rich-text.component';
 
 @Component({
@@ -129,7 +129,7 @@ import { RichTextComponent } from '../modules/contentfull/components/rich-text.c
 			}
 		</section>
 	`,
-	imports: [RichTextComponent, IconMaterialComponent, TimeDifferencePipe],
+	imports: [RichTextComponent, MaterialIcon, TimeDifferencePipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JobCard {

@@ -25,7 +25,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 	template: ` {{ name() }} `,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class IconMaterialComponent {
+export class MaterialIcon {
 	/**
 	 * Name of the material icon (check google material icon website for the list of available icons)
 	 */

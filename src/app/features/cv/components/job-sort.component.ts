@@ -7,11 +7,7 @@ import {
 } from '@angular/core';
 
 import type { JobField } from '@feat/cv/types';
-import {
-	IconMaterialComponent,
-	MenuOverlay,
-	type MenuItem,
-} from '@shared/components';
+import { MenuOverlay, SortIcon, type MenuItem } from '@shared/components';
 import type { SortField } from '@shared/types';
 
 const sortableFields: (MenuItem & SortField<JobField>)[] = [
@@ -33,10 +29,10 @@ export type JobSortableField = (typeof sortableFields)[number];
 	selector: 'app-job-sort',
 	template: `
 		<app-menu [menuItems]="sortableFields">
-			<app-icon-material class="text-accent-400" name="sort" trigger />
+			<app-icon-sort class="text-accent-400" trigger />
 		</app-menu>
 	`,
-	imports: [IconMaterialComponent, MenuOverlay],
+	imports: [MenuOverlay, SortIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JobSortComponent {
