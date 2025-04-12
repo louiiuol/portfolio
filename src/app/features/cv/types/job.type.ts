@@ -1,9 +1,9 @@
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
+import { entrySchema } from '../modules/contentfull/types/entry.type';
 import { formattedRichTextSchema } from '../modules/contentfull/types/rich-text.type';
 import { assetSchema } from './asset.type';
 import { companySchema } from './company.type';
-import { entrySchema } from './entry.type';
 import { skillSchema } from './skill.type';
 
 export const CONTRACT_TYPES = [
@@ -36,7 +36,8 @@ export const jobSchema = entrySchema.extend({
 	remotePolicy: z.enum(RemotePolicyKeys),
 	contractType: z.enum(contractTypesKeys),
 	title: z.string(),
-	description: formattedRichTextSchema,
+	summary: z.string(),
+	description: formattedRichTextSchema, // tasks
 	startDate: z.coerce.date(),
 	endDate: z.coerce.date().nullish(),
 	assets: z.array(assetSchema).nullish(),

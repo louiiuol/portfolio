@@ -5,10 +5,11 @@ import {
 	input,
 	output,
 } from '@angular/core';
-import { ButtonComponent, VisibilityIcon } from '@shared/components';
+import { ButtonComponent, EyeIcon } from '@shared/components';
 import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
 import { Timeline } from 'primeng/timeline';
 import type { Job } from '../types';
+import { SkillPillComponent } from './skill-pill.component';
 
 @Component({
 	selector: 'app-jobs-timeline',
@@ -34,7 +35,7 @@ import type { Job } from '../types';
 						app-button
 						size="small"
 						(click)="setActiveJob.emit(job)">
-						<app-icon-visibility />
+						<app-icon-eye />
 						Voir plus
 					</button>
 				</section>
@@ -53,8 +54,10 @@ import type { Job } from '../types';
 							@if (job.endDate) {
 								-
 								<span>{{ job.endDate | date: 'MMMM yyyy' | capitalize }}</span>
-								<span class="font-bold">({{ job | timeDiff }})</span>
+							} @else {
+								Aujourd'hui
 							}
+							<span class="font-bold">({{ job | timeDiff }})</span>
 						</p>
 					</div>
 
@@ -64,15 +67,12 @@ import type { Job } from '../types';
 
 					<p
 						class="w-full leading-tight tracking-tight max-w-prose leading-9 text-pretty">
-						{{ job.description[0].content }}
+						{{ job.summary }}
 					</p>
 					<div
 						class="flex gap-2 flex-wrap justify-start items-start w-full mt-1">
-						@for (skill of job.skills; track $index) {
-							<span
-								class="text-accent-400 border border-accent-400 px-3 py-1 text-xs rounded-lg">
-								{{ skill.name }}
-							</span>
+						@for (skill of job.skills.slice(3); track $index) {
+							<app-skill-pill [skill]="skill" />
 						}
 					</div>
 					<button
@@ -82,7 +82,7 @@ import type { Job } from '../types';
 						full
 						size="small"
 						(click)="setActiveJob.emit(job)">
-						<app-icon-visibility />
+						<app-icon-eye />
 						Voir plus
 					</button>
 				</article>
@@ -93,9 +93,9 @@ import type { Job } from '../types';
 				<p class="text-lg text-pretty font-medium italic text-slate-600">
 					Aucune expérience ne semble correspondre à ces filtres... 🤔
 				</p>
-				<button app-button (click)="resetFilters.emit()">
+				<!-- <button app-button (click)="resetFilters.emit()">
 					Réinitialiser les filtres
-				</button>
+				</button> -->
 			</div>
 		}`,
 	imports: [
@@ -104,7 +104,8 @@ import type { Job } from '../types';
 		TimeDifferencePipe,
 		Timeline,
 		ButtonComponent,
-		VisibilityIcon,
+		EyeIcon,
+		SkillPillComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -6,37 +6,23 @@ import {
 	inject,
 	input,
 	linkedSignal,
-	model,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-import {
-	JobCard,
-	JobFiltersComponent,
-	JobSortComponent,
-	type JobSortableField,
-} from '@feat/cv/components';
-import type { JobFilters } from '@feat/cv/components/job-filters.component';
+import { JobCard } from '@feat/cv/components';
 import { ContentfullModule } from '@feat/cv/modules/contentfull/contentfull.module';
 import { CVService } from '@feat/cv/services/cv.service';
-import type { ContractType, Job, JobField, Skill } from '@feat/cv/types';
+import type { Job } from '@feat/cv/types';
 import {
 	ButtonComponent,
 	CloseIcon,
 	LoaderComponent,
 } from '@shared/components';
-import {
-	deepEqualObjects,
-	isEmpty,
-	multiTypeSort,
-	removeNullishProps,
-} from '@shared/functions';
-import { isNotNullish, type nullish, type SortDirection } from '@shared/types';
+import { multiTypeSort } from '@shared/functions';
 import { DialogModule } from 'primeng/dialog';
-import { Tooltip } from 'primeng/tooltip';
 import { JobsTimelineComponent } from '../components/job-timeline.component';
 
-const initialFilters = { search: null, contractType: null, skills: [] };
+// const initialFilters = { search: null, contractType: null, skills: [] };
 
 @Component({
 	selector: 'app-cv-page',
@@ -53,7 +39,7 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 				</button> -->
 			</header>
 
-			<nav class="w-full flex justify-between items-center gap-4">
+			<!-- <nav class="w-full flex justify-between items-center gap-4">
 				<app-job-filters
 					[filters]="filters()"
 					(filtersChanged)="updateFilters($event)">
@@ -73,7 +59,7 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 				</app-job-filters>
 
 				<app-job-sort class="ml-auto" (sortChanged)="updateSort($event)" />
-			</nav>
+			</nav> -->
 
 			<!-- Content -->
 			<section
@@ -91,7 +77,6 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 					} @else {
 						<app-jobs-timeline
 							[jobs]="filteredJobs()"
-							(resetFilters)="resetFilters()"
 							(setActiveJob)="setActiveJob($event)" />
 					}
 				}
@@ -104,12 +89,12 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 				<ng-template #headless>
 					<app-job-card [job]="activeJob">
 						<button
-							class="ml-auto mr-1 mt-1"
+							class="ml-auto mr-1"
 							app-button
 							appearance="icon"
 							close-button
 							(click)="setActiveJob(null)">
-							<app-icon-close name="close" />
+							<app-icon-close />
 						</button>
 					</app-job-card>
 				</ng-template>
@@ -118,11 +103,8 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 	`,
 	imports: [
 		ButtonComponent,
-		JobFiltersComponent,
 		ContentfullModule,
 		LoaderComponent,
-		JobSortComponent,
-		Tooltip,
 		DialogModule,
 		JobCard,
 		JobsTimelineComponent,
@@ -132,84 +114,80 @@ const initialFilters = { search: null, contractType: null, skills: [] };
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CVPage {
-	readonly search = model<string | nullish>();
-	readonly sortBy = model<JobField | nullish>();
-	readonly skills = model<Skill['name'][]>();
-	readonly sortDirection = model<SortDirection | nullish>();
-	readonly contractType = input<ContractType | nullish>();
+	// readonly search = model<string | nullish>();
+	// readonly sortBy = model<JobField | nullish>();
+	// readonly skills = model<Skill['name'][]>();
+	// readonly sortDirection = model<SortDirection | nullish>();
+	// readonly contractType = input<ContractType | nullish>();
 	readonly jobId = input<string>();
 
 	protected readonly cvService = inject(CVService);
 	protected readonly router = inject(Router);
 	protected readonly dialog = inject(Dialog);
 
-	protected readonly filters = linkedSignal(() => {
-		const skills = this.skills();
-		return {
-			search: this.search(),
-			contractType: this.contractType(),
-			skills: removeNullishProps(
-				Array.isArray(skills) ? skills : [skills]
-			).filter(isNotNullish),
-		};
-	});
+	// protected readonly filters = linkedSignal(() => {
+	// 	const skills = this.skills();
+	// 	return {
+	// 		search: this.search(),
+	// 		contractType: this.contractType(),
+	// 		skills: removeNullishProps(
+	// 			Array.isArray(skills) ? skills : [skills]
+	// 		).filter(isNotNullish),
+	// 	};
+	// });
 
 	protected readonly filteredJobs = computed(() => {
-		const { search, contractType, skills } = this.filters();
-		let filtered = this.cvService.jobs();
+		// const { search, contractType, skills } = this.filters();
+		const filtered = this.cvService.jobs();
 
-		if (search) {
-			const searchTerm = search.toLocaleLowerCase();
-			filtered = filtered.filter(job =>
-				[job.title, job.company.name]
-					.map(el => el.toLocaleLowerCase())
-					.some(term => term.includes(searchTerm))
-			);
-		}
+		// if (search) {
+		// 	const searchTerm = search.toLocaleLowerCase();
+		// 	filtered = filtered.filter(job =>
+		// 		[job.title, job.company.name]
+		// 			.map(el => el.toLocaleLowerCase())
+		// 			.some(term => term.includes(searchTerm))
+		// 	);
+		// }
 
-		if (contractType) {
-			filtered = filtered.filter(job => job.contractType === contractType);
-		}
+		// if (contractType) {
+		// 	filtered = filtered.filter(job => job.contractType === contractType);
+		// }
 
-		if (skills) {
-			filtered = filtered.filter(job =>
-				skills.every(s => job.skills.map(s => s.name).includes(s))
-			);
-		}
+		// if (skills) {
+		// 	filtered = filtered.filter(job =>
+		// 		skills.every(s => job.skills.map(s => s.name).includes(s))
+		// 	);
+		// }
 
-		return multiTypeSort(
-			filtered,
-			this.sortBy() ?? 'title',
-			this.sortDirection() ?? 'asc'
-		);
+		return multiTypeSort(filtered, 'startDate', 'desc');
 	});
 
-	protected readonly filtersEqualsInitialOne = computed(
-		() =>
-			deepEqualObjects(this.filters(), initialFilters) ||
-			isEmpty(this.filters())
-	);
+	// protected readonly filtersEqualsInitialOne = computed(
+	// 	() =>
+	// 		deepEqualObjects(this.filters(), initialFilters) ||
+	// 		isEmpty(this.filters())
+	// );
 
-	protected updateFilters(filters: Partial<JobFilters>) {
-		const currentFilters = this.filters();
-		this.filters.set(
-			removeNullishProps({
-				...currentFilters,
-				...filters,
-			})
-		);
-		this.updateUrl();
-	}
+	// protected updateFilters(filters: Partial<JobFilters>) {
+	// 	const currentFilters = this.filters();
+	// 	this.filters.set(
+	// 		removeNullishProps({
+	// 			...currentFilters,
+	// 			...filters,
+	// 		})
+	// 	);
+	// 	this.updateUrl();
+	// }
 
-	protected resetFilters() {
-		this.updateFilters(initialFilters);
-	}
+	// protected resetFilters() {
+	// 	this.updateFilters(initialFilters);
+	// }
 
-	protected updateSort(sortBy: JobSortableField | null) {
-		this.sortBy.set(sortBy?.field);
-		this.sortDirection.set(sortBy?.direction);
-		this.updateUrl();
-	}
+	// protected updateSort(sortBy: JobSortableField | null) {
+	// 	this.sortBy.set(sortBy?.field);
+	// 	this.sortDirection.set(sortBy?.direction);
+	// 	this.updateUrl();
+	// }
 
 	protected readonly activeJob = linkedSignal<Job | null>(
 		() => this.cvService.jobs().find(job => job.id === this.jobId()) ?? null
@@ -221,26 +199,26 @@ export class CVPage {
 		this.router
 			.navigate(['/cv'], {
 				queryParams: {
-					...removeNullishProps({
-						sortBy: this.sortBy(),
-						sortDirection: this.sortDirection(),
-						...this.filters(),
-					}),
+					// ...removeNullishProps({
+					// 	sortBy: this.sortBy(),
+					// 	sortDirection: this.sortDirection(),
+					// 	...this.filters(),
+					// }),
 					jobId: job?.id ?? null,
 				},
 			})
 			.catch(console.error);
 	}
 
-	private updateUrl() {
-		this.router
-			.navigate(['/cv'], {
-				queryParams: removeNullishProps({
-					sortBy: this.sortBy(),
-					sortDirection: this.sortDirection(),
-					...this.filters(),
-				}),
-			})
-			.catch(console.error);
-	}
+	// private updateUrl() {
+	// 	this.router
+	// 		.navigate(['/cv'], {
+	// 			queryParams: removeNullishProps({
+	// 				sortBy: this.sortBy(),
+	// 				sortDirection: this.sortDirection(),
+	// 				...this.filters(),
+	// 			}),
+	// 		})
+	// 		.catch(console.error);
+	// }
 }

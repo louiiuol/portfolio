@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ButtonComponent, IconLogoComponent } from '@shared/components/atoms';
+import { ButtonComponent, LogoIcon } from '@shared/components';
 import { APP_LINKS } from '../../../app.routes';
 
 @Component({
@@ -26,7 +26,7 @@ import { APP_LINKS } from '../../../app.routes';
 			}
 		</ul>
 	`,
-	imports: [RouterLink, RouterLinkActive, IconLogoComponent, ButtonComponent],
+	imports: [RouterLink, RouterLinkActive, LogoIcon, ButtonComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {

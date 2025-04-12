@@ -11,10 +11,18 @@ html {
     font-family: Poppins, "Helvetica Neue", sans-serif;
   }
 
+  app-root {
+    &>main>.pattern {
+      @apply absolute inset-0 pointer-events-none bg-primary-50 opacity-5;
+      background: radial-gradient(circle, transparent 20%, var(--color-primary-50) 20%, var(--color-primary-50) 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, var(--color-primary-50) 20%, var(--color-primary-50) 80%, transparent 80%, transparent) 25px 25px, linear-gradient(var(--color-primary-500) 2px, transparent 2px) 0 -1px, linear-gradient(90deg, var(--color-primary-500) 2px, var(--color-primary-50) 2px) -1px 0;
+      background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
+    }
+  }
+
   .page {
     @apply px-3 sm:px-6 lg:px-9 py-3 sm:py-6 lg:py-8;
     @apply flex flex-col gap-4;
-    @apply h-full w-full max-w-[1280px] mx-auto;
+    @apply h-full w-full max-w-[1280px] mx-auto relative;
   }
 }
 

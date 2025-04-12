@@ -55,12 +55,11 @@ export type JobFilters = {
 
 			<p-multiselect
 				class="lg:w-52 !hidden lg:!flex"
-				filter="false"
+				emptyFilterMessage="Aucune compétence"
 				optionLabel="name"
 				optionValue="name"
 				placeholder="Compétences"
 				showClear
-				showToggleAll="false"
 				[formControl]="filtersForm.controls.skills"
 				[options]="cvService.skills()" />
 		</form>

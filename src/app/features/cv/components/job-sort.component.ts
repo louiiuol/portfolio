@@ -15,12 +15,12 @@ const sortableFields: (MenuItem & SortField<JobField>)[] = [
 	{
 		label: 'Du plus récent au plus ancien',
 		field: 'startDate',
-		direction: 'asc',
+		direction: 'desc',
 	},
 	{
 		label: 'Du plus ancien au plus récent',
 		field: 'startDate',
-		direction: 'desc',
+		direction: 'asc',
 	},
 ];
 export type JobSortableField = (typeof sortableFields)[number];
@@ -29,7 +29,7 @@ export type JobSortableField = (typeof sortableFields)[number];
 	selector: 'app-job-sort',
 	template: `
 		<app-menu [menuItems]="sortableFields">
-			<app-icon-sort class="text-accent-400" trigger />
+			<app-icon-sort class="text-slate-600" trigger />
 		</app-menu>
 	`,
 	imports: [MenuOverlay, SortIcon],

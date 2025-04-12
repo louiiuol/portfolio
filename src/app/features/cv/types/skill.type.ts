@@ -1,7 +1,7 @@
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
+import { entrySchema } from '../modules/contentfull/types/entry.type';
 import { assetSchema } from './asset.type';
-import { entrySchema } from './entry.type';
 
 // SKILL
 export const skillSchema = entrySchema.extend({

@@ -23,6 +23,15 @@ p-timeline {
   }
 }
 
+// DIALOG
+
 .p-dialog {
   max-width: calc(100% - 4rem);
+}
+
+
+// TOOLTIP
+.p-tooltip {
+  --p-tooltip-max-width: 20rem;
+  @apply text-balance;
 }

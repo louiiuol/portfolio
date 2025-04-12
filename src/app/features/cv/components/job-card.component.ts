@@ -1,78 +1,115 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
+import { DatePipe } from '@angular/common';
 import type { Job } from '@feat/cv/types';
 import { MaterialIcon } from '@shared/components';
-import { TimeDifferencePipe } from '@shared/pipes';
+import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
+import { ContractIcon } from '../../../shared/components/atoms/icon/icon-contract.component';
+import { HouseLaptopIcon } from '../../../shared/components/atoms/icon/icon-house-laptop.component';
+import { LocationPinIcon } from '../../../shared/components/atoms/icon/icon-location-pin.component';
 import { RichTextComponent } from '../modules/contentfull/components/rich-text.component';
+import { SkillPillComponent } from './skill-pill.component';
 
 @Component({
 	selector: 'app-job-card',
 	host: {
-		class: 'py-4 px-6 flex flex-col gap-6',
+		class: 'py-4 px-6 flex flex-col gap-6 max-w-[640px]',
 	},
 	template: `
 		<header class="flex justify-between items-start gap-4">
 			@let jobCompany = job().company;
 			<h2
 				class="font-semibold text-2xl text-primary-500 leading-snug flex gap-4 items-center justify-start">
-				<img
-					class="size-12"
-					[alt]="'Logo de ' + jobCompany.name"
-					[src]="jobCompany.logo.file.url" />
 				{{ job().title }}
 			</h2>
 			<ng-content select="[close-button]" />
 		</header>
 
 		<ul
-			class="flex gap-4 flex-wrap justify-start items-center w-full text-primary-500">
+			class="flex gap-6 flex-wrap justify-between items-center w-full text-primary-500 text-sm">
 			<li class="flex gap-2 items-center justify-start">
-				<app-icon-material name="apartment" />
-				<span class="font-semibold">
-					{{ jobCompany.name }}
-					@if (jobCompany.url) {
-						<a class="text-blue-500" target="_blank" [href]="jobCompany.url">
-							<app-icon-material name="link" size="small" />
-						</a>
-					}
-				</span>
-			</li>
-			<li class="flex gap-2 items-center justify-start">
-				<app-icon-material name="location_on" />
-				<span class="text-sm font-semibold text-primary-400">
-					{{ jobCompany.city }}
-				</span>
-			</li>
-			<li class="flex gap-2 items-center justify-start">
-				<app-icon-material name="label" />
-				<span class="text-sm font-semibold text-primary-400">
+				<app-icon-contract />
+				<span>
 					{{ job().contractType }}
 				</span>
 			</li>
 			<li class="flex gap-2 items-center justify-start">
-				<app-icon-material name="directions_bike" />
-				<span class="text-sm font-semibold text-primary-400">
-					{{ job().remotePolicy }}
-				</span>
-			</li>
-			<li class="flex gap-2 items-center justify-start">
 				<app-icon-material name="calendar_month" />
-				<span class="text-sm font-semibold text-primary-400">
-					{{ job() | timeDiff }}
-				</span>
+				<p>
+					<span>{{ job().startDate | date: 'MMMM yyyy' | capitalize }}</span>
+					@if (job().endDate) {
+						-
+						<span>{{ job().endDate | date: 'MMMM yyyy' | capitalize }}</span>
+					}
+					<span class="text-xs"> ({{ job() | timeDiff }}) </span>
+				</p>
 			</li>
 		</ul>
 
-		<app-rich-text [content]="job().description" />
+		<p
+			class="bg-primary-50 shadow-inner text-primary-800 px-6 py-3 rounded-2xl">
+			{{ job().summary }}
+		</p>
 
-		<!-- Skills Section -->
-		<div class="flex gap-2 flex-wrap justify-start items-center">
-			@for (skill of job().skills; track $index) {
-				<span
-					class="border-accent-300 border text-accent-300 px-3 py-1 text-xs rounded-lg">
-					{{ skill.name }}
-				</span>
-			}
+		<div class="flex flex-col gap-2">
+			<h3 class="font-semibold">Entreprise</h3>
+			<div class="flex flex-col gap-1">
+				<div class="flex gap-4 items-start justify-start">
+					<img
+						class="size-14"
+						[alt]="'Logo de ' + jobCompany.name"
+						[src]="jobCompany.logo.file.url" />
+
+					<div class="flex flex-col gap-1">
+						<h4 class="text-md font-semibold text-primary-500">
+							{{ jobCompany.name }}
+							@if (jobCompany.url) {
+								<span class="text-xs"
+									>(<a
+										class="text-blue-500"
+										target="_blank"
+										[href]="jobCompany.url">
+										Voir le site </a
+									>)</span
+								>
+							}
+						</h4>
+						<ul
+							class="text-primary-400 flex gap-4 flex-wrap justify-start items-start">
+							<li class="flex gap-2 items-center justify-start">
+								<app-icon-location-pin />
+								<span class="text-xs font-semibold text-primary-400">
+									{{ jobCompany.city }} - {{ jobCompany.country }}
+								</span>
+							</li>
+							<li class="flex gap-2 items-center justify-start">
+								<app-icon-house-laptop />
+								<span class="text-sm font-semibold">
+									{{ job().remotePolicy }}
+								</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<p class="text-sm italic text-gray-600 max-w-prose">
+					" {{ jobCompany.description }} "
+				</p>
+			</div>
+		</div>
+
+		<div class="flex flex-col gap-2">
+			<h3 class="font-semibold">Tâches accomplies</h3>
+			<app-rich-text class="px-6" [content]="job().description" />
+		</div>
+
+		<!-- Skills Section: savoir être / savoir faire -->
+		<div class="flex flex-col gap-2">
+			<h3 class="font-semibold">Compétences acquises</h3>
+			<div class="flex gap-2 flex-wrap justify-start items-center">
+				@for (skill of job().skills; track $index) {
+					<app-skill-pill [skill]="skill" />
+				}
+			</div>
 		</div>
 
 		<div class="flex justify-between items-start gap-4">
@@ -107,29 +144,18 @@ import { RichTextComponent } from '../modules/contentfull/components/rich-text.c
 				</div>
 			</section> -->
 		</div>
-
-		<!-- Assets Section -->
-		<section
-			class="flex flex-col items-end justify-start text-end py-3 empty:hidden">
-			@for (asset of job().assets; track $index) {
-				<div
-					class="flex text-end gap-2 border border-accent-300 p-2 rounded-lg">
-					<img
-						class="w-24"
-						[alt]="'illustration de ' + asset.title"
-						[src]="asset.file.url" />
-
-					<div>
-						<h5 class="text-sm font-semibold text-primary-400 leading-tight">
-							{{ asset.title }}
-						</h5>
-						<p class="text-xs text-primary-300">{{ asset.description }}</p>
-					</div>
-				</div>
-			}
-		</section>
 	`,
-	imports: [RichTextComponent, MaterialIcon, TimeDifferencePipe],
+	imports: [
+		RichTextComponent,
+		MaterialIcon,
+		TimeDifferencePipe,
+		ContractIcon,
+		DatePipe,
+		CapitalizePipe,
+		HouseLaptopIcon,
+		LocationPinIcon,
+		SkillPillComponent,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JobCard {

@@ -8,8 +8,9 @@ import type { nullish } from '../types';
 })
 export class TimeDifferencePipe implements PipeTransform {
 	transform(dates: { startDate: Date; endDate?: Date | nullish }): string {
+		console.log(new Date(dates.endDate ?? 0));
 		return formatDuration(
-			new Date(dates.endDate ?? 0).getTime() -
+			(dates.endDate ? new Date(dates.endDate) : new Date()).getTime() -
 				new Date(dates.startDate).getTime(),
 			{ outputUnit: 'month' }
 		);
