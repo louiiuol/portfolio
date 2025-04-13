@@ -17,6 +17,7 @@ import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
+
 // source: https://primeng.org/theming#primary
 const PrimeCustomPreset = definePreset(Aura, {
 	semantic: {

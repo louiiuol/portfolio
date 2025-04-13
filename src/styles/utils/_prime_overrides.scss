@@ -15,23 +15,33 @@ p-timeline {
 
   // Mobile only
   @media screen and (max-width: 64rem) {
-
     .p-timeline-event-opposite {
       display: none !important;
     }
+  }
 
+  @media screen and (max-width: 32rem) {
+    .p-timeline-event-separator {
+      display: none !important;
+    }
   }
 }
+
 
 // DIALOG
 
 .p-dialog {
   max-width: calc(100% - 4rem);
+  box-shadow: none !important;
+  border: none !important;
+  background: none !important;
 }
 
 
 // TOOLTIP
 .p-tooltip {
-  --p-tooltip-max-width: 20rem;
-  @apply text-balance;
+  --p-tooltip-max-width: 25rem;
+  --p-tooltip-background: whitesmoke;
+  --p-tooltip-color: var(--color-gray-800);
+  @apply text-balance p-3;
 }

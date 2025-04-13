@@ -1,8 +1,12 @@
 import { computed, inject, Injectable, resource } from '@angular/core';
 import { environment } from '@env';
-import type { Company } from '@feat/cv/types/company.type';
-import { isJob, type Job } from '@feat/cv/types/job.type';
-import { isSkill, type Skill } from '@feat/cv/types/skill.type';
+import {
+	type Company,
+	isJob,
+	isSkill,
+	type Job,
+	type Skill,
+} from '@feat/cv/types';
 import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 import {
@@ -13,6 +17,7 @@ import { createClient } from 'contentful';
 import { isRichTextDocument } from '../types/rich-text.type';
 import { RichTextService } from './rich-text.service';
 
+// Internal types
 type ContentTypeId = 'exprience' | 'skill' | 'company';
 const entriesRecord: {
 	exprience: Job[];
@@ -39,7 +44,7 @@ export class ContentfullService {
 	readonly contentResource = resource({
 		loader: async () => {
 			const localEntries = this.getLocalEntries();
-			await sleep(500);
+			await sleep(1000);
 			if (localEntries) {
 				return Promise.resolve(localEntries);
 			}

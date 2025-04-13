@@ -15,5 +15,5 @@ import type { IconSize } from './icon-size.type';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LocationPinIcon {
-	size = input<IconSize>('size-4');
+	size = input<IconSize>('size-3');
 }

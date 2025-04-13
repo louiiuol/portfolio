@@ -18,16 +18,18 @@ import { SkillPillComponent } from './skill-pill.component';
 				<section
 					class="mt-3 hidden lg:flex p-2 text-primary-900 text-center flex-col gap-1">
 					<h4 class=" font-semibold">{{ job.company.name }}</h4>
-					<p class="text-xs flex flex-wrap gap-2 items-center justify-end">
+					<p class="text-xs flex gap-2 justify-start mt-1 flex-wrap">
 						<span>{{ job.startDate | date: 'MMM yyyy' | capitalize }}</span>
+						-
 						@if (job.endDate) {
-							-
-							<span>{{ job.endDate | date: 'MMMM yyyy' | capitalize }}</span>
+							<span>{{ job.endDate | date: 'MMM yyyy' | capitalize }}</span>
+						} @else {
+							Aujourd'hui
 						}
 					</p>
 
-					<p class="text-xs italic text-center">
-						{{ job.contractType }} - {{ job.remotePolicy }}
+					<p class="text-sm italic text-center">
+						{{ job.contractType }}
 					</p>
 
 					<button
@@ -43,16 +45,20 @@ import { SkillPillComponent } from './skill-pill.component';
 
 			<ng-template #content let-job>
 				<article
-					class="flex flex-col justify-start gap-2 mt-3 p-3 bg-white rounded-lg shadow-md text-start">
+					class="flex flex-col justify-start gap-2 sm:mt-3 p-3 bg-white rounded-lg shadow-md text-start">
 					<div
 						class="block lg:hidden w-full text-primary-950 border-b border-offset-200 pb-2 border-primary-200">
-						<h4 class="text-md font-semibold">
-							{{ job.company.name }}
-						</h4>
+						<div class="flex flex-wrap justify-between items-center gap-2">
+							<h4 class="text-md font-semibold">
+								{{ job.company.name }}
+							</h4>
+							<span class="text-xs text-start"> {{ job.contractType }} </span>
+						</div>
+
 						<p class="text-xs flex gap-2 justify-start mt-1 flex-wrap">
 							<span>{{ job.startDate | date: 'MMMM yyyy' | capitalize }}</span>
+							-
 							@if (job.endDate) {
-								-
 								<span>{{ job.endDate | date: 'MMMM yyyy' | capitalize }}</span>
 							} @else {
 								Aujourd'hui
@@ -70,9 +76,15 @@ import { SkillPillComponent } from './skill-pill.component';
 						{{ job.summary }}
 					</p>
 					<div
-						class="flex gap-2 flex-wrap justify-start items-start w-full mt-1">
-						@for (skill of job.skills.slice(3); track $index) {
+						class="flex gap-2 flex-wrap justify-start items-center w-full mt-1">
+						@for (skill of job.skills.slice(0, 3); track $index) {
 							<app-skill-pill [skill]="skill" />
+						}
+						@let remainingSkills = job.skills.length - 3;
+						@if (remainingSkills > 0) {
+							<span class="text-xs text-gray-500">
+								+ {{ remainingSkills }} autres
+							</span>
 						}
 					</div>
 					<button
@@ -91,11 +103,8 @@ import { SkillPillComponent } from './skill-pill.component';
 		@if (!jobs().length) {
 			<div class="flex flex-col items-center p-2 gap-4 flex-1 w-full mt-3">
 				<p class="text-lg text-pretty font-medium italic text-slate-600">
-					Aucune expérience ne semble correspondre à ces filtres... 🤔
+					Aucune expérience disponibles... 🤔 Merci de réessayer plus tard 🙏
 				</p>
-				<!-- <button app-button (click)="resetFilters.emit()">
-					Réinitialiser les filtres
-				</button> -->
 			</div>
 		}`,
 	imports: [
@@ -111,6 +120,5 @@ import { SkillPillComponent } from './skill-pill.component';
 })
 export class JobsTimelineComponent {
 	jobs = input.required<Job[]>();
-	resetFilters = output();
 	setActiveJob = output<Job>();
 }
