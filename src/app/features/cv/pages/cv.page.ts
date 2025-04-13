@@ -1,20 +1,17 @@
 import {
 	ChangeDetectionStrategy,
 	Component,
-	computed,
+	effect,
 	inject,
 	input,
-	linkedSignal,
 } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { ContentfullModule } from '@feat/cv/modules/contentfull/contentfull.module';
 import { CVService } from '@feat/cv/services/cv.service';
-import type { Job } from '@feat/cv/types';
 import { LoaderComponent } from '@shared/components';
-import { multiTypeSort } from '@shared/functions';
 import { JobDialog } from '../components/job-dialog.component';
 import { JobsTimelineComponent } from '../components/job-timeline.component';
+import { JobService } from '../services/job.service';
 
 @Component({
 	selector: 'app-cv-page',
@@ -45,14 +42,16 @@ import { JobsTimelineComponent } from '../components/job-timeline.component';
 						</p>
 					} @else {
 						<app-jobs-timeline
-							[jobs]="sortedJobs()"
-							(setActiveJob)="setActiveJob($event)" />
+							[jobs]="jobService.sortedJobs()"
+							(setActiveJob)="jobService.setActiveJob($event)" />
 					}
 				}
 			</section>
 		</div>
 		<!-- Job Modal -->
-		<app-job-dialog [job]="activeJob()" (setActiveJob)="setActiveJob($event)" />
+		<app-job-dialog
+			[job]="jobService.activeJob()"
+			(setActiveJob)="setActiveJob($event)" />
 	`,
 	imports: [
 		ContentfullModule,
@@ -60,7 +59,7 @@ import { JobsTimelineComponent } from '../components/job-timeline.component';
 		JobsTimelineComponent,
 		JobDialog,
 	],
-	providers: [CVService],
+	providers: [CVService, JobService],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CVPage {
@@ -69,63 +68,18 @@ export class CVPage {
 
 	// Injectables
 	protected readonly cvService = inject(CVService);
-	protected readonly router = inject(Router);
+	protected readonly jobService = inject(JobService);
 
-	// Jobs
-	protected readonly sortedJobs = computed(() =>
-		multiTypeSort(this.cvService.jobs(), 'startDate', 'desc')
-	);
-
-	// Active Job (modal)
-	protected readonly activeJob = linkedSignal<Job | null>(
-		() => this.cvService.jobs().find(job => job.id === this.jobId()) ?? null
-	);
-
-	protected setActiveJob(job: Job | 'previous' | 'next' | null): void {
-		if (job === 'previous' || job === 'next') {
-			this.slideJob(job);
-			return;
-		}
-
-		this.activeJob.set(job);
-
-		this.router
-			.navigate(['/cv'], {
-				queryParams: {
-					jobId: job?.id ?? null,
-				},
-			})
-			.catch(e =>
-				console.error(
-					`Une erreur est survenue lors de la redirection vers: /cv?jobId=${job?.id}. Causé par: `,
-					e
-				)
-			);
+	constructor() {
+		// Sync active job with the URL query params
+		effect(() => this.jobService.setActiveJob(this.jobId()));
 	}
 
-	protected slideJob(direction: 'next' | 'previous'): void {
-		const jobs = this.cvService.jobs();
-		const currentJob = this.activeJob();
-		const currentIndex = jobs.findIndex(job => job.id === currentJob?.id);
-
-		// Si le job courant n'est pas trouvé, on fallback sur le premier ou dernier
-		if (currentIndex === -1) {
-			const fallbackIndex = direction === 'next' ? 0 : jobs.length - 1;
-			this.setActiveJob(jobs[fallbackIndex]);
-			return;
+	protected setActiveJob(target: 'previous' | 'next' | null): void {
+		if (target === 'previous' || target === 'next') {
+			this.jobService.slideJob(target);
+		} else {
+			this.jobService.setActiveJob(target);
 		}
-
-		let nextIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1;
-
-		// Boucle circulaire si on dépasse
-		if (nextIndex >= jobs.length) {
-			nextIndex = 0;
-		}
-		if (nextIndex < 0) {
-			nextIndex = jobs.length - 1;
-		}
-
-		const nextJob = jobs[nextIndex];
-		this.setActiveJob(nextJob);
 	}
 }

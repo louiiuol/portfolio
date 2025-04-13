@@ -53,7 +53,7 @@ export class ContentfullService {
 				const key = el.sys.contentType.sys.id as ContentTypeId;
 				acc[key].push({
 					...this.processEntry(el),
-					id: el.sys.id,
+					id: el.sys.id, // @todo improve the type of the entry (one type for each entry)
 				});
 				return acc;
 			}, entriesRecord);

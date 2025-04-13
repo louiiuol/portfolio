@@ -4,6 +4,7 @@ import { LOCALE_ID, provideZoneChangeDetection } from '@angular/core';
 import {
 	provideRouter,
 	withComponentInputBinding,
+	withInMemoryScrolling,
 	withViewTransitions,
 } from '@angular/router';
 
@@ -40,7 +41,12 @@ const PrimeCustomPreset = definePreset(Aura, {
 export const appConfig: ApplicationConfig = {
 	providers: [
 		provideZoneChangeDetection({ eventCoalescing: true }),
-		provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
+		provideRouter(
+			routes,
+			withComponentInputBinding(),
+			withViewTransitions(),
+			withInMemoryScrolling({ scrollPositionRestoration: 'top' })
+		),
 		provideClientHydration(withEventReplay()),
 		provideAnimationsAsync(),
 		provideHttpClient(withFetch()),
