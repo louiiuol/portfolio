@@ -1,26 +1,35 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { multiTypeSort } from '../../../shared/functions';
-import type { nullish } from '../../../shared/types';
-import type { Job } from '../types';
-import { CVService } from './cv.service';
+import { multiTypeSort } from '@shared/functions';
+import type { nullish } from '@shared/types';
+import { ContentfullService } from '../modules/contentfull/services/contentfull.service';
+import { isJob, type Job } from '../types';
 
 @Injectable()
 export class JobService {
-	protected readonly cvService = inject(CVService);
+	private readonly contentfullService = inject(ContentfullService);
+
 	protected readonly router = inject(Router);
 
 	// Jobs
-	readonly sortedJobs = computed(() =>
-		multiTypeSort(this.cvService.jobs(), 'startDate', 'desc')
-	);
+	readonly sortedJobs = computed(() => ({
+		loading: this.contentfullService.contentResource.isLoading(),
+		error: this.contentfullService.contentResource.error(),
+		data: multiTypeSort(
+			(this.contentfullService.contentResource.value()?.exprience ?? []).filter(
+				isJob
+			),
+			'startDate',
+			'desc'
+		),
+	}));
 
 	// Active Job (modal)
 	readonly activeJob = signal<Job | null>(null);
 
 	setActiveJob(job: Job | string | nullish): void {
 		if (typeof job === 'string') {
-			const found = this.sortedJobs().find(j => j.id === job);
+			const found = this.sortedJobs().data.find(j => j.id === job);
 
 			if (found) {
 				this.activeJob.set(found);
@@ -45,11 +54,11 @@ export class JobService {
 	}
 
 	slideJob(direction: 'next' | 'previous'): void {
-		const jobs = this.cvService.jobs();
+		const jobs = this.sortedJobs().data;
 		const currentJob = this.activeJob();
 		const currentIndex = jobs.findIndex(job => job.id === currentJob?.id);
 
-		// Si le job courant n'est pas trouvé, on fallback sur le premier ou dernier
+		// If current job is not found, set the first or last job as active
 		if (currentIndex === -1) {
 			const fallbackIndex = direction === 'next' ? 0 : jobs.length - 1;
 			this.setActiveJob(jobs[fallbackIndex]);
@@ -58,7 +67,7 @@ export class JobService {
 
 		let nextIndex = direction === 'next' ? currentIndex + 1 : currentIndex - 1;
 
-		// Boucle circulaire si on dépasse
+		// Loop around if we reach the end or beginning of the array
 		if (nextIndex >= jobs.length) {
 			nextIndex = 0;
 		}

@@ -9,7 +9,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-import { CVService } from '@feat/cv/services/cv.service';
+import { SkillService } from '@feat/cv/services/skill.service';
 import { CONTRACT_TYPES, type ContractType, type Skill } from '@feat/cv/types';
 import { deepEqualObjects, isEmpty } from '@shared/functions';
 import { isNotNullish, type nullish } from '@shared/types';
@@ -81,7 +81,7 @@ export class JobFiltersComponent {
 	readonly filters = input.required<JobFilters>();
 	readonly filtersChanged = output<JobFilters>();
 
-	protected readonly cvService = inject(CVService);
+	protected readonly cvService = inject(SkillService);
 
 	protected readonly filtersForm = new FormGroup({
 		search: new FormControl<string | nullish>(null),

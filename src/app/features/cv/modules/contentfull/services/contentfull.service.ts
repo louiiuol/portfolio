@@ -1,12 +1,6 @@
 import { computed, inject, Injectable, resource } from '@angular/core';
 import { environment } from '@env';
-import {
-	type Company,
-	isJob,
-	isSkill,
-	type Job,
-	type Skill,
-} from '@feat/cv/types';
+import { type Company, isSkill, type Job, type Skill } from '@feat/cv/types';
 import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 import {
@@ -33,10 +27,6 @@ type StoredEntriesRecord = (EntriesRecord & { updatedAt: Date }) | null;
 
 @Injectable()
 export class ContentfullService {
-	readonly jobs = computed(() =>
-		(this.contentResource.value()?.exprience ?? []).filter(isJob)
-	);
-
 	readonly skills = computed(() =>
 		(this.contentResource.value()?.skill ?? []).filter(isSkill)
 	);

@@ -20,5 +20,5 @@ import { Tooltip } from 'primeng/tooltip';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillPillComponent {
-	skill = input.required<{ name: string; description?: string }>();
+	readonly skill = input.required<{ name: string; description?: string }>();
 }

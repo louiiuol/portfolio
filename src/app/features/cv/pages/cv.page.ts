@@ -7,10 +7,8 @@ import {
 } from '@angular/core';
 
 import { ContentfullModule } from '@feat/cv/modules/contentfull/contentfull.module';
-import { CVService } from '@feat/cv/services/cv.service';
 import { LoaderComponent } from '@shared/components';
-import { JobDialog } from '../components/job-dialog.component';
-import { JobsTimelineComponent } from '../components/job-timeline.component';
+import { JobDialog, JobsTimelineComponent } from '../components';
 import { JobService } from '../services/job.service';
 
 @Component({
@@ -31,10 +29,10 @@ import { JobService } from '../services/job.service';
 			<!-- Content -->
 			<section
 				class="flex flex-col items-center justify-start gap-4 w-full h-full overflow-y-auto flex-1 relative inset-shadow-sm  bg-gray-50 rounded-lg p-2 sm:p-4">
-				@if (cvService.resourceState.isLoading()) {
+				@if (jobService.sortedJobs().loading) {
 					<app-loader message="chargement des informations du CV" />
 				} @else {
-					@if (cvService.resourceState.error()) {
+					@if (jobService.sortedJobs().error) {
 						<p
 							class="text-gray-700 italic max-w-prose text-pretty text-center mt-6 mx-auto">
 							Impossible de récupérer les informations du CV. Merci de réessayer
@@ -42,7 +40,7 @@ import { JobService } from '../services/job.service';
 						</p>
 					} @else {
 						<app-jobs-timeline
-							[jobs]="jobService.sortedJobs()"
+							[jobs]="jobService.sortedJobs().data"
 							(setActiveJob)="jobService.setActiveJob($event)" />
 					}
 				}
@@ -51,7 +49,7 @@ import { JobService } from '../services/job.service';
 		<!-- Job Modal -->
 		<app-job-dialog
 			[job]="jobService.activeJob()"
-			(setActiveJob)="setActiveJob($event)" />
+			(setActiveJob)="switchActiveJob($event)" />
 	`,
 	imports: [
 		ContentfullModule,
@@ -59,23 +57,21 @@ import { JobService } from '../services/job.service';
 		JobsTimelineComponent,
 		JobDialog,
 	],
-	providers: [CVService, JobService],
+	providers: [JobService],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CVPage {
 	// I/O
 	readonly jobId = input<string>();
 
-	// Injectables
-	protected readonly cvService = inject(CVService);
 	protected readonly jobService = inject(JobService);
 
-	constructor() {
-		// Sync active job with the URL query params
-		effect(() => this.jobService.setActiveJob(this.jobId()));
-	}
+	// Sync active job with the URL query params
+	private readonly syncJobId = effect(() =>
+		this.jobService.setActiveJob(this.jobId())
+	);
 
-	protected setActiveJob(target: 'previous' | 'next' | null): void {
+	protected switchActiveJob(target: 'previous' | 'next' | null): void {
 		if (target === 'previous' || target === 'next') {
 			this.jobService.slideJob(target);
 		} else {

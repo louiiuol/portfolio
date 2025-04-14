@@ -65,8 +65,8 @@ import { JobCard } from './job-card.component';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JobDialog {
-	job = input.required<Job | null>();
-	setActiveJob = output<'previous' | 'next' | null>();
+	readonly job = input.required<Job | null>();
+	readonly setActiveJob = output<'previous' | 'next' | null>();
 
 	protected readonly isBrowser = signal(false);
 

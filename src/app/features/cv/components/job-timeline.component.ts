@@ -119,6 +119,6 @@ import { SkillPillComponent } from './skill-pill.component';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JobsTimelineComponent {
-	jobs = input.required<Job[]>();
-	setActiveJob = output<Job>();
+	readonly jobs = input.required<Job[]>();
+	readonly setActiveJob = output<Job>();
 }

@@ -2,11 +2,13 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 import { DatePipe } from '@angular/common';
 import type { Job } from '@feat/cv/types';
-import { MaterialIcon } from '@shared/components';
+import {
+	ContractIcon,
+	HouseLaptopIcon,
+	LocationPinIcon,
+	MaterialIcon,
+} from '@shared/components/atoms/icon';
 import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
-import { ContractIcon } from '../../../shared/components/atoms/icon/icon-contract.component';
-import { HouseLaptopIcon } from '../../../shared/components/atoms/icon/icon-house-laptop.component';
-import { LocationPinIcon } from '../../../shared/components/atoms/icon/icon-location-pin.component';
 import { RichTextComponent } from '../modules/contentfull/components/rich-text.component';
 import { SkillPillComponent } from './skill-pill.component';
 
