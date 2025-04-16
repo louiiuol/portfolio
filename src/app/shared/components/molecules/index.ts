@@ -1,3 +1,4 @@
+export { EventDatesComponent } from './event-dates/event-dates.component';
 export {
 	MenuOverlay,
 	type MenuItem,

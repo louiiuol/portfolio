@@ -12,6 +12,14 @@ html {
   }
 
   app-root {
+    &>main {
+      background: radial-gradient(ellipse farthest-corner at 70% 90%,
+          var(--color-primary-200),
+          var(--color-primary-800) 100%);
+      background-size: 100% 100%;
+      animation: gradient 60s ease infinite;
+    }
+
     &>main>.pattern {
       @apply absolute inset-0 pointer-events-none bg-primary-50 opacity-5;
       background: radial-gradient(circle, transparent 20%, var(--color-primary-50) 20%, var(--color-primary-50) 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, var(--color-primary-50) 20%, var(--color-primary-50) 80%, transparent 80%, transparent) 25px 25px, linear-gradient(var(--color-primary-500) 2px, transparent 2px) 0 -1px, linear-gradient(90deg, var(--color-primary-500) 2px, var(--color-primary-50) 2px) -1px 0;

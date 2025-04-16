@@ -8,8 +8,8 @@ import {
 
 import { ContentfullModule } from '@feat/cv/modules/contentfull/contentfull.module';
 import { LoaderComponent } from '@shared/components';
-import { JobDialog, JobsTimelineComponent } from '../components';
-import { JobService } from '../services/job.service';
+import { CvTimelineComponent, EventDialog } from '../components';
+import { CvService } from '../services/cv.service';
 
 @Component({
 	selector: 'app-cv-page',
@@ -29,53 +29,51 @@ import { JobService } from '../services/job.service';
 			<!-- Content -->
 			<section
 				class="flex flex-col items-center justify-start gap-4 w-full h-full overflow-y-auto flex-1 relative inset-shadow-sm  bg-gray-50 rounded-lg p-2 sm:p-4">
-				@if (jobService.sortedJobs().loading) {
+				@if (cvService.sortedEvents().loading) {
 					<app-loader message="chargement des informations du CV" />
+				} @else if (cvService.sortedEvents().error) {
+					<p
+						class="text-gray-700 italic max-w-prose text-pretty text-center mt-6 mx-auto">
+						Impossible de récupérer les informations du CV. Merci de réessayer
+						plus tard... 🙏
+					</p>
 				} @else {
-					@if (jobService.sortedJobs().error) {
-						<p
-							class="text-gray-700 italic max-w-prose text-pretty text-center mt-6 mx-auto">
-							Impossible de récupérer les informations du CV. Merci de réessayer
-							plus tard... 🙏
-						</p>
-					} @else {
-						<app-jobs-timeline
-							[jobs]="jobService.sortedJobs().data"
-							(setActiveJob)="jobService.setActiveJob($event)" />
-					}
+					<app-cv-timeline
+						[events]="cvService.sortedEvents().data"
+						(setActiveEvent)="cvService.setActiveEvent($event)" />
 				}
 			</section>
 		</div>
 		<!-- Job Modal -->
-		<app-job-dialog
-			[job]="jobService.activeJob()"
-			(setActiveJob)="switchActiveJob($event)" />
+		<app-event-dialog
+			[event]="cvService.activeEvent()"
+			(setActiveEvent)="switchActiveEvent($event)" />
 	`,
 	imports: [
 		ContentfullModule,
 		LoaderComponent,
-		JobsTimelineComponent,
-		JobDialog,
+		CvTimelineComponent,
+		EventDialog,
 	],
-	providers: [JobService],
+	providers: [CvService],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CVPage {
+export class CvPage {
 	// I/O
-	readonly jobId = input<string>();
+	readonly eventId = input<string>();
 
-	protected readonly jobService = inject(JobService);
+	protected readonly cvService = inject(CvService);
 
 	// Sync active job with the URL query params
 	private readonly syncJobId = effect(() =>
-		this.jobService.setActiveJob(this.jobId())
+		this.cvService.setActiveEvent(this.eventId())
 	);
 
-	protected switchActiveJob(target: 'previous' | 'next' | null): void {
+	protected switchActiveEvent(target: 'previous' | 'next' | null): void {
 		if (target === 'previous' || target === 'next') {
-			this.jobService.slideJob(target);
+			this.cvService.slideEvent(target);
 		} else {
-			this.jobService.setActiveJob(target);
+			this.cvService.setActiveEvent(target);
 		}
 	}
 }

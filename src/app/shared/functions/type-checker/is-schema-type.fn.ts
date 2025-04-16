@@ -1,4 +1,3 @@
-import { environment } from '@env';
 import type { z } from 'zod';
 import { formatZodError } from '../format/format-zod-error.fn';
 
@@ -12,11 +11,15 @@ import { formatZodError } from '../format/format-zod-error.fn';
 export function isSchemaType<T>(
 	entry: unknown,
 	schema: z.ZodType<T>,
-	objectName = 'object'
+	objectName = 'object',
+	logError = false
 ): entry is T {
 	const validation = schema.safeParse(entry);
-	if (validation.error && !environment.production) {
-		console.error(formatZodError(validation.error, `Invalid ${objectName}: `));
+	if (validation.error && logError) {
+		console.error(
+			formatZodError(validation.error, `Invalid ${objectName}: `),
+			entry
+		);
 	}
 	return validation.success;
 }

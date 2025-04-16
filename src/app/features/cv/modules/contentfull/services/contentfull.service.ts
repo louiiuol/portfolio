@@ -1,26 +1,35 @@
 import { computed, inject, Injectable, resource } from '@angular/core';
 import { environment } from '@env';
-import { type Company, isSkill, type Job, type Skill } from '@feat/cv/types';
-import { sleep } from '@shared/functions';
-import { LocalStorageService } from '@shared/services/local-storage.service';
+
 import {
-	isUnknownRecord,
-	type UnknownRecord,
-} from '@shared/types/unknown-record.type';
+	isSkill,
+	type Company,
+	type Diploma,
+	type Job,
+	type School,
+	type Skill,
+} from '@feat/cv/types';
+import { sleep } from '@shared/functions';
+import { LocalStorageService } from '@shared/services';
+import { isUnknownRecord, type UnknownRecord } from '@shared/types';
 import { createClient } from 'contentful';
 import { isRichTextDocument } from '../types/rich-text.type';
 import { RichTextService } from './rich-text.service';
 
 // Internal types
-type ContentTypeId = 'exprience' | 'skill' | 'company';
+type ContentTypeId = 'exprience' | 'skill' | 'company' | 'school' | 'diploma';
 const entriesRecord: {
 	exprience: Job[];
 	skill: Skill[];
 	company: Company[];
+	school: School[];
+	diploma: Diploma[];
 } = {
 	exprience: [],
 	skill: [],
 	company: [],
+	school: [],
+	diploma: [],
 } as const;
 type EntriesRecord = typeof entriesRecord;
 type StoredEntriesRecord = (EntriesRecord & { updatedAt: Date }) | null;

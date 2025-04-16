@@ -7,8 +7,7 @@ import { HeaderComponent } from './shared/components';
 	host: { class: 'flex flex-col' },
 	template: `
 		<app-header />
-		<main
-			class="flex-1 overflow-y-auto bg-linear-to-t from-primary-300 to-primary-700 relative">
+		<main class="flex-1 overflow-y-auto relative">
 			<div class="pattern"></div>
 			<router-outlet />
 		</main>

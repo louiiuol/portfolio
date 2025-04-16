@@ -8,7 +8,7 @@ export const routes: Routes = [
 	},
 	{
 		path: 'cv',
-		loadComponent: () => import('./features/cv').then(m => m.CVPage),
+		loadComponent: () => import('./features/cv').then(m => m.CvPage),
 		title: 'Louis Godlewski | CV',
 	},
 	{ path: '**', redirectTo: '' },
