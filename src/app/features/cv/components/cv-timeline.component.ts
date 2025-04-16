@@ -43,7 +43,7 @@ import { SkillsListComponent } from './skills-list.component';
 					<h4 class=" font-semibold">{{ locationName }}</h4>
 					<app-event-dates [event]="event" />
 
-					<p class="text-sm italic text-center">
+					<p class="text-sm italic text-center font-semibold">
 						{{ eventType }}
 					</p>
 
@@ -61,33 +61,30 @@ import { SkillsListComponent } from './skills-list.component';
 							: 'NA';
 				@let eventType = isJob(event) ? event.contractType : 'Formation';
 				<article
-					class="flex flex-col justify-start gap-2 sm:mt-3 p-3 bg-white rounded-lg shadow-md text-start"
-					[class]="{
-						'!bg-primary-500': isSchool(event),
-					}">
+					class="flex flex-col justify-start gap-4 sm:mt-3 p-3 bg-white rounded-lg shadow-md text-start"
+					[class.!border-primary-500]="isSchool(event)"
+					[class.border]="isSchool(event)">
 					<div
-						class="block lg:hidden w-full text-primary-950 border-b border-offset-200 pb-2 border-primary-200"
-						[class]="{ '!text-white': isSchool(event) }">
+						class="block lg:hidden w-full text-primary-950 border-b border-offset-200 pb-2 border-primary-200">
 						<div class="flex flex-wrap justify-between items-center gap-2">
 							<h4 class="text-md font-semibold">
 								{{ locationName }}
 							</h4>
-							<span class="text-xs text-start"> {{ eventType }} </span>
+							<span class="text-xs text-start font-semibold">
+								{{ eventType }}
+							</span>
 						</div>
 
 						<app-event-dates [event]="event" />
 					</div>
 
 					@if (isJob(event)) {
-						<h3
-							class="text-xl font-semibold text-primary-500 w-full"
-							[class]="{ '!text-white': isSchool(event) }">
+						<h3 class="text-xl font-semibold text-primary-500 w-full">
 							{{ event.title }}
 						</h3>
 
 						<p
-							class="w-full leading-tight tracking-tight max-w-prose leading-9 text-pretty"
-							[class]="{ '!text-white': isSchool(event) }">
+							class="w-full leading-tight tracking-tight max-w-prose leading-9 text-pretty text-sm text-justify">
 							{{ event.summary }}
 						</p>
 
@@ -98,15 +95,24 @@ import { SkillsListComponent } from './skills-list.component';
 						</h3>
 
 						<p
-							class="w-full leading-tight tracking-tight max-w-prose leading-9 text-pretty">
+							class="w-full leading-tight tracking-tight max-w-prose leading-9 text-pretty text-sm text-justify">
 							{{ event.description }}
 						</p>
 
-						@for (diploma of event.diplomas; track $index) {
-							<h3>{{ diploma.name }}</h3>
-							<p class="text-xs">{{ diploma.description }}</p>
-							<app-skills-list [skills]="diploma.skills" />
-						}
+						<h4 class="underline underline-offset-3 text-primary-800">
+							Diplôme(s) acquis
+						</h4>
+						<div class="flex flex-col gap-2">
+							@for (diploma of event.diplomas; track $index) {
+								<div class="bg-primary-50 p-3 rounded-xl flex flex-col gap-2">
+									<h3 class="text-sm font-semibold">{{ diploma.name }}</h3>
+									<p
+										class="text-xs italic text-justify"
+										[innerHTML]="diploma.description"></p>
+									<app-skills-list [skills]="diploma.skills" />
+								</div>
+							}
+						</div>
 					}
 					<ng-container
 						*ngTemplateOutlet="seeMoreButton; context: { $implicit: event }" />
