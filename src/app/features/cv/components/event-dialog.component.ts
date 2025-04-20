@@ -8,20 +8,22 @@ import {
 	PLATFORM_ID,
 	signal,
 } from '@angular/core';
-import { ButtonComponent, ChevronIcon, CloseIcon } from '@shared/components';
+import { ButtonComponent, ChevronIcon } from '@shared/components';
 import { Dialog } from 'primeng/dialog';
-import { isJob, isSchool, type CvEvent } from '../types';
+import { isJob, isTraining, type CvEvent } from '../types';
 import { JobCard } from './job-card.component';
+import { TrainingCard } from './training-card.component';
 
 @Component({
 	selector: 'app-event-dialog',
 	template: `
 		@if (isBrowser() && event(); as activeEvent) {
-			<p-dialog class="sm:max-w-[90%]" modal [visible]="!!activeEvent">
+			<p-dialog class="md:max-w-[90%]" modal [visible]="!!activeEvent">
 				<ng-template #headless>
-					<div class="flex flex-wrap sm:flex-nowrap gap-2 items-center">
+					<div
+						class="flex flex-wrap md:flex-nowrap sm:gap-2 items-end content-end  md:items-center h-full">
 						<button
-							class="!hidden sm:!inline-flex"
+							class="!hidden md:!inline-flex"
 							app-button
 							appearance="fab"
 							color="white"
@@ -29,33 +31,42 @@ import { JobCard } from './job-card.component';
 							<app-icon-chevron direction="left" />
 						</button>
 						@if (isJob(activeEvent)) {
-							<app-job-card class="flex-1 shrink-0" [job]="activeEvent">
-								<button
-									class="ml-auto mr-1"
-									app-button
-									appearance="icon"
-									close-button
-									(click)="setActiveEvent.emit(null)">
-									<app-icon-close />
-								</button>
-							</app-job-card>
-						} @else if (isSchool(activeEvent)) {
-							coming soon
+							<app-job-card
+								class="!rounded-none sm:!rounded-lg"
+								[job]="activeEvent"
+								(closed)="setActiveEvent.emit(null)" />
+						} @else if (isTraining(activeEvent)) {
+							<app-training-card
+								class="!rounded-none sm:!rounded-lg"
+								[training]="activeEvent"
+								(closed)="setActiveEvent.emit(null)" />
 						}
-						<nav
-							class="flex gap-4 w-full sm:w-auto justify-center items-center">
+						<button
+							class="!hidden md:!inline-flex"
+							app-button
+							appearance="fab"
+							color="white"
+							(click)="setActiveEvent.emit('next')">
+							<app-icon-chevron direction="right" />
+						</button>
+						<nav class="flex w-full sm:hidden">
 							<button
-								class="!inline-flex sm:!hidden"
+								class="flex-1 hover:!bg-primary-50"
 								app-button
 								appearance="fab"
 								color="white"
+								rounded="false"
+								size="large"
 								(click)="setActiveEvent.emit('previous')">
 								<app-icon-chevron class="text-primary-700" direction="left" />
 							</button>
 							<button
+								class="flex-1 hover:!bg-primary-50"
 								app-button
 								appearance="fab"
 								color="white"
+								rounded="false"
+								size="large"
 								(click)="setActiveEvent.emit('next')">
 								<app-icon-chevron direction="right" />
 							</button>
@@ -65,7 +76,7 @@ import { JobCard } from './job-card.component';
 			</p-dialog>
 		}
 	`,
-	imports: [ChevronIcon, CloseIcon, JobCard, Dialog, ButtonComponent],
+	imports: [ChevronIcon, JobCard, Dialog, ButtonComponent, TrainingCard],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventDialog {
@@ -75,7 +86,7 @@ export class EventDialog {
 	protected readonly isBrowser = signal(false);
 
 	protected readonly isJob = isJob;
-	protected readonly isSchool = isSchool;
+	protected readonly isTraining = isTraining;
 
 	constructor(@Inject(PLATFORM_ID) platformId: object) {
 		this.isBrowser.set(isPlatformBrowser(platformId));

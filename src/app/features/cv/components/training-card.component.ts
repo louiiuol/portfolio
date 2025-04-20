@@ -1,0 +1,81 @@
+import {
+	ChangeDetectionStrategy,
+	Component,
+	input,
+	output,
+} from '@angular/core';
+
+import type { Training } from '@feat/cv/types';
+import {
+	Card,
+	EventDatesComponent,
+	GraduationCapIcon,
+} from '@shared/components/';
+
+import { TrainingSkillsPipe } from '../pipes/training-skills.pipe';
+import { PlaceInfoComponent } from './place-info.component';
+import { SkillsListComponent } from './skills-list.component';
+
+@Component({
+	selector: 'app-training-card',
+	host: {
+		class: 'dialog-card',
+	},
+	template: `
+		<app-card closable (closed)="closed.emit()">
+			<h2 heading>
+				{{ training().name }}
+			</h2>
+			<app-event-dates
+				class="text-primary-700"
+				showIcon
+				showTimeDiff
+				subHeader
+				[event]="training()" />
+
+			<!-- School -->
+			<div class="flex flex-col gap-2">
+				<h3 class="font-semibold">Lieux</h3>
+				<app-place-info [place]="training().school" />
+			</div>
+
+			<!-- Description -->
+			<p
+				class="bg-primary-50 shadow-inner text-primary-800 px-6 py-3 rounded-2xl">
+				{{ training().description }}
+			</p>
+
+			<!-- Tasks -->
+			<div class="flex flex-col gap-2">
+				<h3 class="font-semibold">Diplômes acquis</h3>
+				<ul class="flex flex-col gap-3">
+					@for (diploma of training().diplomas; track $index) {
+						<li class="flex gap-2 items-center justify-start text-primary-700">
+							<app-icon-graduation-cap />
+							<p class="text-sm">{{ diploma.name }}</p>
+						</li>
+					}
+				</ul>
+			</div>
+
+			<!-- Skills Section: savoir être / savoir faire -->
+			<div class="flex flex-col gap-2 w-full" footer>
+				<h3 class="font-semibold">Compétences acquises</h3>
+				<app-skills-list showAll [skills]="training() | trainingSkills" />
+			</div>
+		</app-card>
+	`,
+	imports: [
+		GraduationCapIcon,
+		SkillsListComponent,
+		Card,
+		PlaceInfoComponent,
+		EventDatesComponent,
+		TrainingSkillsPipe,
+	],
+	changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class TrainingCard {
+	readonly training = input.required<Training>();
+	readonly closed = output<void>();
+}

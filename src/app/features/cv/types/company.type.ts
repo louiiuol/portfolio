@@ -1,10 +1,10 @@
+import { entrySchema } from '@feat/contentfull/types/entry.type';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { entrySchema } from '../modules/contentfull/types/entry.type';
 import { assetSchema } from './asset.type';
 
 // COMPANY
-export const companySchema = entrySchema.extend({
+export const placeSchema = entrySchema.extend({
 	name: z.string(),
 	city: z.string(),
 	country: z.string(),
@@ -12,7 +12,7 @@ export const companySchema = entrySchema.extend({
 	logo: assetSchema,
 	url: z.string().optional(),
 });
-export type Company = z.infer<typeof companySchema>;
+export type Place = z.infer<typeof placeSchema>;
 
-export const isCompany = (entry: unknown): entry is Company =>
-	isSchemaType(entry, companySchema, 'Company');
+export const isPlace = (entry: unknown): entry is Place =>
+	isSchemaType(entry, placeSchema, 'Place');

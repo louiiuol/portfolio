@@ -1,11 +1,12 @@
+export { CalendarIcon } from './icon-calendar.component';
 export { ChevronIcon } from './icon-chevron.component';
 export { CloseIcon } from './icon-close.component';
 export { ContractIcon } from './icon-contract.component';
 export { DownloadIcon } from './icon-download.component';
 export { EyeIcon } from './icon-eye.component';
+export { GraduationCapIcon } from './icon-graduation-cap.component';
 export { HouseLaptopIcon } from './icon-house-laptop.component';
 export { LocationPinIcon } from './icon-location-pin.component';
 export { LogoIcon } from './icon-logo.component';
 export { SearchIcon } from './icon-search.component';
 export { SortIcon } from './icon-sort.component';
-export { MaterialIcon } from './icon.component';

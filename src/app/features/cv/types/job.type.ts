@@ -1,9 +1,9 @@
+import { entrySchema, formattedRichTextSchema } from '@feat/contentfull/types';
+
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { entrySchema } from '../modules/contentfull/types/entry.type';
-import { formattedRichTextSchema } from '../modules/contentfull/types/rich-text.type';
 import { assetSchema } from './asset.type';
-import { companySchema } from './company.type';
+import { placeSchema } from './company.type';
 import { skillSchema } from './skill.type';
 
 export const CONTRACT_TYPES = [
@@ -32,7 +32,7 @@ const RemotePolicyKeys = REMOTE_POLICIES.map(p => p.value) as [
 
 // JOB
 export const jobSchema = entrySchema.extend({
-	company: companySchema,
+	company: placeSchema,
 	remotePolicy: z.enum(RemotePolicyKeys),
 	contractType: z.enum(contractTypesKeys),
 	title: z.string(),

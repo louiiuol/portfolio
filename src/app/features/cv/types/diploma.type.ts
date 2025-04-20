@@ -1,6 +1,6 @@
+import { entrySchema } from '@feat/contentfull/types';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { entrySchema } from '../modules/contentfull/types/entry.type';
 import { skillSchema } from './skill.type';
 
 export const diplomaSchema = entrySchema.extend({

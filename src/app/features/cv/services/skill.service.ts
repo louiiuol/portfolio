@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ContentfullService } from '../modules/contentfull/services/contentfull.service';
+import { ContentfullService } from '@feat/contentfull/services/contentfull.service';
 
 @Injectable()
 export class SkillService {

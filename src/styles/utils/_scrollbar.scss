@@ -20,3 +20,8 @@
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-primary-100);
 }
+
+.horizontal-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-500) rgba(lightgrey, 0.6);
+}

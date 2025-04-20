@@ -1,24 +1,49 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+	booleanAttribute,
+	ChangeDetectionStrategy,
+	Component,
+	computed,
+	input,
+} from '@angular/core';
 import type { Skill } from '../types';
 import { SkillPillComponent } from './skill-pill.component';
 
 @Component({
 	selector: 'app-skills-list',
 	host: {
-		class: 'flex gap-2 flex-wrap justify-start items-center w-full mt-1',
+		class:
+			'inline-flex gap-2 justify-start items-center w-full mt-1 overflow-x-auto horizontal-scrollbar',
 	},
-	template: ` @for (skill of skills().slice(0, 3); track $index) {
-			<app-skill-pill [skill]="skill" />
-		}
-		@let remainingSkills = skills().length - 3;
-		@if (remainingSkills > 0) {
-			<span class="text-xs text-gray-500">
-				+ {{ remainingSkills }} autres
-			</span>
+	template: ` <div
+			class="inline-flex gap-2 justify-start items-center"
+			[class.w-full]="showAll()">
+			@for (skill of shownSkills(); track $index) {
+				<app-skill-pill [skill]="skill" />
+			} @empty {
+				@if (showEmpty()) {
+					<p class="text-sm text-gray-500">Aucune compétence associée</p>
+				}
+			}
+		</div>
+		@if (!showAll()) {
+			@let remainingSkills = skills().length - this.limit();
+			@if (remainingSkills > 0) {
+				<span class="text-xs text-gray-500">
+					+ {{ remainingSkills }} autres
+				</span>
+			}
 		}`,
 	imports: [SkillPillComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillsListComponent {
-	skills = input.required<Array<Skill>>();
+	readonly skills = input.required<Array<Skill>>();
+	readonly showAll = input(false, { transform: booleanAttribute });
+	readonly showEmpty = input(false, { transform: booleanAttribute });
+	readonly showMore = input(false, { transform: booleanAttribute });
+	readonly limit = input(3);
+
+	protected readonly shownSkills = computed(() =>
+		this.showAll() ? this.skills() : this.skills().slice(0, this.limit())
+	);
 }

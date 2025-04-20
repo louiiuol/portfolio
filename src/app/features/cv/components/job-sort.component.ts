@@ -36,16 +36,15 @@ export type JobSortableField = (typeof sortableFields)[number];
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class JobSortComponent {
+	readonly sortChanged = output<JobSortableField | null>();
+
 	protected sortableFields = [...sortableFields].map(f => ({
 		...f,
 		action: () => this.activeSort.set(f),
 	}));
 
 	private readonly activeSort = signal<JobSortableField | null>(null);
-
-	readonly sortChanged = output<JobSortableField | null>();
-
-	constructor() {
-		effect(() => this.sortChanged.emit(this.activeSort()));
-	}
+	private readonly syncSortChanged = effect(() =>
+		this.sortChanged.emit(this.activeSort())
+	);
 }

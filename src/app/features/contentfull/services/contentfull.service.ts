@@ -3,11 +3,11 @@ import { environment } from '@env';
 
 import {
 	isSkill,
-	type Company,
 	type Diploma,
 	type Job,
-	type School,
+	type Place,
 	type Skill,
+	type Training,
 } from '@feat/cv/types';
 import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services';
@@ -21,15 +21,17 @@ type ContentTypeId = 'exprience' | 'skill' | 'company' | 'school' | 'diploma';
 const entriesRecord: {
 	exprience: Job[];
 	skill: Skill[];
-	company: Company[];
-	school: School[];
+	company: Place[];
+	school: Place[];
 	diploma: Diploma[];
+	training: Training[];
 } = {
 	exprience: [],
 	skill: [],
 	company: [],
 	school: [],
 	diploma: [],
+	training: [],
 } as const;
 type EntriesRecord = typeof entriesRecord;
 type StoredEntriesRecord = (EntriesRecord & { updatedAt: Date }) | null;

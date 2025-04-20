@@ -9,9 +9,11 @@ import {
 	ButtonComponent,
 	EventDatesComponent,
 	EyeIcon,
+	GraduationCapIcon,
 } from '@shared/components';
 import { Timeline } from 'primeng/timeline';
-import { isJob, isSchool, type CvEvent } from '../types';
+import { EventLocationPipe, EventTypePipe, TrainingSkillsPipe } from '../pipes';
+import { isJob, isTraining, type CvEvent } from '../types';
 import { SkillsListComponent } from './skills-list.component';
 
 @Component({
@@ -19,7 +21,7 @@ import { SkillsListComponent } from './skills-list.component';
 	template: ` <p-timeline class="mt-3" align="left" [value]="events()">
 			<ng-template #seeMoreButton let-event>
 				<button
-					class="mx-auto mt-1 lg:hidden"
+					class="mx-auto mt-1"
 					app-button
 					color="primary"
 					full
@@ -31,20 +33,14 @@ import { SkillsListComponent } from './skills-list.component';
 			</ng-template>
 
 			<ng-template #opposite let-event>
-				@let locationName =
-					isJob(event)
-						? event.company.name
-						: isSchool(event)
-							? event.name
-							: 'NA';
-				@let eventType = isJob(event) ? event.contractType : 'Formation';
+				@let eventLocation = event | eventLocation;
 				<section
-					class="mt-3 hidden lg:flex p-2 text-primary-900 text-center flex-col gap-1">
-					<h4 class=" font-semibold">{{ locationName }}</h4>
+					class="mt-3 hidden lg:flex text-primary-900 text-center flex-col gap-1">
+					<h4 class=" font-semibold">{{ eventLocation.name }}</h4>
 					<app-event-dates [event]="event" />
 
 					<p class="text-sm italic text-center font-semibold">
-						{{ eventType }}
+						{{ event | eventType }}
 					</p>
 
 					<ng-container
@@ -53,43 +49,43 @@ import { SkillsListComponent } from './skills-list.component';
 			</ng-template>
 
 			<ng-template #content let-event>
-				@let locationName =
-					isJob(event)
-						? event.company.name
-						: isSchool(event)
-							? event.name
-							: 'NA';
-				@let eventType = isJob(event) ? event.contractType : 'Formation';
+				@let eventLocation = event | eventLocation;
 				<article
-					class="flex flex-col justify-start gap-4 sm:mt-3 p-3 bg-white rounded-lg shadow-md text-start"
-					[class.!border-primary-500]="isSchool(event)"
-					[class.border]="isSchool(event)">
+					class="flex flex-col justify-start gap-4 sm:mt-3 p-3 bg-white rounded-lg shadow-md text-start">
+					<!-- Common section -->
 					<div
 						class="block lg:hidden w-full text-primary-950 border-b border-offset-200 pb-2 border-primary-200">
 						<div class="flex flex-wrap justify-between items-center gap-2">
 							<h4 class="text-md font-semibold">
-								{{ locationName }}
+								{{ eventLocation.name }}
+								<span class="text-xs text-gray-400 text-300">
+									({{ eventLocation.city }})
+								</span>
 							</h4>
 							<span class="text-xs text-start font-semibold">
-								{{ eventType }}
+								{{ event | eventType }}
 							</span>
 						</div>
 
 						<app-event-dates [event]="event" />
 					</div>
 
+					<!-- Job info -->
 					@if (isJob(event)) {
 						<h3 class="text-xl font-semibold text-primary-500 w-full">
 							{{ event.title }}
 						</h3>
 
 						<p
-							class="w-full leading-tight tracking-tight max-w-prose leading-9 text-pretty text-sm text-justify">
+							class="w-full leading-snug tracking-tight max-w-prose leading-9 text-pretty text-sm text-justify">
 							{{ event.summary }}
 						</p>
 
 						<app-skills-list [skills]="event.skills" />
-					} @else if (isSchool(event)) {
+					}
+
+					<!-- Training info -->
+					@else if (isTraining(event)) {
 						<h3 class="text-xl font-semibold text-primary-500 w-full">
 							{{ event.name }}
 						</h3>
@@ -99,23 +95,30 @@ import { SkillsListComponent } from './skills-list.component';
 							{{ event.description }}
 						</p>
 
-						<h4 class="underline underline-offset-3 text-primary-800">
-							Diplôme(s) acquis
-						</h4>
-						<div class="flex flex-col gap-2">
-							@for (diploma of event.diplomas; track $index) {
-								<div class="bg-primary-50 p-3 rounded-xl flex flex-col gap-2">
-									<h3 class="text-sm font-semibold">{{ diploma.name }}</h3>
-									<p
-										class="text-xs italic text-justify"
-										[innerHTML]="diploma.description"></p>
-									<app-skills-list [skills]="diploma.skills" />
-								</div>
-							}
+						<!-- Diplôme(s) acquis -->
+						<div
+							class="flex gap-2 items-center justify-start text-primary-700 w-full">
+							<app-icon-graduation-cap />
+
+							<p class="text-sm">
+								<strong>{{ event.diplomas.length }}</strong> Diplôme{{
+									event.diplomas.length > 1 ? 's' : ''
+								}}
+								acquis lors de cette formation.
+							</p>
 						</div>
+
+						<app-skills-list [skills]="event | trainingSkills" />
 					}
-					<ng-container
-						*ngTemplateOutlet="seeMoreButton; context: { $implicit: event }" />
+
+					<!-- See more button for mobile -->
+					<div class="lg:hidden">
+						<ng-container
+							*ngTemplateOutlet="
+								seeMoreButton;
+								context: { $implicit: event }
+							" />
+					</div>
 				</article>
 			</ng-template>
 		</p-timeline>
@@ -123,7 +126,7 @@ import { SkillsListComponent } from './skills-list.component';
 		@if (!events().length) {
 			<div class="flex flex-col items-center p-2 gap-4 flex-1 w-full mt-3">
 				<p class="text-lg text-pretty font-medium italic text-slate-600">
-					Aucune résultat disponible ... 🤔 Merci de réessayer plus tard 🙏
+					Aucune expérience disponible ... 🤔 Merci de réessayer plus tard 🙏
 				</p>
 			</div>
 		}`,
@@ -134,6 +137,10 @@ import { SkillsListComponent } from './skills-list.component';
 		EventDatesComponent,
 		SkillsListComponent,
 		NgTemplateOutlet,
+		GraduationCapIcon,
+		EventLocationPipe,
+		EventTypePipe,
+		TrainingSkillsPipe,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -142,5 +149,5 @@ export class CvTimelineComponent {
 	readonly setActiveEvent = output<CvEvent>();
 
 	protected readonly isJob = isJob;
-	protected readonly isSchool = isSchool;
+	protected readonly isTraining = isTraining;
 }

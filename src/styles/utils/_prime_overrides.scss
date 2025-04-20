@@ -37,6 +37,14 @@ p-timeline {
   background: none !important;
 }
 
+@media screen and (max-width: 32rem) {
+  .p-dialog {
+    max-width: 100vw;
+    max-height: 100% !important;
+    height: 100%;
+  }
+}
+
 
 // TOOLTIP
 .p-tooltip {

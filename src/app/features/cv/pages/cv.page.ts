@@ -6,8 +6,8 @@ import {
 	input,
 } from '@angular/core';
 
-import { ContentfullModule } from '@feat/cv/modules/contentfull/contentfull.module';
-import { LoaderComponent } from '@shared/components';
+import { ContentfullModule } from '@feat/contentfull/contentfull.module';
+import { Card, LoaderComponent } from '@shared/components';
 import { CvTimelineComponent, EventDialog } from '../components';
 import { CvService } from '../services/cv.service';
 
@@ -15,35 +15,25 @@ import { CvService } from '../services/cv.service';
 	selector: 'app-cv-page',
 	host: { class: 'page' },
 	template: `
-		<div
-			class="bg-white p-2 sm:p-4 rounded-lg shadow-lg min-h-full flex flex-col gap-4 max-w-[1024px] w-full mx-auto">
-			<header class="flex gap-4 justify-between items-center">
-				<h1 class="text-2xl font-semibold text-primary-700">
-					Curriculum Vitae
-				</h1>
-				<!-- <button app-button appearance="icon-stroked">
-					<app-icon-download class="size-[1rem] sm:size-[2rem] text-2xl" />
-				</button> -->
-			</header>
+		<app-card
+			class="min-h-full  max-w-[1024px] w-full mx-auto !rounded-none sm:!rounded-lg">
+			<h1 heading>Curriculum Vitae</h1>
 
-			<!-- Content -->
-			<section
-				class="flex flex-col items-center justify-start gap-4 w-full h-full overflow-y-auto flex-1 relative inset-shadow-sm  bg-gray-50 rounded-lg p-2 sm:p-4">
-				@if (cvService.sortedEvents().loading) {
-					<app-loader message="chargement des informations du CV" />
-				} @else if (cvService.sortedEvents().error) {
-					<p
-						class="text-gray-700 italic max-w-prose text-pretty text-center mt-6 mx-auto">
-						Impossible de récupérer les informations du CV. Merci de réessayer
-						plus tard... 🙏
-					</p>
-				} @else {
-					<app-cv-timeline
-						[events]="cvService.sortedEvents().data"
-						(setActiveEvent)="cvService.setActiveEvent($event)" />
-				}
-			</section>
-		</div>
+			@if (cvService.sortedEvents().loading) {
+				<app-loader message="chargement des informations du CV" />
+			} @else if (cvService.sortedEvents().error) {
+				<p
+					class="text-gray-700 italic max-w-prose text-pretty text-center mt-6 mx-auto">
+					Impossible de récupérer les informations du CV. Merci de réessayer
+					plus tard... 🙏
+				</p>
+			} @else {
+				<app-cv-timeline
+					[events]="cvService.sortedEvents().data"
+					(setActiveEvent)="cvService.setActiveEvent($event)" />
+			}
+		</app-card>
+
 		<!-- Job Modal -->
 		<app-event-dialog
 			[event]="cvService.activeEvent()"
@@ -54,6 +44,7 @@ import { CvService } from '../services/cv.service';
 		LoaderComponent,
 		CvTimelineComponent,
 		EventDialog,
+		Card,
 	],
 	providers: [CvService],
 	changeDetection: ChangeDetectionStrategy.OnPush,

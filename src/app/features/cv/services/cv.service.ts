@@ -1,17 +1,17 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { ContentfullService } from '@feat/contentfull/services/contentfull.service';
 import { multiTypeSort } from '@shared/functions';
 import type { nullish } from '@shared/types';
-import { ContentfullService } from '../modules/contentfull/services/contentfull.service';
-import { isJob, isSchool, type CvEvent } from '../types';
+import { isJob, type CvEvent } from '../types';
+import { isTraining } from '../types/training.type';
 
 @Injectable()
 export class CvService {
 	private readonly contentfullService = inject(ContentfullService);
+	private readonly router = inject(Router);
 
-	protected readonly router = inject(Router);
-
-	// Events
+	// All events
 	readonly sortedEvents = computed(() => {
 		const entries = this.contentfullService.contentResource.value();
 		const state = {
@@ -22,7 +22,7 @@ export class CvService {
 			return { ...state, data: [] };
 		}
 		const content = [
-			...entries.school.filter(isSchool),
+			...entries.training.filter(isTraining),
 			...entries.exprience.filter(isJob),
 		];
 		return {

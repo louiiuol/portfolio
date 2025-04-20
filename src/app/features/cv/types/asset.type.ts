@@ -1,6 +1,6 @@
+import { entrySchema } from '@feat/contentfull/types/entry.type';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { entrySchema } from '../modules/contentfull/types/entry.type';
 
 // ASSET
 export const assetSchema = entrySchema.extend({

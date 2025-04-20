@@ -1,4 +1,4 @@
 import type { Job } from './job.type';
-import type { School } from './school.type';
+import type { Training } from './training.type';
 
-export type CvEvent = Job | School;
+export type CvEvent = Job | Training;
