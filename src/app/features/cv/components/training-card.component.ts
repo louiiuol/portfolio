@@ -13,6 +13,7 @@ import {
 } from '@shared/components/';
 
 import { TrainingSkillsPipe } from '../pipes/training-skills.pipe';
+import { EventTypeComponent } from './event-type.component';
 import { PlaceInfoComponent } from './place-info.component';
 import { SkillsListComponent } from './skills-list.component';
 
@@ -26,12 +27,17 @@ import { SkillsListComponent } from './skills-list.component';
 			<h2 heading>
 				{{ training().name }}
 			</h2>
-			<app-event-dates
-				class="text-primary-700"
-				showIcon
-				showTimeDiff
-				subHeader
-				[event]="training()" />
+
+			<div class="flex justify-between items-center flex-wrap" subHeader>
+				<app-event-type [event]="training()" />
+
+				<app-event-dates
+					class="text-primary-700"
+					showIcon
+					showTimeDiff
+					subHeader
+					[event]="training()" />
+			</div>
 
 			<!-- School -->
 			<div class="flex flex-col gap-2">
@@ -45,13 +51,13 @@ import { SkillsListComponent } from './skills-list.component';
 				{{ training().description }}
 			</p>
 
-			<!-- Tasks -->
+			<!-- Diplomas -->
 			<div class="flex flex-col gap-2">
 				<h3 class="font-semibold">Diplômes acquis</h3>
 				<ul class="flex flex-col gap-3">
 					@for (diploma of training().diplomas; track $index) {
 						<li class="flex gap-2 items-center justify-start text-primary-700">
-							<app-icon-graduation-cap />
+							<app-icon-graduation-cap class="shrink-0 size-4" />
 							<p class="text-sm">{{ diploma.name }}</p>
 						</li>
 					}
@@ -72,6 +78,7 @@ import { SkillsListComponent } from './skills-list.component';
 		PlaceInfoComponent,
 		EventDatesComponent,
 		TrainingSkillsPipe,
+		EventTypeComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

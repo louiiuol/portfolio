@@ -11,7 +11,7 @@ import { ButtonComponent, CloseIcon } from '../../atoms';
 	selector: 'app-card',
 	host: {
 		class:
-			'py-3 px-3 sm:px-6 flex flex-col gap-2 bg-slate-50 rounded-lg shadow-md w-full h-full',
+			'pt-3 px-3 sm:px-6 flex flex-col gap-2 bg-slate-50 rounded-lg shadow-md w-full h-full',
 	},
 	template: `
 		<div class="flex flex-col gap-4">
@@ -33,12 +33,12 @@ import { ButtonComponent, CloseIcon } from '../../atoms';
 		</div>
 
 		<section
-			class="flex flex-col gap-6 overflow-y-auto -mx-3 py-3 px-4 sm:-mx-6 sm:px-4 inset-shadow-sm bg-gray-50 rounded relative flex-1">
+			class="flex flex-col gap-6 overflow-y-auto px-3 -mx-3 py-3 sm:-mx-6 sm:px-4 inset-shadow-sm bg-gray-50 rounded relative flex-1 stable-scrollbar-gutter">
 			<ng-content />
 		</section>
 
 		<footer
-			class="flex justify-between items-center gap-4 empty:hidden mt-auto w-full">
+			class="flex justify-between items-center gap-4 empty:hidden mt-auto w-full pb-3">
 			<ng-content select="[footer]" />
 		</footer>
 	`,

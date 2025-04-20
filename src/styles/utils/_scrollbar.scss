@@ -25,3 +25,7 @@
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary-500) rgba(lightgrey, 0.6);
 }
+
+.stable-scrollbar-gutter {
+  scrollbar-gutter: stable;
+}

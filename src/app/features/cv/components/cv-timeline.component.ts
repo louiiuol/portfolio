@@ -12,8 +12,9 @@ import {
 	GraduationCapIcon,
 } from '@shared/components';
 import { Timeline } from 'primeng/timeline';
-import { EventLocationPipe, EventTypePipe, TrainingSkillsPipe } from '../pipes';
+import { EventLocationPipe, TrainingSkillsPipe } from '../pipes';
 import { isJob, isTraining, type CvEvent } from '../types';
+import { EventTypeComponent } from './event-type.component';
 import { SkillsListComponent } from './skills-list.component';
 
 @Component({
@@ -32,26 +33,27 @@ import { SkillsListComponent } from './skills-list.component';
 				</button>
 			</ng-template>
 
+			<!-- CONTEXT -->
 			<ng-template #opposite let-event>
 				@let eventLocation = event | eventLocation;
 				<section
-					class="mt-3 hidden lg:flex text-primary-900 text-center flex-col gap-1">
+					class="mt-3 hidden lg:flex text-primary-900 text-center justify-start items-center flex-col gap-1">
 					<h4 class=" font-semibold">{{ eventLocation.name }}</h4>
-					<app-event-dates [event]="event" />
 
-					<p class="text-sm italic text-center font-semibold">
-						{{ event | eventType }}
-					</p>
+					<app-event-type [event]="event" />
+
+					<app-event-dates [event]="event" />
 
 					<ng-container
 						*ngTemplateOutlet="seeMoreButton; context: { $implicit: event }" />
 				</section>
 			</ng-template>
 
+			<!-- MAIN CONTENT -->
 			<ng-template #content let-event>
 				@let eventLocation = event | eventLocation;
 				<article
-					class="flex flex-col justify-start gap-4 sm:mt-3 p-3 bg-white rounded-lg shadow-md text-start">
+					class="flex flex-col justify-start gap-4 mx-2 sm:mt-3 p-3 bg-white rounded-lg shadow-md text-start">
 					<!-- Common section -->
 					<div
 						class="block lg:hidden w-full text-primary-950 border-b border-offset-200 pb-2 border-primary-200">
@@ -62,9 +64,7 @@ import { SkillsListComponent } from './skills-list.component';
 									({{ eventLocation.city }})
 								</span>
 							</h4>
-							<span class="text-xs text-start font-semibold">
-								{{ event | eventType }}
-							</span>
+							<app-event-type [event]="event" />
 						</div>
 
 						<app-event-dates [event]="event" />
@@ -98,7 +98,7 @@ import { SkillsListComponent } from './skills-list.component';
 						<!-- Diplôme(s) acquis -->
 						<div
 							class="flex gap-2 items-center justify-start text-primary-700 w-full">
-							<app-icon-graduation-cap />
+							<app-icon-graduation-cap class="shrink-0" />
 
 							<p class="text-sm">
 								<strong>{{ event.diplomas.length }}</strong> Diplôme{{
@@ -139,8 +139,8 @@ import { SkillsListComponent } from './skills-list.component';
 		NgTemplateOutlet,
 		GraduationCapIcon,
 		EventLocationPipe,
-		EventTypePipe,
 		TrainingSkillsPipe,
+		EventTypeComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })

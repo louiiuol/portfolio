@@ -8,12 +8,12 @@ import {
 import type { Job } from '@feat/cv/types';
 import {
 	Card,
-	ContractIcon,
 	EventDatesComponent,
 	HouseLaptopIcon,
 } from '@shared/components/';
 
 import { RichTextComponent } from '@feat/contentfull/components/rich-text.component';
+import { EventTypeComponent } from './event-type.component';
 import { PlaceInfoComponent } from './place-info.component';
 import { SkillsListComponent } from './skills-list.component';
 
@@ -31,11 +31,8 @@ import { SkillsListComponent } from './skills-list.component';
 			<ul
 				class="flex gap-6 flex-wrap justify-between items-center w-full text-primary-500 text-sm"
 				subHeader>
-				<li class="flex gap-2 items-center justify-start">
-					<app-icon-contract />
-					<span>
-						{{ job().contractType }}
-					</span>
+				<li>
+					<app-event-type [event]="job()" />
 				</li>
 				<li class="flex gap-2 items-center justify-start">
 					<app-icon-house-laptop />
@@ -75,12 +72,12 @@ import { SkillsListComponent } from './skills-list.component';
 	`,
 	imports: [
 		RichTextComponent,
-		ContractIcon,
 		HouseLaptopIcon,
 		SkillsListComponent,
 		Card,
 		PlaceInfoComponent,
 		EventDatesComponent,
+		EventTypeComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
