@@ -3,13 +3,15 @@ import type { Routes } from '@angular/router';
 export const routes: Routes = [
 	{
 		path: '',
-		loadComponent: () => import('./pages/home/home.page').then(m => m.HomePage),
+		loadComponent: () =>
+			import('./features/home/home.page').then(m => m.HomePage),
 		title: 'Louis Godlewski | Accueil',
 	},
 	{
 		path: 'cv',
-		loadComponent: () => import('./features/cv').then(m => m.CvPage),
-		title: 'Louis Godlewski | CV',
+		loadComponent: () =>
+			import('./features/cv/pages/cv.page').then(m => m.CvPage),
+		title: 'Louis Godlewski | Curriculum Vitae',
 	},
 	{ path: '**', redirectTo: '' },
 ];

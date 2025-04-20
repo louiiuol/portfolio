@@ -55,12 +55,17 @@ import { SkillsListComponent } from './skills-list.component';
 
 			<!-- Diplomas -->
 			<div class="flex flex-col gap-2">
-				<h3 class="font-semibold">Diplômes acquis</h3>
-				<ul class="flex flex-col gap-3">
+				<h3 class="font-semibold mb-2">Diplômes acquis</h3>
+				<ul class="flex flex-col gap-4">
 					@for (diploma of training().diplomas; track $index) {
-						<li class="flex gap-2 items-center justify-start text-primary-700">
+						<li class="flex gap-2 items-start justify-start text-primary-700">
 							<app-icon-graduation-cap class="shrink-0 size-4" />
-							<p class="text-sm">{{ diploma.name }}</p>
+							<div class="flex flex-col gap-1 text-sm ">
+								<h4 class="font-semibold">{{ diploma.name }}</h4>
+								<p>
+									{{ diploma.description }}
+								</p>
+							</div>
 						</li>
 					}
 				</ul>
