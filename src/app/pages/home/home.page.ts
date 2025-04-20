@@ -18,9 +18,7 @@ export class HomePage {
 	protected readonly title = 'portfolio';
 	protected readonly introTexts = [
 		'Bienvenue sur mon portfolio 👋',
-		// "Je suis un développeur web qui aime construire des interfaces propres, intuitives et utiles",
-		// "Je souhaites créer des applications utiles, et collaborer sur de nouveaux projets open sources!",
-		// "n'hésitez pas à me contacter si vous avez un projet en tête !",
-		'Bonne visite ! 🚀',
+		'Je suis un développeur fullstack souhaitant construire des interfaces propres, intuitives et utiles',
+		"N'hésitez pas à me contacter si vous avez un projet en tête ! Bonne visite ! 🚀",
 	];
 }
