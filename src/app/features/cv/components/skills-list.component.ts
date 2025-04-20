@@ -11,13 +11,10 @@ import { SkillPillComponent } from './skill-pill.component';
 @Component({
 	selector: 'app-skills-list',
 	host: {
-		class:
-			'inline-flex gap-2 justify-start items-center w-full mt-1 overflow-x-auto horizontal-scrollbar',
+		class: 'inline-flex gap-2 justify-start items-center w-full mt-1 flex-wrap',
 	},
 	template: ` <div
-			class="inline-flex flex-wrap gap-2 justify-start items-center pb-2"
-			[class.flex-wrap]="!showAll()"
-			[class.w-full]="showAll()">
+			class="inline-flex flex-wrap gap-2 justify-start items-center pb-2">
 			@for (skill of shownSkills(); track $index) {
 				<app-skill-pill [skill]="skill" />
 			} @empty {

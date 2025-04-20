@@ -45,3 +45,7 @@ html {
 .invisible {
   opacity: 0;
 }
+
+.inset-app-shadow {
+  box-shadow: inset 0px -5px 12px 3px rgba(199, 203, 230, 0.18), inset 0px 7px 12px 3px rgba(199, 203, 230, 0.18);
+}

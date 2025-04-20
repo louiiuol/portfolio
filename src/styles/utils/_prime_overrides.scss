@@ -4,12 +4,21 @@ p-timeline {
 
   .p-timeline-event-opposite {
     flex: 0.25 !important;
+    margin-inline: 2rem !important;
   }
 
   .p-timeline-event-content,
   .p-timeline-event-opposite {
 
     margin-bottom: 1.75rem;
+  }
+
+  .p-timeline-event-separator {
+    flex: 0.125 !important;
+
+    .p-timeline-event-marker {
+      align-self: center !important;
+    }
   }
 
   // Mobile only

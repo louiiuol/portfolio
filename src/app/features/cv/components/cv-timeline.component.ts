@@ -53,7 +53,7 @@ import { SkillsListComponent } from './skills-list.component';
 			<ng-template #content let-event>
 				@let eventLocation = event | eventLocation;
 				<article
-					class="flex flex-col justify-start gap-4 mx-2 sm:mt-3 p-3 bg-white rounded-lg shadow-md text-start">
+					class="flex flex-col justify-start gap-4 mx-2 sm:mt-3 p-3 bg-white rounded-lg shadow-md text-start max-w-[584px] mx-auto w-full">
 					<!-- Common section -->
 					<div
 						class="block lg:hidden w-full text-primary-950 border-b border-offset-200 pb-2 border-primary-200">
@@ -77,7 +77,7 @@ import { SkillsListComponent } from './skills-list.component';
 						</h3>
 
 						<p
-							class="w-full leading-snug tracking-tight max-w-prose leading-9 text-pretty text-sm text-justify">
+							class="w-full leading-snug tracking-tight max-w-prose leading-9 text-pretty text-sm">
 							{{ event.summary }}
 						</p>
 
@@ -91,7 +91,7 @@ import { SkillsListComponent } from './skills-list.component';
 						</h3>
 
 						<p
-							class="w-full leading-tight tracking-tight max-w-prose leading-9 text-pretty text-sm text-justify">
+							class="w-full leading-tight tracking-tight max-w-prose leading-9 text-pretty text-sm">
 							{{ event.description }}
 						</p>
 

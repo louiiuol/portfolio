@@ -6,11 +6,7 @@ import {
 } from '@angular/core';
 
 import type { Job } from '@feat/cv/types';
-import {
-	Card,
-	EventDatesComponent,
-	HouseLaptopIcon,
-} from '@shared/components/';
+import { Card, EventDatesComponent } from '@shared/components/';
 
 import { RichTextComponent } from '@feat/contentfull/components/rich-text.component';
 import { EventTypeComponent } from './event-type.component';
@@ -34,21 +30,20 @@ import { SkillsListComponent } from './skills-list.component';
 				<li>
 					<app-event-type [event]="job()" />
 				</li>
-				<li class="flex gap-2 items-center justify-start">
-					<app-icon-house-laptop />
-					<span class="text-sm font-semibold">
-						{{ job().remotePolicy }}
-					</span>
-				</li>
+
 				<li class="flex gap-2 items-center justify-start">
 					<app-event-dates showIcon showTimeDiff [event]="job()" />
 				</li>
 			</ul>
 
+			<app-skills-list showAll [skills]="job().skills" />
+
 			<!-- Company -->
 			<div class="flex flex-col gap-2">
 				<h3 class="font-semibold">Entreprise</h3>
-				<app-place-info [place]="job().company" />
+				<app-place-info
+					[place]="job().company"
+					[remotePolicy]="job().remotePolicy" />
 			</div>
 
 			<!-- Description -->
@@ -64,15 +59,13 @@ import { SkillsListComponent } from './skills-list.component';
 			</div>
 
 			<!-- Skills Section: savoir être / savoir faire -->
-			<div class="flex flex-col gap-2 w-full" footer>
+			<!-- <div class="flex flex-col gap-2 w-full">
 				<h3 class="font-semibold">Compétences acquises</h3>
-				<app-skills-list showAll [skills]="job().skills" />
-			</div>
+			</div> -->
 		</app-card>
 	`,
 	imports: [
 		RichTextComponent,
-		HouseLaptopIcon,
 		SkillsListComponent,
 		Card,
 		PlaceInfoComponent,

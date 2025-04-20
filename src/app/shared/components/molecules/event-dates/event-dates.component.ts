@@ -25,7 +25,7 @@ import { CalendarIcon } from '../../atoms';
 			Aujourd'hui
 		}
 		@if (showTimeDiff()) {
-			<span class="font-bold">({{ event() | timeDiff }})</span>
+			<span class="font-semibold">({{ event() | timeDiff }})</span>
 		}
 	`,
 	imports: [DatePipe, CapitalizePipe, TimeDifferencePipe, CalendarIcon],

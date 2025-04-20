@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { LocationPinIcon } from '@shared/components';
-import type { Place } from '../types';
+import { HouseLaptopIcon, LocationPinIcon } from '@shared/components';
+import type { RemotePolicy } from '../types';
+import { isJob, type Place } from '../types';
 
 @Component({
 	selector: 'app-place-info',
@@ -26,15 +27,24 @@ import type { Place } from '../types';
 					}
 				</h4>
 
-				<!-- Address -->
+				<!-- Tag Infos -->
 				<ul
-					class="text-primary-400 flex gap-4 flex-wrap justify-start items-center">
+					class="text-primary-400 flex gap-4 flex-wrap justify-start items-center text-xs font-medium">
+					<!-- Address -->
 					<li class="flex gap-2 items-center justify-start">
 						<app-icon-location-pin />
-						<span class="text-xs font-semibold text-primary-400">
-							{{ place().city }} - {{ place().country }}
-						</span>
+						<span class=""> {{ place().city }} - {{ place().country }} </span>
 					</li>
+
+					<!-- Remote Policy -->
+					@if (remotePolicy()) {
+						<li class="flex gap-2 items-center justify-start">
+							<app-icon-house-laptop />
+							<span>
+								{{ remotePolicy() }}
+							</span>
+						</li>
+					}
 				</ul>
 			</div>
 		</div>
@@ -44,9 +54,11 @@ import type { Place } from '../types';
 			" {{ place().description }} "
 		</p>
 	`,
-	imports: [LocationPinIcon],
+	imports: [LocationPinIcon, HouseLaptopIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaceInfoComponent {
 	readonly place = input.required<Place>();
+	readonly remotePolicy = input<RemotePolicy>();
+	readonly isJob = isJob;
 }

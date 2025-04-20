@@ -16,6 +16,10 @@ import { TrainingCard } from './training-card.component';
 
 @Component({
 	selector: 'app-event-dialog',
+	host: {
+		'(touchstart)': 'onTouchStart($event)',
+		'(touchend)': 'onTouchEnd($event)',
+	},
 	template: `
 		@if (isBrowser() && event(); as activeEvent) {
 			<p-dialog modal [visible]="!!activeEvent">
@@ -51,7 +55,7 @@ import { TrainingCard } from './training-card.component';
 						</button>
 
 						<!-- Mobile navigation -->
-						<nav class="flex w-full lg:hidden">
+						<nav class="flex w-full lg:hidden h-12">
 							<button
 								class="flex-1 hover:!bg-primary-50"
 								app-button
@@ -92,5 +96,16 @@ export class EventDialog {
 
 	constructor(@Inject(PLATFORM_ID) platformId: object) {
 		this.isBrowser.set(isPlatformBrowser(platformId));
+	}
+
+	private touchStartX = 0;
+
+	onTouchStart(event: TouchEvent) {
+		this.touchStartX = event.changedTouches[0].screenX;
+	}
+
+	onTouchEnd(event: TouchEvent) {
+		const delta = event.changedTouches[0].screenX - this.touchStartX;
+		this.setActiveEvent.emit(delta > 0 ? 'next' : 'previous');
 	}
 }

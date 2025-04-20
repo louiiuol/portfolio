@@ -7,7 +7,7 @@ export const timeFactors: Record<
 	TimeUnit,
 	{ seconds: number; labelCompact: string; label: string }
 > = {
-	year: { seconds: 31_536_000, labelCompact: 'an', label: 'année' }, // Assuming 365-day year
+	year: { seconds: 31_536_000, labelCompact: 'an', label: 'an' }, // Assuming 365-day year
 	month: { seconds: 2_592_000, labelCompact: 'm', label: 'mois' }, // Assuming 30-day month
 	week: { seconds: 604_800, labelCompact: 'sem', label: 'semaine' },
 	day: { seconds: 86_400, labelCompact: 'j', label: 'jour' },
