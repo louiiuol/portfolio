@@ -12,8 +12,13 @@ import {
 	GraduationCapIcon,
 } from '@shared/components';
 import { Timeline } from 'primeng/timeline';
-import { EventLocationPipe, TrainingSkillsPipe } from '../../pipes';
-import { isJob, isTraining, type CvEvent } from '../../types';
+import {
+	EventDescriptionPipe,
+	EventLocationPipe,
+	EventNamePipe,
+	EventSkillsPipe,
+} from '../../pipes';
+import { isTraining, type CvEvent } from '../../types';
 import { EventTypeComponent } from '../event/event-type.component';
 import { SkillsListComponent } from '../skill/skills-list.component';
 
@@ -43,7 +48,10 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 
 					<app-event-type [event]="event" />
 
-					<app-event-dates [event]="event" />
+					<app-event-dates
+						class="!justify-center"
+						showTimeDiff
+						[event]="event" />
 
 					<ng-container
 						*ngTemplateOutlet="seeMoreButton; context: { $implicit: event }" />
@@ -56,8 +64,8 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 				<article
 					class="flex flex-col justify-start gap-4 mx-2 sm:mt-3 p-3 bg-white rounded-lg shadow-md text-start max-w-[584px] mx-auto w-full">
 					<!-- Common section -->
-					<div
-						class="block lg:hidden w-full text-primary-950 border-b border-offset-200 pb-2 border-primary-200">
+					<header
+						class="flex flex-col gap-2 lg:hidden w-full text-primary-950 border-b border-offset-200 pb-2 border-primary-200">
 						<div class="flex flex-wrap justify-between items-center gap-2">
 							<h4 class="text-md font-semibold text-primary-800">
 								{{ eventLocation.name }}
@@ -72,32 +80,19 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 							class="text-primary-400"
 							showTimeDiff
 							[event]="event" />
-					</div>
+					</header>
 
 					<section class="flex flex-col gap-3">
-						<!-- Job info -->
-						@if (isJob(event)) {
-							<h3 class="text-xl font-semibold text-primary-950 w-full">
-								{{ event.title }}
-							</h3>
+						<h3 class="text-xl font-semibold text-primary-950 w-full">
+							{{ event | eventName }}
+						</h3>
 
-							<p class="w-full max-w-prose text-pretty">
-								{{ event.summary }}
-							</p>
-
-							<app-skills-list [skills]="event.skills" />
-						}
+						<p class="w-full max-w-prose text-pretty">
+							{{ event | eventDescription }}
+						</p>
 
 						<!-- Training info -->
-						@else if (isTraining(event)) {
-							<h3 class="text-xl font-semibold text-primary-950 w-full">
-								{{ event.name }}
-							</h3>
-
-							<p class="w-full max-w-prose text-pretty">
-								{{ event.description }}
-							</p>
-
+						@if (isTraining(event)) {
 							<!-- Diplôme(s) acquis -->
 							<div
 								class="flex gap-2 items-center justify-start text-primary-700 w-full">
@@ -110,9 +105,9 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 									acquis lors de cette formation.
 								</p>
 							</div>
-
-							<app-skills-list [skills]="event | trainingSkills" />
 						}
+
+						<app-skills-list [skills]="event | eventSkills" />
 					</section>
 
 					<!-- See more button for mobile -->
@@ -143,7 +138,9 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 		NgTemplateOutlet,
 		GraduationCapIcon,
 		EventLocationPipe,
-		TrainingSkillsPipe,
+		EventNamePipe,
+		EventDescriptionPipe,
+		EventSkillsPipe,
 		EventTypeComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
@@ -152,6 +149,5 @@ export class CvTimelineComponent {
 	readonly events = input.required<CvEvent[]>();
 	readonly setActiveEvent = output<CvEvent>();
 
-	protected readonly isJob = isJob;
 	protected readonly isTraining = isTraining;
 }

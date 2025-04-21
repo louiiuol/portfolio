@@ -11,26 +11,25 @@ import { SkillPillComponent } from './skill-pill.component';
 @Component({
 	selector: 'app-skills-list',
 	host: {
-		class: 'inline-flex gap-2 justify-start items-center w-full mt-1 flex-wrap',
+		class: 'inline-flex flex-wrap gap-3 justify-start items-center',
 	},
-	template: ` <div
-			class="inline-flex flex-wrap gap-2 justify-start items-center pb-2">
-			@for (skill of shownSkills(); track $index) {
-				<app-skill-pill [skill]="skill" />
-			} @empty {
-				@if (showEmpty()) {
-					<p class="text-sm text-slate-500">Aucune compétence associée</p>
-				}
+	template: `
+		@for (skill of shownSkills(); track $index) {
+			<app-skill-pill [skill]="skill" />
+		} @empty {
+			@if (showEmpty()) {
+				<p class="text-sm text-slate-500">Aucune compétence associée</p>
 			}
-		</div>
+		}
 		@if (!showAll()) {
 			@let remainingSkills = skills().length - this.limit();
 			@if (remainingSkills > 0) {
-				<span class="text-xs text-slate-500 w-fit pb-2">
+				<span class="text-xs text-slate-500 w-fit">
 					+ {{ remainingSkills }} autres
 				</span>
 			}
-		}`,
+		}
+	`,
 	imports: [SkillPillComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
