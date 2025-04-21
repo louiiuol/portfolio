@@ -7,7 +7,7 @@ import { isJob, type CvEvent } from '../../types';
 	selector: 'app-event-type',
 	host: {
 		class:
-			'text-xs font-semibold border border-primary-200 rounded-lg py-1 px-2 bg-primary-50 text-primary-700 flex gap-2 items-center',
+			'text-xs font-semibold border border-primary-200 rounded-lg py-1 px-2 bg-primary-50 text-primary-800 flex gap-2 items-center',
 	},
 	template: `
 		@if (isJob(event())) {

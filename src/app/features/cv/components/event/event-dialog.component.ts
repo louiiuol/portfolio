@@ -29,7 +29,7 @@ import { EventCardComponent } from './event-card.component';
 							color="white"
 							size="large"
 							(click)="setActiveEvent.emit('previous')">
-							<app-icon-chevron class="text-primary-500" direction="left" />
+							<app-icon-chevron class="text-primary-400" direction="left" />
 						</button>
 
 						<!-- Event card -->
@@ -46,7 +46,7 @@ import { EventCardComponent } from './event-card.component';
 							color="white"
 							size="large"
 							(click)="setActiveEvent.emit('next')">
-							<app-icon-chevron class="text-primary-500" direction="right" />
+							<app-icon-chevron class="text-primary-400" direction="right" />
 						</button>
 
 						<!-- Mobile navigation -->
@@ -58,7 +58,7 @@ import { EventCardComponent } from './event-card.component';
 								color="white"
 								rounded="false"
 								(click)="setActiveEvent.emit('previous')">
-								<app-icon-chevron class="text-primary-700" direction="left" />
+								<app-icon-chevron class="text-primary-800" direction="left" />
 								Précédent
 							</button>
 							<button
@@ -69,7 +69,7 @@ import { EventCardComponent } from './event-card.component';
 								rounded="false"
 								(click)="setActiveEvent.emit('next')">
 								Suivant
-								<app-icon-chevron class="text-primary-500" direction="right" />
+								<app-icon-chevron class="text-primary-800" direction="right" />
 							</button>
 						</nav>
 					</div>

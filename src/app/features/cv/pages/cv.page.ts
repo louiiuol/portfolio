@@ -7,7 +7,11 @@ import {
 } from '@angular/core';
 
 import { ContentfullModule } from '@feat/contentfull/contentfull.module';
-import { Card, LoaderComponent } from '@shared/components';
+import {
+	Card,
+	ErrorMessageComponent,
+	LoaderComponent,
+} from '@shared/components';
 import { CvTimelineComponent, EventDialog } from '../components';
 import { CvService } from '../services/cv.service';
 
@@ -23,10 +27,7 @@ import { CvService } from '../services/cv.service';
 			@if (cvService.sortedEvents().loading) {
 				<app-loader message="chargement des informations du CV" />
 			} @else if (cvService.sortedEvents().error) {
-				<p
-					class="text-slate-700 italic max-w-prose text-pretty text-center mt-6 mx-auto">
-					{{ errorMessage }}
-				</p>
+				<app-error-message [errorMessage]="errorMessage" />
 			} @else {
 				<app-cv-timeline
 					[events]="cvService.sortedEvents().data"
@@ -45,6 +46,7 @@ import { CvService } from '../services/cv.service';
 		CvTimelineComponent,
 		EventDialog,
 		Card,
+		ErrorMessageComponent,
 	],
 	providers: [CvService],
 	changeDetection: ChangeDetectionStrategy.OnPush,

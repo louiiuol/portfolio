@@ -7,7 +7,7 @@ import { isJob } from '../types';
 	name: 'eventSkills',
 })
 export class EventSkillsPipe implements PipeTransform {
-	transform(value: CvEvent): Skill[] {
+	transform = (value: CvEvent): Skill[] => {
 		return isJob(value)
 			? value.skills
 			: value.diplomas
@@ -17,5 +17,5 @@ export class EventSkillsPipe implements PipeTransform {
 						(skills, index, self) =>
 							index === self.findIndex(skill => skill.name === skills.name)
 					);
-	}
+	};
 }

@@ -37,7 +37,7 @@ type TypistState = {
 	selector: 'app-typist',
 	host: {
 		class:
-			'w-full max-w-xl inline-flex items-center px-4 py-2 bg-white text-primary-600 outline-primary-500 outline-2 transition-all mx-auto rounded-lg',
+			'w-full max-w-xl inline-flex items-center px-4 py-2 bg-white text-primary-800 outline-primary-500 outline-2 transition-all mx-auto rounded-lg',
 	},
 	template: `
 		@let typingState = typingState$ | async;

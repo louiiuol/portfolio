@@ -16,7 +16,7 @@ import { ButtonComponent, CloseIcon } from '../../atoms';
 	template: `
 		<div class="flex flex-col gap-4">
 			<header class="flex justify-between items-start gap-3">
-				<div class="font-semibold text-2xl flex-1 text-primary-900">
+				<div class="font-semibold text-2xl flex-1 text-primary-800">
 					<ng-content select="[heading]" />
 				</div>
 				@if (closable()) {

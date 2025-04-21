@@ -19,7 +19,7 @@ import type { Place, RemotePolicy } from '../../types';
 
 			<!-- Name and url -->
 			<div class="flex flex-col gap-1">
-				<h4 class="text-lg font-semibold text-primary-500">
+				<h4 class="text-lg font-semibold text-primary-400">
 					{{ place().name }}
 					@if (place().url) {
 						<span class="text-xs ml-2">
@@ -53,7 +53,7 @@ import type { Place, RemotePolicy } from '../../types';
 		</div>
 
 		<!-- Description -->
-		<p class="text-slate-600 max-w-prose">" {{ place().description }} "</p>
+		<p class="text-primary-800 max-w-prose">" {{ place().description }} "</p>
 	`,
 	imports: [LocationPinIcon, HouseLaptopIcon, ExternalLinkIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,

@@ -7,7 +7,7 @@ import { isJob } from '../types';
 	name: 'eventDescription',
 })
 export class EventDescriptionPipe implements PipeTransform {
-	transform(value: CvEvent): string {
+	transform = (value: CvEvent): string => {
 		return isJob(value) ? value.summary : value.description;
-	}
+	};
 }
