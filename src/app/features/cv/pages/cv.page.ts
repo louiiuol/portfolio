@@ -19,13 +19,13 @@ import { CvService } from '../services/cv.service';
 			class="min-h-full  max-w-[1024px] w-full mx-auto !rounded-none sm:!rounded-lg">
 			<h1 heading>Curriculum Vitae</h1>
 
+			<!-- Main content -->
 			@if (cvService.sortedEvents().loading) {
 				<app-loader message="chargement des informations du CV" />
 			} @else if (cvService.sortedEvents().error) {
 				<p
 					class="text-gray-700 italic max-w-prose text-pretty text-center mt-6 mx-auto">
-					Impossible de récupérer les informations du CV. Merci de réessayer
-					plus tard... 🙏
+					{{ errorMessage }}
 				</p>
 			} @else {
 				<app-cv-timeline
@@ -54,6 +54,9 @@ export class CvPage {
 	readonly eventId = input<string>();
 
 	protected readonly cvService = inject(CvService);
+
+	protected readonly errorMessage =
+		'Impossible de récupérer les informations du CV. Merci de réessayer plus tard... 🙏';
 
 	// Sync active job with the URL query params
 	private readonly syncJobId = effect(() =>

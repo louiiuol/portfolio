@@ -10,9 +10,9 @@ import {
 } from '@angular/core';
 import { ButtonComponent, ChevronIcon } from '@shared/components';
 import { Dialog } from 'primeng/dialog';
-import { isJob, isTraining, type CvEvent } from '../types';
-import { JobCard } from './job-card.component';
-import { TrainingCard } from './training-card.component';
+import { isJob, isTraining, type CvEvent } from '../../types';
+import { JobCard } from '../job/job-card.component';
+import { TrainingCard } from '../training/training-card.component';
 
 @Component({
 	selector: 'app-event-dialog',

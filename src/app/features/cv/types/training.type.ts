@@ -1,8 +1,8 @@
 import { entrySchema } from '@feat/contentfull/types';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { placeSchema } from './company.type';
 import { diplomaSchema } from './diploma.type';
+import { placeSchema } from './place.type';
 
 export const trainingSchema = entrySchema.extend({
 	name: z.string(),

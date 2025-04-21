@@ -12,10 +12,10 @@ import {
 	GraduationCapIcon,
 } from '@shared/components/';
 
-import { TrainingSkillsPipe } from '../pipes/training-skills.pipe';
-import { EventTypeComponent } from './event-type.component';
-import { PlaceInfoComponent } from './place-info.component';
-import { SkillsListComponent } from './skills-list.component';
+import { TrainingSkillsPipe } from '../../pipes/training-skills.pipe';
+import { EventTypeComponent } from '../event/event-type.component';
+import { PlaceInfoComponent } from '../place/place-info.component';
+import { SkillsListComponent } from '../skill/skills-list.component';
 
 @Component({
 	selector: 'app-training-card',

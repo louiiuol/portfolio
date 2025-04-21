@@ -12,14 +12,15 @@ import {
 	GraduationCapIcon,
 } from '@shared/components';
 import { Timeline } from 'primeng/timeline';
-import { EventLocationPipe, TrainingSkillsPipe } from '../pipes';
-import { isJob, isTraining, type CvEvent } from '../types';
-import { EventTypeComponent } from './event-type.component';
-import { SkillsListComponent } from './skills-list.component';
+import { EventLocationPipe, TrainingSkillsPipe } from '../../pipes';
+import { isJob, isTraining, type CvEvent } from '../../types';
+import { EventTypeComponent } from '../event/event-type.component';
+import { SkillsListComponent } from '../skill/skills-list.component';
 
 @Component({
 	selector: 'app-cv-timeline',
 	template: ` <p-timeline class="mt-3" align="left" [value]="events()">
+			<!-- See more button -->
 			<ng-template #seeMoreButton let-event>
 				<button
 					class="mx-auto mt-1"

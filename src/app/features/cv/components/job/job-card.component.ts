@@ -9,9 +9,9 @@ import type { Job } from '@feat/cv/types';
 import { Card, EventDatesComponent } from '@shared/components/';
 
 import { RichTextComponent } from '@feat/contentfull/components/rich-text.component';
-import { EventTypeComponent } from './event-type.component';
-import { PlaceInfoComponent } from './place-info.component';
-import { SkillsListComponent } from './skills-list.component';
+import { EventTypeComponent } from '../event/event-type.component';
+import { PlaceInfoComponent } from '../place/place-info.component';
+import { SkillsListComponent } from '../skill/skills-list.component';
 
 @Component({
 	selector: 'app-job-card',

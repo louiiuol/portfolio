@@ -5,7 +5,7 @@ import {
 	computed,
 	input,
 } from '@angular/core';
-import type { Skill } from '../types';
+import type { Skill } from '../../types';
 import { SkillPillComponent } from './skill-pill.component';
 
 @Component({

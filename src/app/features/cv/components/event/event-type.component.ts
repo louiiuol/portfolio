@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ContractIcon, GraduationCapIcon } from '@shared/components';
-import { EventTypePipe } from '../pipes';
-import { isJob, type CvEvent } from '../types';
+import { EventTypePipe } from '../../pipes';
+import { isJob, type CvEvent } from '../../types';
 
 @Component({
 	selector: 'app-event-type',

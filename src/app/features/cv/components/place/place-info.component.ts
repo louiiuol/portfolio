@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { HouseLaptopIcon, LocationPinIcon } from '@shared/components';
-import type { RemotePolicy } from '../types';
-import { isJob, type Place } from '../types';
+import type { Place, RemotePolicy } from '../../types';
 
 @Component({
 	selector: 'app-place-info',
@@ -60,5 +59,4 @@ import { isJob, type Place } from '../types';
 export class PlaceInfoComponent {
 	readonly place = input.required<Place>();
 	readonly remotePolicy = input<RemotePolicy>();
-	readonly isJob = isJob;
 }

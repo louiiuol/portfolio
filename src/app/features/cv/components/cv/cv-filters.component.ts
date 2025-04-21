@@ -21,7 +21,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectModule } from 'primeng/select';
 import { debounceTime } from 'rxjs';
 
-export type JobFilters = {
+export type CvFilters = {
 	search?: string | nullish;
 	contractType?: ContractType | nullish;
 	skills: Skill['name'][];
@@ -77,9 +77,9 @@ export type JobFilters = {
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class JobFiltersComponent {
-	readonly filters = input.required<JobFilters>();
-	readonly filtersChanged = output<JobFilters>();
+export class CvFiltersComponent {
+	readonly filters = input.required<CvFilters>();
+	readonly filtersChanged = output<CvFilters>();
 
 	protected readonly cvService = inject(SkillService);
 

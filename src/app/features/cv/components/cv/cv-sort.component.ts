@@ -6,12 +6,10 @@ import {
 	signal,
 } from '@angular/core';
 
-import type { JobField } from '@feat/cv/types';
 import { MenuOverlay, SortIcon, type MenuItem } from '@shared/components';
 import type { SortField } from '@shared/types';
 
-const sortableFields: (MenuItem & SortField<JobField>)[] = [
-	{ label: 'Ordre alphabétique', field: 'title', direction: 'asc' },
+const sortableFields: (MenuItem & SortField<'startDate'>)[] = [
 	{
 		label: 'Du plus récent au plus ancien',
 		field: 'startDate',
@@ -35,7 +33,7 @@ export type JobSortableField = (typeof sortableFields)[number];
 	imports: [MenuOverlay, SortIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class JobSortComponent {
+export class CvSortComponent {
 	readonly sortChanged = output<JobSortableField | null>();
 
 	protected sortableFields = [...sortableFields].map(f => ({

@@ -3,7 +3,7 @@ import { entrySchema, formattedRichTextSchema } from '@feat/contentfull/types';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
 import { assetSchema } from './asset.type';
-import { placeSchema } from './company.type';
+import { placeSchema } from './place.type';
 import { skillSchema } from './skill.type';
 
 export const CONTRACT_TYPES = [

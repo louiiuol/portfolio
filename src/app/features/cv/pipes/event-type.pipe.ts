@@ -15,7 +15,6 @@ const translations: Record<ContractType, string> = {
 	name: 'eventType',
 })
 export class EventTypePipe implements PipeTransform {
-	transform(value: CvEvent): string {
-		return isJob(value) ? translations[value.contractType] : 'Formation';
-	}
+	transform = (value: CvEvent): string =>
+		isJob(value) ? translations[value.contractType] : 'Formation';
 }

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LogoIcon } from '@shared/components/atoms/icon/icon-logo.component';
+import { LogoIcon } from '@shared/components/atoms/icon/logo.icon';
 import { TypistComponent } from '@shared/components/molecules/typist/typist.component';
 
 @Component({
