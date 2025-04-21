@@ -21,7 +21,7 @@ import { TrainingCard } from '../training/training-card.component';
 			<p-dialog modal [visible]="!!activeEvent">
 				<ng-template #headless>
 					<div
-						class="flex flex-wrap lg:flex-nowrap lg:gap-2 items-end content-end  lg:items-center h-full">
+						class="flex flex-col lg:flex-row lg:gap-2 items-end content-end  lg:items-center h-full">
 						<button
 							class="!hidden lg:!inline-flex"
 							app-button

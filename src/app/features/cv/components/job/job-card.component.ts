@@ -36,8 +36,6 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 				</li>
 			</ul>
 
-			<app-skills-list showAll [skills]="job().skills" />
-
 			<!-- Company -->
 			<div class="flex flex-col gap-2">
 				<h3 class="font-semibold">Entreprise</h3>
@@ -52,10 +50,18 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 				{{ job().summary }}
 			</p>
 
+			<!-- Skills -->
+			<div class="flex flex-col gap-2">
+				<h3 class="font-semibold">Compétences acquises</h3>
+				<app-skills-list showAll [skills]="job().skills" />
+			</div>
+
 			<!-- Tasks -->
 			<div class="flex flex-col gap-2">
 				<h3 class="font-semibold">Tâches accomplies</h3>
-				<app-rich-text class="px-6" [content]="job().description" />
+				<app-rich-text
+					class="px-6 text-primary-700"
+					[content]="job().description" />
 			</div>
 
 			<!-- Skills Section: savoir être / savoir faire -->

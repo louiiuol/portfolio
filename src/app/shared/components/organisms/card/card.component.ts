@@ -33,7 +33,7 @@ import { ButtonComponent, CloseIcon } from '../../atoms';
 		</div>
 
 		<section
-			class="flex flex-col gap-6 overflow-y-auto px-3 -mx-3 py-3 sm:-mx-6 sm:px-4 bg-white rounded-lg relative flex-1 stable-scrollbar-gutter inset-app-shadow">
+			class="flex flex-col gap-6 overflow-y-auto px-3 -mx-3 py-3 sm:-mx-6 sm:px-4 bg-slate-50 rounded-lg relative flex-1 stable-scrollbar-gutter inset-app-shadow">
 			<ng-content />
 		</section>
 

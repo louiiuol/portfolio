@@ -19,7 +19,7 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 
 @Component({
 	selector: 'app-cv-timeline',
-	template: ` <p-timeline class="mt-3" align="left" [value]="events()">
+	template: ` <p-timeline class="mt-3 sm:pr-6" align="left" [value]="events()">
 			<!-- See more button -->
 			<ng-template #seeMoreButton let-event>
 				<button
@@ -38,7 +38,7 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 			<ng-template #opposite let-event>
 				@let eventLocation = event | eventLocation;
 				<section
-					class="mt-3 hidden lg:flex text-primary-900 text-center justify-start items-center flex-col gap-1">
+					class="mt-3 hidden lg:flex text-primary-900 text-center justify-start items-center flex-col gap-2">
 					<h4 class=" font-semibold">{{ eventLocation.name }}</h4>
 
 					<app-event-type [event]="event" />
@@ -59,58 +59,61 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 					<div
 						class="block lg:hidden w-full text-primary-950 border-b border-offset-200 pb-2 border-primary-200">
 						<div class="flex flex-wrap justify-between items-center gap-2">
-							<h4 class="text-md font-semibold">
+							<h4 class="text-md font-semibold text-primary-800">
 								{{ eventLocation.name }}
-								<span class="text-xs text-gray-400 text-300">
+								<span class="text-xs text-primary-400 text-300 font-normal">
 									({{ eventLocation.city }})
 								</span>
 							</h4>
 							<app-event-type [event]="event" />
 						</div>
 
-						<app-event-dates [event]="event" />
+						<app-event-dates
+							class="text-primary-400"
+							showTimeDiff
+							[event]="event" />
 					</div>
 
-					<!-- Job info -->
-					@if (isJob(event)) {
-						<h3 class="text-xl font-semibold text-primary-500 w-full">
-							{{ event.title }}
-						</h3>
+					<section class="flex flex-col gap-3">
+						<!-- Job info -->
+						@if (isJob(event)) {
+							<h3 class="text-xl font-semibold text-primary-950 w-full">
+								{{ event.title }}
+							</h3>
 
-						<p
-							class="w-full leading-snug tracking-tight max-w-prose leading-9 text-pretty text-sm">
-							{{ event.summary }}
-						</p>
-
-						<app-skills-list [skills]="event.skills" />
-					}
-
-					<!-- Training info -->
-					@else if (isTraining(event)) {
-						<h3 class="text-xl font-semibold text-primary-500 w-full">
-							{{ event.name }}
-						</h3>
-
-						<p
-							class="w-full leading-tight tracking-tight max-w-prose leading-9 text-pretty text-sm">
-							{{ event.description }}
-						</p>
-
-						<!-- Diplôme(s) acquis -->
-						<div
-							class="flex gap-2 items-center justify-start text-primary-700 w-full">
-							<app-icon-graduation-cap class="shrink-0" />
-
-							<p class="text-sm">
-								<strong>{{ event.diplomas.length }}</strong> Diplôme{{
-									event.diplomas.length > 1 ? 's' : ''
-								}}
-								acquis lors de cette formation.
+							<p class="w-full max-w-prose text-pretty">
+								{{ event.summary }}
 							</p>
-						</div>
 
-						<app-skills-list [skills]="event | trainingSkills" />
-					}
+							<app-skills-list [skills]="event.skills" />
+						}
+
+						<!-- Training info -->
+						@else if (isTraining(event)) {
+							<h3 class="text-xl font-semibold text-primary-950 w-full">
+								{{ event.name }}
+							</h3>
+
+							<p class="w-full max-w-prose text-pretty">
+								{{ event.description }}
+							</p>
+
+							<!-- Diplôme(s) acquis -->
+							<div
+								class="flex gap-2 items-center justify-start text-primary-700 w-full">
+								<app-icon-graduation-cap class="shrink-0" />
+
+								<p class="text-sm">
+									<strong>{{ event.diplomas.length }}</strong> Diplôme{{
+										event.diplomas.length > 1 ? 's' : ''
+									}}
+									acquis lors de cette formation.
+								</p>
+							</div>
+
+							<app-skills-list [skills]="event | trainingSkills" />
+						}
+					</section>
 
 					<!-- See more button for mobile -->
 					<div class="lg:hidden">

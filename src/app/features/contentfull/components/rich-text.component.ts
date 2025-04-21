@@ -4,7 +4,7 @@ import type { FormattedRichText } from '../types/rich-text.type';
 @Component({
 	selector: 'app-rich-text',
 	host: {
-		class: 'tracking-snug leading-relaxed flex flex-col gap-2',
+		class: 'flex flex-col gap-2',
 	},
 	template: `
 		@for (description of content(); track $index) {

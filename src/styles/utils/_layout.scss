@@ -34,10 +34,11 @@ html {
   }
 
   .dialog-card {
-    @apply flex-1 shrink-0 w-full lg:w-[768px] h-[90dvh];
+    @apply flex-1 shrink-0 w-full lg:w-[768px];
+    height: calc(100dvh - 68px);
 
     &>app-card {
-      @apply rounded-b-none lg:rounded-b-lg;
+      @apply rounded-none lg:rounded-lg;
     }
   }
 }

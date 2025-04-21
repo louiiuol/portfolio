@@ -1,10 +1,14 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { HouseLaptopIcon, LocationPinIcon } from '@shared/components';
+import {
+	ExternalLinkIcon,
+	HouseLaptopIcon,
+	LocationPinIcon,
+} from '@shared/components';
 import type { Place, RemotePolicy } from '../../types';
 
 @Component({
 	selector: 'app-place-info',
-	host: { class: 'flex flex-col gap-2' },
+	host: { class: 'flex flex-col gap-4' },
 	template: `
 		<div class="flex gap-4 items-start justify-start">
 			<!-- Logo -->
@@ -15,14 +19,14 @@ import type { Place, RemotePolicy } from '../../types';
 
 			<!-- Name and url -->
 			<div class="flex flex-col gap-1">
-				<h4 class="text-md font-semibold text-primary-500">
+				<h4 class="text-lg font-semibold text-primary-500">
 					{{ place().name }}
 					@if (place().url) {
-						<span class="text-xs"
-							>(<a class="text-blue-500" target="_blank" [href]="place().url">
-								Voir le site </a
-							>)</span
-						>
+						<span class="text-xs ml-2">
+							<a class="text-blue-500" target="_blank" [href]="place().url">
+								Voir le site <app-icon-external-link class="ml-1" />
+							</a>
+						</span>
 					}
 				</h4>
 
@@ -49,11 +53,9 @@ import type { Place, RemotePolicy } from '../../types';
 		</div>
 
 		<!-- Description -->
-		<p class="text-sm italic text-gray-600 max-w-prose">
-			" {{ place().description }} "
-		</p>
+		<p class="text-slate-600 max-w-prose">" {{ place().description }} "</p>
 	`,
-	imports: [LocationPinIcon, HouseLaptopIcon],
+	imports: [LocationPinIcon, HouseLaptopIcon, ExternalLinkIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaceInfoComponent {

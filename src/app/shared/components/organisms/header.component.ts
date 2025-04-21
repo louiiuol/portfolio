@@ -17,7 +17,7 @@ import { APP_LINKS } from '../../../app.routes';
 						app-button
 						appearance="basic"
 						color="primary"
-						[routerLink]="'/' + link.path"
+						[routerLink]="link.path"
 						[routerLinkActive]="'active'"
 						[routerLinkActiveOptions]="{ exact: true }">
 						{{ link.label }}

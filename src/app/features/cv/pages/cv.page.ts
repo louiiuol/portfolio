@@ -24,7 +24,7 @@ import { CvService } from '../services/cv.service';
 				<app-loader message="chargement des informations du CV" />
 			} @else if (cvService.sortedEvents().error) {
 				<p
-					class="text-gray-700 italic max-w-prose text-pretty text-center mt-6 mx-auto">
+					class="text-slate-700 italic max-w-prose text-pretty text-center mt-6 mx-auto">
 					{{ errorMessage }}
 				</p>
 			} @else {

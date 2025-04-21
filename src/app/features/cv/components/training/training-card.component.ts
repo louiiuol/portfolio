@@ -39,8 +39,6 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 					[event]="training()" />
 			</div>
 
-			<app-skills-list showAll [skills]="training() | trainingSkills" />
-
 			<!-- School -->
 			<div class="flex flex-col gap-2">
 				<h3 class="font-semibold">École</h3>
@@ -52,6 +50,12 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 				class="bg-primary-50 shadow-inner text-primary-800 px-6 py-3 rounded-2xl">
 				{{ training().description }}
 			</p>
+
+			<!-- Skills -->
+			<div class="flex flex-col gap-2">
+				<h3 class="font-semibold">Compétences acquises</h3>
+				<app-skills-list showAll [skills]="training() | trainingSkills" />
+			</div>
 
 			<!-- Diplomas -->
 			<div class="flex flex-col gap-2">
@@ -70,11 +74,6 @@ import { SkillsListComponent } from '../skill/skills-list.component';
 					}
 				</ul>
 			</div>
-
-			<!-- Skills Section: savoir être / savoir faire -->
-			<!-- <div class="flex flex-col gap-2 w-full">
-				<h3 class="font-semibold">Compétences acquises</h3>
-			</div> -->
 		</app-card>
 	`,
 	imports: [

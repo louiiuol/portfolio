@@ -29,7 +29,7 @@ import { debounceTime, filter, map, shareReplay, startWith } from 'rxjs';
 				[style.minWidth]="minWidth()"
 				[style.width]="inputWidth()" />
 			@if (hint()) {
-				<p class="text-xs text-gray-500 mt-2">{{ hint() }}</p>
+				<p class="text-xs text-slate-500 mt-2">{{ hint() }}</p>
 			}
 		</div>
 	`,

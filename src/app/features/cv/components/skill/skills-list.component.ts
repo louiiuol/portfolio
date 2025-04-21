@@ -19,14 +19,14 @@ import { SkillPillComponent } from './skill-pill.component';
 				<app-skill-pill [skill]="skill" />
 			} @empty {
 				@if (showEmpty()) {
-					<p class="text-sm text-gray-500">Aucune compétence associée</p>
+					<p class="text-sm text-slate-500">Aucune compétence associée</p>
 				}
 			}
 		</div>
 		@if (!showAll()) {
 			@let remainingSkills = skills().length - this.limit();
 			@if (remainingSkills > 0) {
-				<span class="text-xs text-gray-500 w-fit pb-2">
+				<span class="text-xs text-slate-500 w-fit pb-2">
 					+ {{ remainingSkills }} autres
 				</span>
 			}
@@ -39,7 +39,7 @@ export class SkillsListComponent {
 	readonly showAll = input(false, { transform: booleanAttribute });
 	readonly showEmpty = input(false, { transform: booleanAttribute });
 	readonly showMore = input(false, { transform: booleanAttribute });
-	readonly limit = input(3);
+	readonly limit = input(5);
 
 	protected readonly shownSkills = computed(() =>
 		this.showAll() ? this.skills() : this.skills().slice(0, this.limit())

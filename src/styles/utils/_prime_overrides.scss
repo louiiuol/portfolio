@@ -30,6 +30,7 @@ p-timeline {
 
   @media screen and (max-width: 32rem) {
     .p-timeline-event-separator {
+      flex: 0 !important;
       display: none !important;
     }
   }
@@ -49,7 +50,7 @@ p-timeline {
   @media screen and (max-width: 64rem) {
     & {
       max-width: 100vw;
-      height: 100%;
+      height: 100dvh;
     }
   }
 }
@@ -58,6 +59,6 @@ p-timeline {
 .p-tooltip {
   --p-tooltip-max-width: 64rem;
   --p-tooltip-background: whitesmoke;
-  --p-tooltip-color: var(--color-gray-800);
+  --p-tooltip-color: var(--color-slate-800);
   @apply text-balance p-3;
 }
