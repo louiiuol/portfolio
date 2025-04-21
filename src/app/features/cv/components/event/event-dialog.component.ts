@@ -20,10 +20,10 @@ import { EventCardComponent } from './event-card.component';
 			<p-dialog modal [visible]="!!activeEvent">
 				<ng-template #headless>
 					<div
-						class="flex flex-col lg:flex-row lg:gap-2 items-end content-end  lg:items-center h-full">
+						class="flex flex-col md:flex-row md:gap-2 items-end content-end  md:items-center h-full">
 						<!-- Desktop previous button -->
 						<button
-							class="!hidden lg:!inline-flex"
+							class="!hidden md:!inline-flex"
 							app-button
 							appearance="fab"
 							color="white"
@@ -34,13 +34,13 @@ import { EventCardComponent } from './event-card.component';
 
 						<!-- Event card -->
 						<app-event-card
-							class="!rounded-none lg:!rounded-lg"
+							class="!rounded-none md:!rounded-lg"
 							[event]="activeEvent"
 							(closed)="setActiveEvent.emit(null)" />
 
 						<!-- Desktop next button -->
 						<button
-							class="!hidden lg:!inline-flex"
+							class="!hidden md:!inline-flex"
 							app-button
 							appearance="fab"
 							color="white"
@@ -50,7 +50,7 @@ import { EventCardComponent } from './event-card.component';
 						</button>
 
 						<!-- Mobile navigation -->
-						<nav class="flex w-full lg:hidden h-18">
+						<nav class="flex w-full md:hidden h-18">
 							<button
 								class="flex-1 hover:!bg-primary-50"
 								app-button
