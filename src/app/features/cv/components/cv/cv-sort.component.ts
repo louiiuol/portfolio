@@ -38,7 +38,7 @@ export type EventSortableField = (typeof sortableFields)[number];
 	selector: 'app-cv-sort',
 	template: `
 		<app-menu [menuItems]="sortableFields">
-			<app-icon-sort class="text-accent-300" trigger />
+			<app-icon-sort class="text-accent-300 mt-1.5" trigger />
 		</app-menu>
 	`,
 	imports: [MenuOverlay, SortIcon],

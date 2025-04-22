@@ -47,13 +47,12 @@ type CvFilters = typeof initialFilters;
 		<app-card
 			class="min-h-full  max-w-[1024px] w-full mx-auto !rounded-none sm:!rounded-lg">
 			<h1 heading>Curriculum Vitae</h1>
-			<nav class="flex gap-6 justify-between items-center" subHeader>
+			<nav class="flex gap-4 sm:gap-6 justify-between items-start" subHeader>
 				<app-cv-filters
 					[filters]="filters()"
 					(filtersChanged)="updateFilters($event)">
 					@if (!filtersEqualsInitialOne()) {
 						<button
-							class="sm:!block !hidden"
 							app-button
 							appearance="stroked"
 							color="red"

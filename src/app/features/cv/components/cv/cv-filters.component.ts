@@ -33,13 +33,12 @@ export type CvFilters = {
 
 @Component({
 	selector: 'app-cv-filters',
-	host: { class: 'inline-flex items-center gap-4 flex-1' },
 	template: `
 		<form
-			class="flex gap-2 items-center justify-start flex-1 md:flex-0"
+			class="flex flex-wrap gap-2 items-center justify-start flex-1 max-w-lg"
 			[formGroup]="filtersForm">
 			<p-select
-				class="md:w-52 !hidden md:!flex"
+				class="flex-1"
 				optionLabel="label"
 				optionValue="value"
 				placeholder="Type de contrat"
@@ -48,19 +47,23 @@ export type CvFilters = {
 				[formControl]="filtersForm.controls.eventType"
 				[options]="eventTypes" />
 
-			<p-multiselect
-				class="lg:w-52 !hidden lg:!flex"
-				emptyFilterMessage="Aucune compétence"
-				optionLabel="name"
-				optionValue="name"
-				placeholder="Compétences"
-				showClear
-				size="small"
-				[formControl]="filtersForm.controls.skills"
-				[options]="cvService.skills()" />
-		</form>
+			@if (cvService.skills(); as skills) {
+				<p-multiselect
+					class="flex-1"
+					emptyFilterMessage="Aucune compétence"
+					optionLabel="name"
+					optionValue="name"
+					placeholder="Compétences"
+					showClear
+					size="small"
+					[formControl]="filtersForm.controls.skills"
+					[options]="skills" />
+			} @else {
+				<span class="bg-slate-200 rounded-lg w-52 flex-1">chargement</span>
+			}
 
-		<ng-content select="[suffix]" />
+			<ng-content select="[suffix]" />
+		</form>
 	`,
 
 	imports: [
