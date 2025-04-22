@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { ContentfullService } from '@feat/contentfull/services/contentfull.service';
 import { multiTypeSort } from '@shared/functions';
 import type { nullish } from '@shared/types';
-import { isJob, type CvEvent } from '../types';
-import { isTraining } from '../types/training.type';
+import { Job, type CvEvent } from '../types';
+import { TrainingEvent } from '../types/training.type';
 
 @Injectable()
 export class CvService {
@@ -18,16 +18,16 @@ export class CvService {
 			loading: this.contentfullService.contentResource.isLoading(),
 			error: this.contentfullService.contentResource.error(),
 		};
-		if (!entries) {
+		if (!entries || state.loading || state.error) {
 			return { ...state, data: [] };
 		}
-		const content = [
-			...entries.training.filter(isTraining),
-			...entries.exprience.filter(isJob),
-		];
+
+		const trainings = entries.training.map(entry => new TrainingEvent(entry));
+		const jobs = entries.exprience.map(entry => new Job(entry));
+
 		return {
 			...state,
-			data: multiTypeSort(content, 'startDate', 'desc'),
+			data: multiTypeSort([...trainings, ...jobs], 'startDate', 'desc'),
 		};
 	});
 
@@ -37,7 +37,6 @@ export class CvService {
 	setActiveEvent(event: CvEvent | string | nullish): void {
 		if (typeof event === 'string') {
 			const found = this.sortedEvents().data.find(j => j.id === event);
-
 			if (found) {
 				this.activeEvent.set(found);
 			}

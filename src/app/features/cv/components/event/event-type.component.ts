@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { ContractIcon, GraduationCapIcon } from '@shared/components';
-import { EventTypePipe } from '../../pipes';
 import { isJob, type CvEvent } from '../../types';
 
 @Component({
@@ -15,9 +14,9 @@ import { isJob, type CvEvent } from '../../types';
 		} @else {
 			<app-icon-graduation-cap />
 		}
-		{{ event() | eventType }}
+		{{ event().type }}
 	`,
-	imports: [GraduationCapIcon, ContractIcon, EventTypePipe],
+	imports: [GraduationCapIcon, ContractIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventTypeComponent {

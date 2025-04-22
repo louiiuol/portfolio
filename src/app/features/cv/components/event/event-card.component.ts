@@ -4,18 +4,14 @@ import {
 	input,
 	output,
 } from '@angular/core';
+import { RichTextComponent } from '@feat/contentfull/components/rich-text.component';
 import {
 	Card,
 	EventDatesComponent,
 	GraduationCapIcon,
 } from '@shared/components';
-import { RichTextComponent } from '../../../contentfull/components/rich-text.component';
-import {
-	EventDescriptionPipe,
-	EventNamePipe,
-	EventSkillsPipe,
-} from '../../pipes';
-import { isJob, type CvEvent } from '../../types';
+
+import { isJob, isTraining, type CvEvent } from '../../types';
 import { PlaceInfoComponent } from '../place/place-info.component';
 import { SkillsListComponent } from '../skill/skills-list.component';
 import { EventTypeComponent } from './event-type.component';
@@ -28,7 +24,7 @@ import { EventTypeComponent } from './event-type.component';
 			@let displayedEvent = event();
 
 			<h2 heading>
-				{{ displayedEvent | eventName }}
+				{{ displayedEvent.name }}
 			</h2>
 			<!-- Job tags & dates -->
 			<section
@@ -41,7 +37,7 @@ import { EventTypeComponent } from './event-type.component';
 			<!-- Description -->
 			<p
 				class="bg-primary-50 shadow-inner text-primary-800 px-6 py-3 rounded-2xl">
-				{{ displayedEvent | eventDescription }}
+				{{ displayedEvent.description }}
 			</p>
 
 			<section class="flex flex-col gap-2">
@@ -49,19 +45,19 @@ import { EventTypeComponent } from './event-type.component';
 					<!-- Company -->
 					<h3 class="font-semibold">Entreprise</h3>
 					<app-place-info
-						[place]="displayedEvent.company"
+						[place]="displayedEvent.location"
 						[remotePolicy]="displayedEvent.remotePolicy" />
 				} @else {
 					<!-- School -->
 					<h3 class="font-semibold">École</h3>
-					<app-place-info [place]="displayedEvent.school" />
+					<app-place-info [place]="displayedEvent.location" />
 				}
 			</section>
 
 			<!-- Skills -->
 			<section class="flex flex-col gap-2">
 				<h3 class="font-semibold">Compétences acquises</h3>
-				<app-skills-list showAll [skills]="displayedEvent | eventSkills" />
+				<app-skills-list showAll [skills]="displayedEvent.skills" />
 			</section>
 
 			<!-- Specifics section -->
@@ -71,8 +67,8 @@ import { EventTypeComponent } from './event-type.component';
 					<h3 class="font-semibold">Tâches accomplies</h3>
 					<app-rich-text
 						class="px-6 text-primary-800"
-						[content]="displayedEvent.description" />
-				} @else {
+						[content]="displayedEvent.tasks" />
+				} @else if (isTraining(displayedEvent)) {
 					<!-- Training Diplomas -->
 					<h3 class="font-semibold mb-2">Diplômes acquis</h3>
 					<ul class="flex flex-col gap-4">
@@ -100,9 +96,6 @@ import { EventTypeComponent } from './event-type.component';
 		EventDatesComponent,
 		EventTypeComponent,
 		GraduationCapIcon,
-		EventNamePipe,
-		EventDescriptionPipe,
-		EventSkillsPipe,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -111,4 +104,5 @@ export class EventCardComponent {
 	readonly closed = output<void>();
 
 	protected readonly isJob = isJob;
+	protected readonly isTraining = isTraining;
 }

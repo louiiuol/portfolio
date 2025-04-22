@@ -1,6 +1,7 @@
 :host {
   position: relative;
   overflow: clip;
+  height: fit-content;
 
   &[data-color="primary"] {
     --button-theme: var(--color-primary-500);
@@ -84,7 +85,7 @@
     &:not([data-appearance="icon"]),
     &:not([data-appearance="icon-stroked"]),
     &:not([data-appearance="fab"]) {
-      padding: 0.125rem 0.5rem;
+      padding: 0.125rem 0.25rem;
       font-size: var(--text-xs);
       line-height: var(--text-xs--line-height);
     }
@@ -107,7 +108,7 @@
     &:not([data-appearance="icon"]),
     &:not([data-appearance="icon-stroked"]),
     &:not([data-appearance="fab"]) {
-      padding: 0.5rem 1rem;
+      padding: 0.25rem 0.5rem;
       font-size: var(--text-sm);
       line-height: var(--text-sm--line-height);
     }

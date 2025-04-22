@@ -1,4 +1,4 @@
-import { entrySchema } from '@feat/contentfull/types/entry.type';
+import { entrySchema } from '@feat/contentfull/types';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
 

@@ -8,8 +8,9 @@ import {
 
 import { MenuOverlay, SortIcon, type MenuItem } from '@shared/components';
 import type { SortField } from '@shared/types';
+import type { CvEventField } from '../../types';
 
-const sortableFields: (MenuItem & SortField<'startDate'>)[] = [
+const sortableFields: (MenuItem & SortField<CvEventField>)[] = [
 	{
 		label: 'Du plus récent au plus ancien',
 		field: 'startDate',
@@ -20,28 +21,38 @@ const sortableFields: (MenuItem & SortField<'startDate'>)[] = [
 		field: 'startDate',
 		direction: 'asc',
 	},
+	{
+		label: 'Par ordre alphabétique',
+		field: 'name',
+		direction: 'asc',
+	},
+	{
+		label: 'Par ordre inverse alphabétique',
+		field: 'name',
+		direction: 'desc',
+	},
 ];
-export type JobSortableField = (typeof sortableFields)[number];
+export type EventSortableField = (typeof sortableFields)[number];
 
 @Component({
-	selector: 'app-job-sort',
+	selector: 'app-cv-sort',
 	template: `
 		<app-menu [menuItems]="sortableFields">
-			<app-icon-sort class="text-slate-600" trigger />
+			<app-icon-sort class="text-accent-300" trigger />
 		</app-menu>
 	`,
 	imports: [MenuOverlay, SortIcon],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CvSortComponent {
-	readonly sortChanged = output<JobSortableField | null>();
+	readonly sortChanged = output<EventSortableField | null>();
 
 	protected sortableFields = [...sortableFields].map(f => ({
 		...f,
 		action: () => this.activeSort.set(f),
 	}));
 
-	private readonly activeSort = signal<JobSortableField | null>(null);
+	private readonly activeSort = signal<EventSortableField | null>(null);
 	private readonly syncSortChanged = effect(() =>
 		this.sortChanged.emit(this.activeSort())
 	);

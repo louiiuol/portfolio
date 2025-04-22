@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { EventDatesComponent } from '@shared/components';
-import { EventLocationPipe } from '../../pipes';
 import type { CvEvent } from '../../types';
 import { EventTypeComponent } from './event-type.component';
 
@@ -11,7 +10,7 @@ import { EventTypeComponent } from './event-type.component';
 			'mt-3 hidden lg:flex text-primary-800 text-center justify-start items-center flex-col gap-2',
 	},
 	template: `
-		<h4 class=" font-semibold">{{ (event() | eventLocation).name }}</h4>
+		<h4 class=" font-semibold">{{ event().location.name }}</h4>
 
 		<app-event-type [event]="event()" />
 
@@ -19,7 +18,7 @@ import { EventTypeComponent } from './event-type.component';
 
 		<ng-content />
 	`,
-	imports: [EventLocationPipe, EventTypeComponent, EventDatesComponent],
+	imports: [EventTypeComponent, EventDatesComponent],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EventContextComponent {

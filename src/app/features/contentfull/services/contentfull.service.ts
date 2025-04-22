@@ -1,14 +1,9 @@
 import { computed, inject, Injectable, resource } from '@angular/core';
 import { environment } from '@env';
 
-import {
-	isSkill,
-	type Diploma,
-	type Job,
-	type Place,
-	type Skill,
-	type Training,
-} from '@feat/cv/types';
+import { isSkill, type Diploma, type Place, type Skill } from '@feat/cv/types';
+import type { JobInput } from '@feat/cv/types/job.type';
+import type { TrainingInput } from '@feat/cv/types/training.type';
 import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services';
 import { isUnknownRecord, type UnknownRecord } from '@shared/types';
@@ -19,12 +14,12 @@ import { RichTextService } from './rich-text.service';
 // Internal types
 type ContentTypeId = 'exprience' | 'skill' | 'company' | 'school' | 'diploma';
 const entriesRecord: {
-	exprience: Job[];
+	exprience: JobInput[];
 	skill: Skill[];
 	company: Place[];
 	school: Place[];
 	diploma: Diploma[];
-	training: Training[];
+	training: TrainingInput[];
 } = {
 	exprience: [],
 	skill: [],

@@ -1,14 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import {
-	EventDatesComponent,
-	GraduationCapIcon,
-} from '../../../../shared/components';
-import {
-	EventDescriptionPipe,
-	EventLocationPipe,
-	EventNamePipe,
-	EventSkillsPipe,
-} from '../../pipes';
+import { EventDatesComponent, GraduationCapIcon } from '@shared/components';
 import { isTraining, type CvEvent } from '../../types';
 import { SkillsListComponent } from '../skill/skills-list.component';
 import { EventTypeComponent } from './event-type.component';
@@ -20,16 +11,14 @@ import { EventTypeComponent } from './event-type.component';
 			'flex flex-col justify-start gap-4 mx-2 sm:mt-3 p-3 bg-white rounded-lg shadow-md text-start max-w-[584px] mx-auto w-full',
 	},
 	template: `
-		@let eventLocation = event() | eventLocation;
-
 		<!-- Common section -->
 		<header
 			class="flex flex-col gap-2 lg:hidden w-full text-primary-800 border-b border-offset-200 pb-2 border-primary-200">
 			<div class="flex flex-wrap justify-between items-center gap-2">
 				<h4 class="text-md font-semibold text-primary-800">
-					{{ eventLocation.name }}
+					{{ event().location.name }}
 					<span class="text-xs text-primary-400 text-300 font-normal">
-						({{ eventLocation.city }})
+						({{ event().location.city }})
 					</span>
 				</h4>
 				<app-event-type [event]="event()" />
@@ -43,11 +32,11 @@ import { EventTypeComponent } from './event-type.component';
 
 		<section class="flex flex-col gap-3">
 			<h3 class="text-xl font-semibold text-primary-800 w-full">
-				{{ event() | eventName }}
+				{{ event().name }}
 			</h3>
 
 			<p class="w-full max-w-prose text-pretty text-primary-800">
-				{{ event() | eventDescription }}
+				{{ event().description }}
 			</p>
 
 			<!-- Training info -->
@@ -67,7 +56,7 @@ import { EventTypeComponent } from './event-type.component';
 				</div>
 			}
 
-			<app-skills-list [skills]="event() | eventSkills" />
+			<app-skills-list [skills]="event().skills" />
 		</section>
 
 		<ng-content />
@@ -76,10 +65,6 @@ import { EventTypeComponent } from './event-type.component';
 		EventDatesComponent,
 		SkillsListComponent,
 		GraduationCapIcon,
-		EventLocationPipe,
-		EventNamePipe,
-		EventDescriptionPipe,
-		EventSkillsPipe,
 		EventTypeComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
