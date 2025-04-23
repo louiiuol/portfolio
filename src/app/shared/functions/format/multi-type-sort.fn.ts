@@ -7,14 +7,14 @@ import { multiTypeCompare } from '../compare/multi-type-compare.fn';
  * @param direction The direction to sort in.
  * @returns The sorted array.
  */
-export function multiTypeSort<T>(
+export const multiTypeSort = <T>(
 	filtered: T[],
 	field: keyof T,
 	direction: 'asc' | 'desc'
-): T[] {
+): T[] => {
 	return filtered.sort((a, b) => {
 		const current = (direction === 'asc' ? a : b)[field];
 		const next = (direction === 'asc' ? b : a)[field];
 		return multiTypeCompare(current, next);
 	});
-}
+};

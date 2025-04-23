@@ -6,9 +6,9 @@ import { EVENT_TYPES_KEYS } from './event-type.type';
 import type { JobInput } from './job.type';
 import { placeSchema, type Place } from './place.type';
 import { skillSchema, type Skill } from './skill.type';
-import { type TrainingInput } from './training.type';
+import { type TrainingEntry } from './training.type';
 
-export type CvEventInput = JobInput | TrainingInput;
+export type CvEventInput = JobInput | TrainingEntry;
 
 export abstract class CvEvent {
 	id: string | nullish;

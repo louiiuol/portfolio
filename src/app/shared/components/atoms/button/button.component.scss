@@ -1,7 +1,6 @@
 :host {
   position: relative;
   overflow: clip;
-  height: fit-content;
 
   &[data-color="primary"] {
     --button-theme: var(--color-primary-500);

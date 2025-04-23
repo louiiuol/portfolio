@@ -9,4 +9,4 @@ export {
 	type CvEventType,
 } from './event-type.type';
 export { isSkill, skillSchema, type Skill } from './skill.type';
-export { isTraining } from './training.type';
+export { isTraining, Training } from './training.type';

@@ -3,20 +3,11 @@ import {
 	Component,
 	effect,
 	inject,
-	input,
-	output,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-import { SkillService } from '@feat/cv/services/skill.service';
-
-import {
-	EVENT_TYPES,
-	type ContractType,
-	type CvEventType,
-	type Skill,
-} from '@feat/cv/types';
+import { EVENT_TYPES, type CvEventType, type Skill } from '@feat/cv/types';
 import { deepEqualObjects, isEmpty } from '@shared/functions';
 import { isNotNullish, type nullish } from '@shared/types';
 
@@ -25,11 +16,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectModule } from 'primeng/select';
 import { debounceTime } from 'rxjs';
-
-export type CvFilters = {
-	contractType?: ContractType | nullish;
-	skills: Skill['name'][];
-};
+import { CvService } from '../../services/cv.service';
 
 @Component({
 	selector: 'app-cv-filters',
@@ -76,13 +63,12 @@ export type CvFilters = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CvFiltersComponent {
-	readonly filters = input.required<CvFilters>();
-	readonly filtersChanged = output<CvFilters>();
-
-	protected readonly cvService = inject(SkillService);
+	protected readonly cvService = inject(CvService);
 
 	protected readonly filtersForm = new FormGroup({
-		eventType: new FormControl<CvEventType | nullish>(null),
+		eventType: new FormControl<CvEventType | nullish>(null, {
+			nonNullable: true,
+		}),
 		skills: new FormControl<Skill['name'][]>([], {
 			nonNullable: true,
 		}),
@@ -93,7 +79,7 @@ export class CvFiltersComponent {
 	constructor() {
 		// Patch filters effect
 		effect(() => {
-			const filtersInput = this.filters();
+			const filtersInput = this.cvService.filters();
 			if (
 				!deepEqualObjects(filtersInput, this.filtersForm.value) &&
 				!isEmpty(filtersInput)
@@ -106,9 +92,9 @@ export class CvFiltersComponent {
 		this.filtersForm.valueChanges
 			.pipe(debounceTime(300), takeUntilDestroyed())
 			.subscribe(filtersOutput => {
-				const filtersInput = this.filters();
+				const filtersInput = this.cvService.filters();
 				if (!deepEqualObjects(filtersOutput, filtersInput)) {
-					this.filtersChanged.emit({
+					this.cvService.updateFilters({
 						...filtersOutput,
 						skills: filtersOutput.skills?.filter(isNotNullish) ?? [],
 					});

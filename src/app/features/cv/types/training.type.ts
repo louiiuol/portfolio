@@ -16,9 +16,9 @@ export const trainingSchema = entrySchema.extend({
 	diplomas: z.array(diplomaSchema),
 	school: placeSchema,
 });
-export type TrainingInput = z.infer<typeof trainingSchema>;
+export type TrainingEntry = z.infer<typeof trainingSchema>;
 
-export class TrainingEvent extends CvEvent {
+export class Training extends CvEvent {
 	readonly type: 'Formation';
 	readonly description: string;
 	readonly location: Place;
@@ -26,7 +26,7 @@ export class TrainingEvent extends CvEvent {
 	readonly skills: Skill[];
 	readonly diplomas: Diploma[];
 
-	constructor(input: TrainingInput) {
+	constructor(input: TrainingEntry) {
 		super(input);
 		this.description = input.description;
 		this.location = input.school;
@@ -43,7 +43,7 @@ export class TrainingEvent extends CvEvent {
 	}
 }
 
-export const isTraining = (entry: unknown): entry is TrainingEvent =>
+export const isTraining = (entry: unknown): entry is Training =>
 	isSchemaType(
 		entry,
 		cvEventSchema.extend({

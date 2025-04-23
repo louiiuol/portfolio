@@ -1,33 +1,71 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentfullService } from '@feat/contentfull/services/contentfull.service';
-import { multiTypeSort } from '@shared/functions';
-import type { nullish } from '@shared/types';
-import { Job, type CvEvent } from '../types';
-import { TrainingEvent } from '../types/training.type';
+import { multiTypeSort, removeNullishProps } from '@shared/functions';
+import type { nullish, SortDirection } from '@shared/types';
+import type { EventSortableField } from '../components/cv/cv-sort.component';
+import type { CvEvent, CvEventField, CvEventType } from '../types';
+import { isSkill, Job, Training } from '../types';
+
+export type CvFilters = {
+	eventType?: CvEventType | nullish;
+	skills?: string[];
+};
+const initialFilters: CvFilters = {
+	eventType: null,
+	skills: [],
+};
 
 @Injectable()
 export class CvService {
 	private readonly contentfullService = inject(ContentfullService);
 	private readonly router = inject(Router);
 
-	// All events
+	readonly skills = computed(() =>
+		(this.contentfullService.contentResource.value()?.skill ?? []).filter(
+			isSkill
+		)
+	);
+
+	readonly filters = signal<CvFilters>(initialFilters);
+	readonly sort = signal<{ sortBy: CvEventField; direction: SortDirection }>({
+		sortBy: 'startDate',
+		direction: 'asc',
+	});
+
+	// All CV events
 	readonly sortedEvents = computed(() => {
 		const entries = this.contentfullService.contentResource.value();
-		const state = {
+		const states = {
 			loading: this.contentfullService.contentResource.isLoading(),
 			error: this.contentfullService.contentResource.error(),
 		};
-		if (!entries || state.loading || state.error) {
-			return { ...state, data: [] };
+		if (!entries || states.loading || states.error) {
+			return { ...states, data: [] };
 		}
 
-		const trainings = entries.training.map(entry => new TrainingEvent(entry));
-		const jobs = entries.exprience.map(entry => new Job(entry));
+		let filtered = [
+			...entries.training.map(entry => new Training(entry)),
+			...entries.exprience.map(entry => new Job(entry)),
+		];
+
+		const { eventType, skills } = this.filters();
+
+		if (eventType) {
+			filtered = filtered.filter(job => job.type === eventType);
+		}
+
+		if (skills?.length) {
+			filtered = filtered.filter(job =>
+				skills.some(s => job.skills.map(s => s.name).includes(s))
+			);
+		}
+
+		const { sortBy, direction } = this.sort();
 
 		return {
-			...state,
-			data: multiTypeSort([...trainings, ...jobs], 'startDate', 'desc'),
+			...states,
+			data: multiTypeSort(filtered, sortBy, direction),
 		};
 	});
 
@@ -53,7 +91,7 @@ export class CvService {
 			})
 			.catch(e =>
 				console.error(
-					`Une erreur est survenue lors de la redirection vers: /cv?jobId=${event?.id}. Causé par: `,
+					`Une erreur est survenue lors de la redirection vers: /cv?event=${event?.id}. Causé par: `,
 					e
 				)
 			);
@@ -83,5 +121,21 @@ export class CvService {
 		}
 
 		this.setActiveEvent(events[nextIndex]);
+	}
+
+	updateFilters(filters: Partial<CvFilters>): void {
+		this.filters.set(
+			removeNullishProps({
+				...this.filters(),
+				...filters,
+			})
+		);
+	}
+
+	updateSort(sortBy: EventSortableField | null) {
+		this.sort.set({
+			sortBy: sortBy?.field ?? 'startDate',
+			direction: sortBy?.direction ?? 'asc',
+		});
 	}
 }

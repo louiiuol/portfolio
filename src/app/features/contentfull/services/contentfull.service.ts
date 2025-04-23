@@ -1,9 +1,9 @@
-import { computed, inject, Injectable, resource } from '@angular/core';
+import { inject, Injectable, resource } from '@angular/core';
 import { environment } from '@env';
 
-import { isSkill, type Diploma, type Place, type Skill } from '@feat/cv/types';
+import { type Diploma, type Place, type Skill } from '@feat/cv/types';
 import type { JobInput } from '@feat/cv/types/job.type';
-import type { TrainingInput } from '@feat/cv/types/training.type';
+import type { TrainingEntry } from '@feat/cv/types/training.type';
 import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services';
 import { isUnknownRecord, type UnknownRecord } from '@shared/types';
@@ -19,7 +19,7 @@ const entriesRecord: {
 	company: Place[];
 	school: Place[];
 	diploma: Diploma[];
-	training: TrainingInput[];
+	training: TrainingEntry[];
 } = {
 	exprience: [],
 	skill: [],
@@ -33,10 +33,6 @@ type StoredEntriesRecord = (EntriesRecord & { updatedAt: Date }) | null;
 
 @Injectable()
 export class ContentfullService {
-	readonly skills = computed(() =>
-		(this.contentResource.value()?.skill ?? []).filter(isSkill)
-	);
-
 	readonly contentResource = resource({
 		loader: async () => {
 			const localEntries = this.getLocalEntries();

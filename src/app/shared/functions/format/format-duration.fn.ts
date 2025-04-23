@@ -21,37 +21,81 @@ export function formatDuration(
 	if (!milliseconds || milliseconds < 1) {
 		return '--';
 	}
-	let seconds = milliseconds * timeFactors['millisecond'].seconds;
-	// If someone passes negative values or 0, handle gracefully:
+
+	const seconds = milliseconds * timeFactors['millisecond'].seconds;
 	if (seconds <= 0) {
-		return `0 ${opt.compact ? timeFactors.second.labelCompact : timeFactors.second.label}`;
+		return formatZeroDuration(opt);
 	}
 
+	return formatDurationParts(seconds, opt);
+}
+
+/**
+ * Formats a duration of 0 seconds into a readable string.
+ *
+ * @param opt - Options for formatting.
+ * @returns A string representing the zero duration.
+ */
+function formatZeroDuration(opt: { compact?: boolean }): string {
+	return `0 ${opt.compact ? timeFactors.second.labelCompact : timeFactors.second.label}`;
+}
+
+/**
+ * Formats a duration in seconds into a readable string, stopping at the specified lowest unit.
+ *
+ * @param seconds - The total duration in seconds.
+ * @param opt - Options for formatting.
+ * @returns A string representing the formatted duration.
+ */
+function formatDurationParts(
+	seconds: number,
+	opt: { separator?: string; compact?: boolean; outputUnit?: TimeUnit }
+): string {
 	let reachedLowest = false;
 	const parts: string[] = [];
 
 	for (const unitKey of UNITS_IN_ORDER) {
-		// If we've already reached the requested lowest unit, ignore smaller units
 		if (reachedLowest) {
 			break;
 		}
 
-		const { seconds: unitSize, label, labelCompact } = timeFactors[unitKey];
-		// How many of this unit fit into the current remainder?
-		const value = Math.floor(seconds / unitSize);
-
-		if (value > 0) {
-			const plural = value > 1 && label !== 'mois' ? 's' : '';
-			parts.push(`${value} ${opt.compact ? labelCompact : label}${plural}`);
-			// Reduce remainder
-			seconds = seconds % unitSize;
+		const part = formatUnitPart(unitKey, seconds, opt);
+		if (part) {
+			parts.push(part.value);
+			seconds = part.remainingSeconds;
 		}
 
-		// If this is the lowest unit we want to show, stop after adding it
 		if (opt.outputUnit === unitKey) {
 			reachedLowest = true;
 		}
 	}
 
 	return parts.join(opt.separator ?? ' ');
+}
+
+/**
+ * Formats a specific unit part of the duration into a readable string.
+ *
+ * @param unitKey - The time unit to format.
+ * @param seconds - The total duration in seconds.
+ * @param opt - Options for formatting.
+ * @returns An object containing the formatted value and remaining seconds, or null if the value is 0.
+ */
+function formatUnitPart(
+	unitKey: TimeUnit,
+	seconds: number,
+	opt: { compact?: boolean }
+): { value: string; remainingSeconds: number } | null {
+	const { seconds: unitSize, label, labelCompact } = timeFactors[unitKey];
+	const value = Math.floor(seconds / unitSize);
+
+	if (value > 0) {
+		const plural = value > 1 && label !== 'mois' ? 's' : '';
+		return {
+			value: `${value} ${opt.compact ? labelCompact : label}${plural}`,
+			remainingSeconds: seconds % unitSize,
+		};
+	}
+
+	return null;
 }
