@@ -34,23 +34,30 @@ import { EventRowComponent } from '../event/event-row.component';
 
 			<!-- CONTEXT -->
 			<ng-template #opposite let-event>
-				<app-event-context [event]="event">
-					<ng-container
-						*ngTemplateOutlet="seeMoreButton; context: { $implicit: event }" />
-				</app-event-context>
-			</ng-template>
-
-			<!-- MAIN CONTENT -->
-			<ng-template #content let-event>
-				<app-event-row [event]="event">
-					<div class="lg:hidden">
+				@if (event) {
+					<app-event-context [event]="event">
 						<ng-container
 							*ngTemplateOutlet="
 								seeMoreButton;
 								context: { $implicit: event }
 							" />
-					</div>
-				</app-event-row>
+					</app-event-context>
+				}
+			</ng-template>
+
+			<!-- MAIN CONTENT -->
+			<ng-template #content let-event>
+				@if (event) {
+					<app-event-row [event]="event">
+						<div class="lg:hidden">
+							<ng-container
+								*ngTemplateOutlet="
+									seeMoreButton;
+									context: { $implicit: event }
+								" />
+						</div>
+					</app-event-row>
+				}
 			</ng-template>
 		</p-timeline>
 

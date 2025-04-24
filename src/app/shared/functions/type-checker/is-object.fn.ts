@@ -4,5 +4,5 @@
  * @returns True if the value is an object, false otherwise.
  */
 export function isObject(value: unknown): value is Record<string, unknown> {
-	return typeof value === 'object' && value !== null && value !== undefined;
+	return typeof value === 'object' && value !== null;
 }

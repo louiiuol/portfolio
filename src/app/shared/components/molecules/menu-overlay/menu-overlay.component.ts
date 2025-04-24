@@ -6,6 +6,7 @@ import {
 	signal,
 } from '@angular/core';
 
+// @todo add active state to menu item
 export type MenuItem = {
 	label: string;
 	action?: () => void;

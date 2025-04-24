@@ -33,7 +33,7 @@ export class Training extends CvEvent {
 		this.name = input.name;
 		this.type = 'Formation';
 		this.diplomas = input.diplomas;
-		this.skills = input.diplomas
+		this.skills = this.diplomas
 			.map(diploma => diploma.skills)
 			.flat()
 			.filter(
