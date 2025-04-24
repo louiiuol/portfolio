@@ -1,7 +1,7 @@
 export const CONTRACT_TYPES = [
 	{ value: 'cdi', label: 'CDI' },
-	{ value: 'cdd', label: 'CDD' },
-	{ value: 'freelance', label: 'Freelance' },
+	// { value: 'cdd', label: 'CDD' },
+	// { value: 'freelance', label: 'Freelance' },
 	{ value: 'alternance', label: 'Alternance' },
 	{ value: 'stage', label: 'Stage' },
 ] as const;

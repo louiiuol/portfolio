@@ -98,8 +98,10 @@ export class ContentfullService {
 		return entry as T;
 	}
 
-	private hasFields(record: UnknownRecord): record is { fields: unknown[] } {
-		return 'fields' in record;
+	private hasFields(
+		record: UnknownRecord
+	): record is { fields: UnknownRecord[] } {
+		return 'fields' in record && Array.isArray(record['fields']);
 	}
 
 	private processObject(obj: UnknownRecord): UnknownRecord {

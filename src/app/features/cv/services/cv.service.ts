@@ -1,9 +1,12 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentfullService } from '@feat/contentfull/services/contentfull.service';
-import { multiTypeSort, removeNullishProps } from '@shared/functions';
-import type { nullish, SortDirection } from '@shared/types';
-import type { EventSortableField } from '../components/cv/cv-sort.component';
+import {
+	deepEqualObjects,
+	multiTypeSort,
+	removeNullishProps,
+} from '@shared/functions';
+import type { nullish, SortField } from '@shared/types';
 import type { CvEvent, CvEventField, CvEventType } from '../types';
 import { isSkill, Job, Training } from '../types';
 
@@ -27,10 +30,10 @@ export class CvService {
 		)
 	);
 
-	readonly filters = signal<CvFilters>(initialFilters);
-	readonly sort = signal<{ sortBy: CvEventField; direction: SortDirection }>({
+	readonly filters = signal(initialFilters);
+	readonly sort = signal<SortField<CvEventField>>({
 		sortBy: 'startDate',
-		direction: 'asc',
+		direction: 'desc',
 	});
 
 	// All CV events
@@ -70,7 +73,7 @@ export class CvService {
 	});
 
 	// Active Event (Job or School) (used by modal)
-	readonly activeEvent = signal<CvEvent | null>(null);
+	readonly activeEvent = signal<CvEvent | nullish>(null);
 
 	setActiveEvent(event: CvEvent | string | nullish): void {
 		if (typeof event === 'string') {
@@ -81,24 +84,15 @@ export class CvService {
 			return;
 		}
 
-		this.activeEvent.set(event ?? null);
-
-		this.router
-			.navigate(['/cv'], {
-				queryParams: {
-					eventId: event?.id ?? null,
-				},
-			})
-			.catch(e =>
-				console.error(
-					`Une erreur est survenue lors de la redirection vers: /cv?event=${event?.id}. Causé par: `,
-					e
-				)
-			);
+		this.activeEvent.set(event);
+		this.redirectToEvent(event?.id);
 	}
 
 	slideEvent(direction: 'next' | 'previous'): void {
 		const events = this.sortedEvents().data;
+		if (!events.length) {
+			return;
+		}
 		const currentIndex = events.findIndex(
 			job => job.id === this.activeEvent()?.id
 		);
@@ -123,19 +117,37 @@ export class CvService {
 		this.setActiveEvent(events[nextIndex]);
 	}
 
-	updateFilters(filters: Partial<CvFilters>): void {
-		this.filters.set(
-			removeNullishProps({
-				...this.filters(),
-				...filters,
-			})
-		);
+	switchActiveEvent(target: 'previous' | 'next' | null): void {
+		if (target === 'previous' || target === 'next') {
+			this.slideEvent(target);
+		} else {
+			this.setActiveEvent(target);
+		}
 	}
 
-	updateSort(sortBy: EventSortableField | null) {
-		this.sort.set({
-			sortBy: sortBy?.field ?? 'startDate',
-			direction: sortBy?.direction ?? 'asc',
-		});
+	updateFilters(filters: Partial<CvFilters>): void {
+		if (!deepEqualObjects(filters, this.filters())) {
+			this.filters.set(
+				removeNullishProps({
+					...this.filters(),
+					...filters,
+				})
+			);
+		}
+	}
+
+	private redirectToEvent(eventId: string | nullish): void {
+		this.router
+			.navigate(['/cv'], {
+				queryParams: {
+					eventId,
+				},
+			})
+			.catch(e =>
+				console.error(
+					`Une erreur est survenue lors de la redirection vers: /cv?event=${eventId}. Causé par: `,
+					e
+				)
+			);
 	}
 }

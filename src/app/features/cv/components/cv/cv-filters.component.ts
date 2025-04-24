@@ -7,7 +7,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-import { EVENT_TYPES, type CvEventType, type Skill } from '@feat/cv/types';
+import { EVENT_TYPES, type CvEventType } from '@feat/cv/types';
 import { deepEqualObjects, isEmpty } from '@shared/functions';
 import { isNotNullish, type nullish } from '@shared/types';
 
@@ -66,12 +66,8 @@ export class CvFiltersComponent {
 	protected readonly cvService = inject(CvService);
 
 	protected readonly filtersForm = new FormGroup({
-		eventType: new FormControl<CvEventType | nullish>(null, {
-			nonNullable: true,
-		}),
-		skills: new FormControl<Skill['name'][]>([], {
-			nonNullable: true,
-		}),
+		eventType: new FormControl<CvEventType | nullish>(null),
+		skills: new FormControl<string[]>([]),
 	});
 
 	protected readonly eventTypes = EVENT_TYPES;
@@ -81,24 +77,21 @@ export class CvFiltersComponent {
 		effect(() => {
 			const filtersInput = this.cvService.filters();
 			if (
-				!deepEqualObjects(filtersInput, this.filtersForm.value) &&
-				!isEmpty(filtersInput)
+				!isEmpty(filtersInput) &&
+				!deepEqualObjects(filtersInput, this.filtersForm.value)
 			) {
-				this.filtersForm.patchValue(filtersInput);
+				this.filtersForm.patchValue(filtersInput, { emitEvent: false });
 			}
 		});
 
-		// Emit filters changed
+		// Emit when filters form changed
 		this.filtersForm.valueChanges
-			.pipe(debounceTime(300), takeUntilDestroyed())
-			.subscribe(filtersOutput => {
-				const filtersInput = this.cvService.filters();
-				if (!deepEqualObjects(filtersOutput, filtersInput)) {
-					this.cvService.updateFilters({
-						...filtersOutput,
-						skills: filtersOutput.skills?.filter(isNotNullish) ?? [],
-					});
-				}
-			});
+			.pipe(debounceTime(400), takeUntilDestroyed())
+			.subscribe(filtersOutput =>
+				this.cvService.updateFilters({
+					...filtersOutput,
+					skills: filtersOutput.skills?.filter(isNotNullish),
+				})
+			);
 	}
 }

@@ -8,7 +8,9 @@ import {
 	withViewTransitions,
 } from '@angular/router';
 
+import { registerLocaleData } from '@angular/common';
 import { provideHttpClient, withFetch } from '@angular/common/http';
+import localeFr from '@angular/common/locales/fr';
 import {
 	provideClientHydration,
 	withEventReplay,
@@ -18,6 +20,9 @@ import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
+
+// Register locale data
+registerLocaleData(localeFr);
 
 // source: https://primeng.org/theming#primary
 const PrimeCustomPreset = definePreset(Aura, {

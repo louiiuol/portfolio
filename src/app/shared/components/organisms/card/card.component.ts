@@ -23,7 +23,8 @@ import { ButtonComponent, CloseIcon } from '../../atoms';
 					<button
 						class="ml-auto"
 						app-button
-						appearance="icon"
+						appearance="icon-stroked"
+						aria-label="Fermer la vue"
 						(click)="closed.emit()">
 						<app-icon-close />
 					</button>

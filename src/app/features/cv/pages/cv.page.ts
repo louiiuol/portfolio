@@ -28,9 +28,7 @@ import { CvService } from '../services/cv.service';
 			<h1 heading>Curriculum Vitae</h1>
 			<nav class="flex gap-4 sm:gap-6 justify-between items-start" subHeader>
 				<app-cv-filters />
-				<app-cv-sort
-					class="ml-auto"
-					(sortChanged)="cvService.updateSort($event)" />
+				<app-cv-sort class="ml-auto" />
 			</nav>
 
 			<!-- Main content -->
@@ -39,16 +37,12 @@ import { CvService } from '../services/cv.service';
 			} @else if (cvService.sortedEvents().error) {
 				<app-error-message [errorMessage]="errorMessage" />
 			} @else {
-				<app-cv-timeline
-					[events]="cvService.sortedEvents().data"
-					(setActiveEvent)="cvService.setActiveEvent($event)" />
+				<app-cv-timeline [events]="cvService.sortedEvents().data" />
 			}
 		</app-card>
 
 		<!-- Job Modal -->
-		<app-event-dialog
-			[event]="cvService.activeEvent()"
-			(setActiveEvent)="switchActiveEvent($event)" />
+		<app-event-dialog [event]="cvService.activeEvent()" />
 	`,
 	imports: [
 		ContentfullModule,
@@ -73,12 +67,4 @@ export class CvPage {
 
 	protected readonly errorMessage =
 		'Impossible de récupérer les informations du CV. Merci de réessayer plus tard... 🙏';
-
-	protected switchActiveEvent(target: 'previous' | 'next' | null): void {
-		if (target === 'previous' || target === 'next') {
-			this.cvService.slideEvent(target);
-		} else {
-			this.cvService.setActiveEvent(target);
-		}
-	}
 }

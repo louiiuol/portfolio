@@ -12,11 +12,12 @@ import type { Place, RemotePolicy } from '../../types';
 	template: `
 		<div class="flex gap-4 items-start justify-start">
 			<!-- Logo -->
-			<img
-				class="size-14"
-				[alt]="'Logo de ' + place().name"
-				[src]="place().logo.file.url" />
-
+			@if (place().logo.file.url; as logoUrl) {
+				<img
+					class="size-14"
+					[alt]="'Logo de ' + place().name"
+					[src]="logoUrl" />
+			}
 			<!-- Name and url -->
 			<div class="flex flex-col gap-1">
 				<h4 class="text-lg font-semibold text-primary-400">

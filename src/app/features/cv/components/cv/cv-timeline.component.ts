@@ -2,8 +2,8 @@ import { NgTemplateOutlet } from '@angular/common';
 import {
 	ChangeDetectionStrategy,
 	Component,
+	inject,
 	input,
-	output,
 } from '@angular/core';
 import {
 	ButtonComponent,
@@ -11,6 +11,7 @@ import {
 	EyeIcon,
 } from '@shared/components';
 import { Timeline } from 'primeng/timeline';
+import { CvService } from '../../services/cv.service';
 import { type CvEvent } from '../../types';
 import { EventContextComponent } from '../event/event-context.component';
 import { EventRowComponent } from '../event/event-row.component';
@@ -25,8 +26,7 @@ import { EventRowComponent } from '../event/event-row.component';
 					app-button
 					color="primary"
 					full
-					size="small"
-					(click)="setActiveEvent.emit(event)">
+					(click)="cvService.setActiveEvent(event)">
 					<app-icon-eye />
 					Voir plus
 				</button>
@@ -71,5 +71,5 @@ import { EventRowComponent } from '../event/event-row.component';
 })
 export class CvTimelineComponent {
 	readonly events = input.required<CvEvent[]>();
-	readonly setActiveEvent = output<CvEvent>();
+	protected readonly cvService = inject(CvService);
 }
