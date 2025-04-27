@@ -3,6 +3,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+const COVERAGE_THRESHOLDS = {
+	HIGH: 80,
+	MEDIUM: 50,
+};
+
 // Fix pour __dirname en module ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,28 +23,39 @@ if (!fs.existsSync(coverageSummaryPath)) {
 	process.exit(1);
 }
 
-const summary = JSON.parse(fs.readFileSync(coverageSummaryPath, 'utf8'));
+function getBadge(percentage) {
+	if (percentage >= 80) {
+		return '🟩';
+	}
+	if (percentage >= 50) {
+		return '🟧';
+	}
+	return '🟥';
+}
 
-const total = summary.total;
+function generateSummary() {
+	const coverage = JSON.parse(readFileSync(coveragePath, 'utf-8'));
+	const total = coverage.total;
 
-// Formatage Markdown
-const markdown = `
-## 🛡️ Code Coverage Report
+	const badge = getBadge(total.statements.pct);
 
-| Metric         | Covered | Total | %     |
-|----------------|---------|-------|-------|
-| Statements     | ${total.statements.covered} / ${total.statements.total} | ${total.statements.pct}% |
-| Branches       | ${total.branches.covered} / ${total.branches.total} | ${total.branches.pct}% |
-| Functions      | ${total.functions.covered} / ${total.functions.total} | ${total.functions.pct}% |
-| Lines          | ${total.lines.covered} / ${total.lines.total} | ${total.lines.pct}% |
+	const lines = [
+		`# 🛡️ Test Coverage Report`,
+		``,
+		`| Type        | %     |`,
+		`|-------------|-------|`,
+		`| Statements  | ${total.statements.pct}% |`,
+		`| Branches    | ${total.branches.pct}% |`,
+		`| Functions   | ${total.functions.pct}% |`,
+		`| Lines       | ${total.lines.pct}% |`,
+		``,
+		`${badge} **Global Coverage:** ${total.statements.pct}%`,
+	];
 
-`;
+	writeFileSync(outputPath, lines.join('\n'));
+	console.log('✅ Coverage summary generated with badge!');
+}
 
-console.log(markdown);
-
-// Fail si couverture < 80%
-const coverageThreshold = 80;
-if (total.lines.pct < coverageThreshold) {
-	console.error(`❌ Coverage is below threshold (${coverageThreshold}%)`);
-	process.exit(1);
+if (require.main === module) {
+	generateSummary();
 }

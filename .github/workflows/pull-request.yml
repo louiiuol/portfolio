@@ -1,4 +1,4 @@
-name: Run Karma Tests and Comment Coverage
+name: Run Units tests & Comments coverage summary
 
 on:
   pull_request:
@@ -19,8 +19,14 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run tests with Karma
         run: npm run test:ci
 
+      - name: Comment coverage summary
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            $(node scripts/coverage-summary.js)
