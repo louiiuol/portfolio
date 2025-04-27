@@ -21,14 +21,14 @@ import type { nullish, TimeUnit } from '@shared/types';
 })
 export class DurationPipe implements PipeTransform {
 	transform(
-		time: number | nullish,
+		ms: number | nullish,
 		outputUnit: TimeUnit = 'second',
 		compact = true,
 		separator: string = ' '
 	): string {
-		if (!time) {
+		if (!ms) {
 			return '--';
 		}
-		return formatDuration(time, { separator, compact, outputUnit });
+		return formatDuration(ms, { separator, compact, outputUnit });
 	}
 }

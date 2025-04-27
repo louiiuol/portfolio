@@ -15,13 +15,13 @@
 
 ## Table of Contents 📚
 
-1. Self presentation
-2. Experiences
-3. Skills
-4. Projects
-5. Contacts
+1. Experiences ✔
+2. Projects 🏗️
+3. Skills ⏳
+4. Self presentation ⏳
+5. Contacts ⏳
 
-## Built with
+## Built with ⚙
 
 | Dependency | version |
 |:-----------|:----------|

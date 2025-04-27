@@ -1,6 +1,6 @@
 import type { PipeTransform } from '@angular/core';
 import { Pipe } from '@angular/core';
-import { isEmpty } from '../functions/type-checker/is-empty/is-empty.fn';
+import { isEmpty } from '@shared/functions/type-checker';
 
 @Pipe({
 	name: 'isNotEmpty',

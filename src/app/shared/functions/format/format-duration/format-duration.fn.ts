@@ -12,7 +12,7 @@ import type { TimeUnit } from '@shared/types';
  */
 export function formatDuration(
 	milliseconds: number,
-	opt: {
+	opt?: {
 		separator?: string;
 		compact?: boolean;
 		outputUnit?: TimeUnit;
@@ -37,8 +37,8 @@ export function formatDuration(
  * @param opt - Options for formatting.
  * @returns A string representing the zero duration.
  */
-function formatZeroDuration(opt: { compact?: boolean }): string {
-	return `0${opt.compact ? timeFactors.second.labelCompact : ' ' + timeFactors.second.label}`;
+function formatZeroDuration(opt?: { compact?: boolean }): string {
+	return `0${opt?.compact ? timeFactors.second.labelCompact : ' ' + timeFactors.second.label}`;
 }
 
 /**
@@ -50,21 +50,21 @@ function formatZeroDuration(opt: { compact?: boolean }): string {
  */
 function formatDurationParts(
 	seconds: number,
-	opt: {
+	opt?: {
 		separator?: string;
 		compact?: boolean;
 		outputUnit?: TimeUnit;
 		maxUnits?: number;
 	}
 ): string {
-	const { outputUnit, separator, compact, maxUnits } = opt;
+	const { outputUnit, separator, compact, maxUnits } = opt ?? {};
 
 	if (outputUnit) {
 		const { seconds: unitSize, label, labelCompact } = timeFactors[outputUnit];
 		const value = Math.floor(seconds / unitSize);
-		const plural = value > 1 && label !== 'mois' ? 's' : '';
+		const plural = !opt?.compact && value > 1 && label !== 'mois' ? 's' : '';
 
-		return `${value}${compact ? '' : ' '}${compact ? labelCompact : label}${plural}`;
+		return [value, compact ? labelCompact : ' ' + label, plural].join('');
 	}
 
 	const parts: string[] = [];
@@ -95,15 +95,15 @@ function formatDurationParts(
 function formatUnitPart(
 	unitKey: TimeUnit,
 	seconds: number,
-	opt: { compact?: boolean }
+	opt?: { compact?: boolean }
 ): { value: string; remainingSeconds: number } | null {
 	const { seconds: unitSize, label, labelCompact } = timeFactors[unitKey];
 	const value = Math.floor(seconds / unitSize);
 
 	if (value > 0) {
-		const plural = value > 1 && label !== 'mois' ? 's' : '';
+		const plural = !opt?.compact && value > 1 && label !== 'mois' ? 's' : '';
 		return {
-			value: `${value}${opt.compact ? '' : ' '}${opt.compact ? labelCompact : label}${plural}`,
+			value: `${value}${opt?.compact ? '' : ' '}${opt?.compact ? labelCompact : label}${plural}`,
 			remainingSeconds: seconds % unitSize,
 		};
 	}

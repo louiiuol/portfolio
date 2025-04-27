@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { CapitalizePipe } from '@shared/pipes/capitalize.pipe';
+import { CapitalizePipe } from '@shared/pipes';
 
 /**
  * Simple component to render a loader (with CSS only).

@@ -78,4 +78,11 @@ describe('formatDuration', () => {
 			'61 minutes'
 		);
 	});
+
+	it('should use default parameters when optional arguments are not provided', () => {
+		const time = 36000;
+		const result = formatDuration(time, { compact: true });
+
+		expect(result).toBe('36s');
+	});
 });
