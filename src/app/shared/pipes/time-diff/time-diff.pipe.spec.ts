@@ -1,6 +1,6 @@
 import { TimeDifferencePipe } from './time-diff.pipe';
 
-fdescribe('TimeDifferencePipe', () => {
+describe('TimeDifferencePipe', () => {
 	let pipe: TimeDifferencePipe;
 
 	beforeEach(() => {
