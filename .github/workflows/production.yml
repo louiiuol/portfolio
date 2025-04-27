@@ -23,12 +23,10 @@ jobs:
       - name: Run tests with Karma
         run: npm run test:ci
 
-      - name: Generate coverage summary
-        run: |
-          mkdir -p ./coverage/summary
-          npx nyc report --reporter=text-summary > ./coverage/summary/coverage.txt || echo "No coverage summary found"
+      - name: Generate nice coverage summary
+        run: node scripts/coverage-summary.js
 
       - name: Comment coverage on PR
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          path: ./coverage/summary/coverage.txt
+          path: coverage/summary.txt
