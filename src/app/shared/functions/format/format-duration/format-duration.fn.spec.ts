@@ -5,6 +5,10 @@ describe('formatDuration', () => {
 		expect(formatDuration(0, {})).toBe('0 seconde');
 	});
 
+	it('should return "0 jour" for 0 milliseconds if output unit is set to "day"', () => {
+		expect(formatDuration(0, { outputUnit: 'day' })).toBe('0 jour');
+	});
+
 	it('should return "0 seconde" for negative milliseconds', () => {
 		expect(formatDuration(-1000, {})).toBe('0 seconde');
 	});
