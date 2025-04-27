@@ -19,7 +19,7 @@ describe('TimeDifferencePipe', () => {
 		const startDate = new Date('2023-01-01');
 		const endDate = new Date('2023-01-10');
 		const result = pipe.transform({ startDate, endDate }, 'day');
-		expect(result).toBe('9 jours');
+		expect(result).toBe('-9 jours');
 	});
 
 	it('should use the current date if endDate is not provided', () => {

@@ -1,4 +1,4 @@
-name: Build & Run units tests
+name: Run Units-Tests 🧪
 
 on:
   pull_request:
