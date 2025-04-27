@@ -24,9 +24,9 @@ export function formatDuration(
 	}
 
 	const seconds = milliseconds * timeFactors['millisecond'].seconds;
-	const unit = timeFactors[opt?.outputUnit ?? 'second'];
 
 	if (seconds <= 0) {
+		const unit = timeFactors[opt?.outputUnit ?? 'second'];
 		return `0${opt?.compact ? unit.labelCompact : ' ' + unit.label}`;
 	}
 

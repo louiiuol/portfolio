@@ -11,7 +11,7 @@ import { SkillPillComponent } from './skill-pill.component';
 @Component({
 	selector: 'app-skills-list',
 	host: {
-		class: 'inline-flex flex-wrap gap-3 justify-start items-center',
+		class: 'inline-flex flex-wrap gap-2 justify-start items-center',
 	},
 	template: `
 		@for (skill of shownSkills(); track $index) {
@@ -38,7 +38,7 @@ export class SkillsListComponent {
 	readonly showAll = input(false, { transform: booleanAttribute });
 	readonly showEmpty = input(false, { transform: booleanAttribute });
 	readonly showMore = input(false, { transform: booleanAttribute });
-	readonly limit = input(5);
+	readonly limit = input(3);
 
 	protected readonly shownSkills = computed(() =>
 		this.showAll() ? this.skills() : this.skills().slice(0, this.limit())

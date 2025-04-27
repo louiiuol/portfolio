@@ -33,7 +33,7 @@ export class TimeDifferencePipe implements PipeTransform {
 			return '--';
 		}
 
-		const prefix = endTimestamp > startTimestamp ? '-' : '';
+		const prefix = endTimestamp < startTimestamp ? '-' : '';
 		return (
 			prefix +
 			formatDuration(Math.abs(endTimestamp - startTimestamp), {
