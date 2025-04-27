@@ -12,13 +12,19 @@ module.exports = function (config) {
 		client: {
 			clearContext: false,
 		},
+		reporters: ['progress', 'coverage', 'kjhtml'],
 		coverageReporter: {
 			dir: require('path').join(__dirname, './coverage'),
 			subdir: '.',
-			reporters: [{ type: 'html' }, { type: 'text-summary' }],
+
+			reporters: [
+				{ type: 'html' },
+				{ type: 'text-summary' },
+				{ type: 'json-summary' },
+			],
 		},
-		reporters: ['progress', 'kjhtml'],
 		browsers: ['ChromeHeadless'],
 		singleRun: true,
+		restartOnFileChange: true,
 	});
 };
