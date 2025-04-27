@@ -1,6 +1,6 @@
 # Louis Godlewski | Portfolio
 
-[![Build & Tests status](https://github.com/louiiuol/portfolio/actions/workflows/pull-request.yml/badge.svg?branch=main)](https://github.com/louiiuol/portfolio/actions/workflows/pull-request.yml)
+[![Run Units-Tests 🧪](https://github.com/louiiuol/portfolio/actions/workflows/pull-request.yml/badge.svg)](https://github.com/louiiuol/portfolio/actions/workflows/pull-request.yml)
 
 ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=plastic&logo=javascript&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3077C6?style=plastic&logo=typescript&logoColor=white)
