@@ -1,5 +1,5 @@
 import { timeFactors, UNITS_IN_ORDER } from '@shared/constants';
-import type { TimeUnit } from '@shared/types';
+import { isNullish, type TimeUnit } from '@shared/types';
 
 /**
  * Formats a duration in seconds into a readable string, optionally stopping
@@ -12,32 +12,25 @@ import type { TimeUnit } from '@shared/types';
  */
 export function formatDuration(
 	milliseconds: number,
-	opt: {
+	opt?: {
 		separator?: string;
 		compact?: boolean;
 		outputUnit?: TimeUnit;
+		maxUnits?: number;
 	}
 ): string {
-	if (!milliseconds || milliseconds < 1) {
+	if (isNullish(milliseconds) || isNaN(milliseconds)) {
 		return '--';
 	}
 
 	const seconds = milliseconds * timeFactors['millisecond'].seconds;
+	const unit = timeFactors[opt?.outputUnit ?? 'second'];
+
 	if (seconds <= 0) {
-		return formatZeroDuration(opt);
+		return `0${opt?.compact ? unit.labelCompact : ' ' + unit.label}`;
 	}
 
 	return formatDurationParts(seconds, opt);
-}
-
-/**
- * Formats a duration of 0 seconds into a readable string.
- *
- * @param opt - Options for formatting.
- * @returns A string representing the zero duration.
- */
-function formatZeroDuration(opt: { compact?: boolean }): string {
-	return `0 ${opt.compact ? timeFactors.second.labelCompact : timeFactors.second.label}`;
 }
 
 /**
@@ -49,28 +42,38 @@ function formatZeroDuration(opt: { compact?: boolean }): string {
  */
 function formatDurationParts(
 	seconds: number,
-	opt: { separator?: string; compact?: boolean; outputUnit?: TimeUnit }
+	opt?: {
+		separator?: string;
+		compact?: boolean;
+		outputUnit?: TimeUnit;
+		maxUnits?: number;
+	}
 ): string {
-	let reachedLowest = false;
+	const { outputUnit, separator, compact, maxUnits } = opt ?? {};
+
+	if (outputUnit) {
+		const { seconds: unitSize, label, labelCompact } = timeFactors[outputUnit];
+		const value = Math.floor(seconds / unitSize);
+		const unit = compact ? labelCompact : ' ' + label;
+		const plural = !opt?.compact && value > 1 && label !== 'mois' ? 's' : '';
+		return [value, unit, plural].join('');
+	}
+
 	const parts: string[] = [];
+	let remainingUnits = typeof maxUnits === 'number' ? maxUnits : Infinity;
 
 	for (const unitKey of UNITS_IN_ORDER) {
-		if (reachedLowest) {
-			break;
-		}
+		if (remainingUnits <= 0) break;
 
 		const part = formatUnitPart(unitKey, seconds, opt);
 		if (part) {
 			parts.push(part.value);
 			seconds = part.remainingSeconds;
-		}
-
-		if (opt.outputUnit === unitKey) {
-			reachedLowest = true;
+			remainingUnits--;
 		}
 	}
 
-	return parts.join(opt.separator ?? ' ');
+	return parts.join(separator ?? ' ');
 }
 
 /**
@@ -84,15 +87,15 @@ function formatDurationParts(
 function formatUnitPart(
 	unitKey: TimeUnit,
 	seconds: number,
-	opt: { compact?: boolean }
+	opt?: { compact?: boolean }
 ): { value: string; remainingSeconds: number } | null {
 	const { seconds: unitSize, label, labelCompact } = timeFactors[unitKey];
 	const value = Math.floor(seconds / unitSize);
 
 	if (value > 0) {
-		const plural = value > 1 && label !== 'mois' ? 's' : '';
+		const plural = !opt?.compact && value > 1 && label !== 'mois' ? 's' : '';
 		return {
-			value: `${value} ${opt.compact ? labelCompact : label}${plural}`,
+			value: `${value}${opt?.compact ? '' : ' '}${opt?.compact ? labelCompact : label}${plural}`,
 			remainingSeconds: seconds % unitSize,
 		};
 	}

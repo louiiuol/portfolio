@@ -1,4 +1,4 @@
-import { isNotNullish } from './nullish.type';
+import { isNotNullish } from '../nullish/nullish.type';
 
 export type UnknownRecord = Record<
 	string | number,
@@ -6,5 +6,5 @@ export type UnknownRecord = Record<
 >;
 
 export function isUnknownRecord(obj: unknown): obj is UnknownRecord {
-	return typeof obj === 'object' && isNotNullish(obj);
+	return !Array.isArray(obj) && typeof obj === 'object' && isNotNullish(obj);
 }

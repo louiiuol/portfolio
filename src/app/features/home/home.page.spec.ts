@@ -23,8 +23,9 @@ describe('HomePage', () => {
 		expect(component).toBeTruthy();
 	});
 
-	it('should have the correct title', () => {
-		expect(component.title).toBe('portfolio');
+	it('should have the correct class on the host element', () => {
+		const hostElement = fixture.debugElement.nativeElement;
+		expect(hostElement.classList).toContain('page');
 	});
 
 	it('should render the icon logo component', () => {
@@ -32,13 +33,12 @@ describe('HomePage', () => {
 		expect(iconLogoElement).toBeTruthy();
 	});
 
-	it('should have the correct class on the host element', () => {
-		const hostElement = fixture.debugElement.nativeElement;
-		expect(hostElement.classList).toContain('page');
-		expect(hostElement.classList).toContain('items-center');
-		expect(hostElement.classList).toContain('justify-center');
-		expect(hostElement.classList).toContain('bg-linear-to-t');
-		expect(hostElement.classList).toContain('from-primary-300');
-		expect(hostElement.classList).toContain('to-primary-700');
+	it('should have the correct introTexts', () => {
+		expect((component as any).introTexts.length).toBe(3);
+	});
+
+	it('should render the TypistComponent', () => {
+		const typistElement = fixture.debugElement.query(By.css('app-typist'));
+		expect(typistElement).toBeTruthy();
 	});
 });

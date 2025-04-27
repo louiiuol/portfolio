@@ -92,6 +92,16 @@
 				"@angular-eslint/template/prefer-self-closing-tags": ["error"],
 				"@angular-eslint/no-empty-lifecycle-method": ["warn"]
 			}
+		},
+
+		{
+			"files": ["*.spec.ts"], // seulement les tests
+			"rules": {
+				"@typescript-eslint/no-unsafe-member-access": "off",
+				"@typescript-eslint/no-unsafe-call": "off",
+				"@typescript-eslint/no-unsafe-assignment": "off",
+				"@typescript-eslint/no-explicit-any": "off"
+			}
 		}
 	]
 }

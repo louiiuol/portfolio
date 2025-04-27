@@ -1,1 +1,1 @@
-export { LocalStorageService } from './local-storage.service';
+export { LocalStorageService } from './local-storage/local-storage.service';

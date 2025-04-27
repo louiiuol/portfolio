@@ -1,4 +1,5 @@
-import { isObject } from '../type-checker/is-object.fn';
+import { isNotNullish } from '../../../types';
+import { isObject } from '../../type-checker/is-object/is-object.fn';
 
 /**
  * Compares two objects deeply to determine if they are equal.
@@ -24,37 +25,55 @@ import { isObject } from '../type-checker/is-object.fn';
  * - If the objects have different numbers of keys, they are considered unequal.
  */
 export function deepEqualObjects(obj1: unknown, obj2: unknown): boolean {
-	// Base case: If both objects are identical, return true.
-
-	if (
-		(obj1 === null && obj2 === undefined) ||
-		(obj1 === undefined && obj2 === null)
-	) {
+	if ((!isNotNullish(obj1) && !isNotNullish(obj2)) || obj1 === obj2) {
 		return true;
 	}
 
-	if (obj1 === obj2) {
-		return true;
-	}
-
-	// Check if both are non-null objects:
-	if (!isObject(obj1) || !isObject(obj2)) {
+	if (typeof obj1 !== typeof obj2) {
 		return false;
 	}
 
+	if (obj1 instanceof Date && obj2 instanceof Date) {
+		return obj1.getTime() === obj2.getTime();
+	}
+
+	if (typeof obj1 === 'function' && typeof obj2 === 'function') {
+		return obj1.toString() === obj2.toString();
+	}
+
+	if (Array.isArray(obj1) && Array.isArray(obj2)) {
+		return areArraysEqual(obj1, obj2);
+	}
+
+	if (isObject(obj1) && isObject(obj2)) {
+		return areObjectsEqual(obj1, obj2);
+	}
+
+	return false;
+}
+
+function areObjectsEqual(
+	obj1: Record<string, unknown>,
+	obj2: Record<string, unknown>
+): boolean {
 	const keys1 = Object.keys(obj1);
 	const keys2 = Object.keys(obj2);
 
-	if (keys1.length !== keys2.length) {
-		return false;
-	}
+	if (keys1.length !== keys2.length) return false;
 
 	for (const key of keys1) {
-		// 'keys2.includes(key)' checks the key existence in obj2
-		// Then we compare the nested values recursively
-		if (!keys2.includes(key) || !deepEqualObjects(obj1[key], obj2[key])) {
-			return false;
-		}
+		if (!(key in obj2) || !deepEqualObjects(obj1[key], obj2[key])) return false;
 	}
+
+	return true;
+}
+
+function areArraysEqual(arr1: unknown[], arr2: unknown[]): boolean {
+	if (arr1.length !== arr2.length) return false;
+
+	for (let i = 0; i < arr1.length; i++) {
+		if (!deepEqualObjects(arr1[i], arr2[i])) return false;
+	}
+
 	return true;
 }

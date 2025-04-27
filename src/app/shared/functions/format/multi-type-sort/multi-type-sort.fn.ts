@@ -1,4 +1,4 @@
-import { multiTypeCompare } from '../compare/multi-type-compare.fn';
+import { multiTypeCompare } from '../../compare/multi-type-compare/multi-type-compare.fn';
 
 /**
  * Sorts an array of objects by a given field, handling multiple types (number, string, date).
