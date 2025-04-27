@@ -1,5 +1,5 @@
 import type { z } from 'zod';
-import { formatZodError } from '../format/format-zod-error.fn';
+import { formatZodError } from '../../format/format-zod-error/format-zod-error.fn';
 
 /**
  * Validate an entry against a zod schema (allows to entry is inferred type of zodSchema)

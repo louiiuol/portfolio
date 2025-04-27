@@ -16,9 +16,10 @@ export function formatDuration(
 		separator?: string;
 		compact?: boolean;
 		outputUnit?: TimeUnit;
+		maxUnits?: number;
 	}
 ): string {
-	if (!milliseconds || milliseconds < 1) {
+	if (milliseconds < 0) {
 		return '--';
 	}
 
@@ -37,7 +38,7 @@ export function formatDuration(
  * @returns A string representing the zero duration.
  */
 function formatZeroDuration(opt: { compact?: boolean }): string {
-	return `0 ${opt.compact ? timeFactors.second.labelCompact : timeFactors.second.label}`;
+	return `0${opt.compact ? timeFactors.second.labelCompact : ' ' + timeFactors.second.label}`;
 }
 
 /**
@@ -49,28 +50,38 @@ function formatZeroDuration(opt: { compact?: boolean }): string {
  */
 function formatDurationParts(
 	seconds: number,
-	opt: { separator?: string; compact?: boolean; outputUnit?: TimeUnit }
+	opt: {
+		separator?: string;
+		compact?: boolean;
+		outputUnit?: TimeUnit;
+		maxUnits?: number;
+	}
 ): string {
-	let reachedLowest = false;
+	const { outputUnit, separator, compact, maxUnits } = opt;
+
+	if (outputUnit) {
+		const { seconds: unitSize, label, labelCompact } = timeFactors[outputUnit];
+		const value = Math.floor(seconds / unitSize);
+		const plural = value > 1 && label !== 'mois' ? 's' : '';
+
+		return `${value}${compact ? '' : ' '}${compact ? labelCompact : label}${plural}`;
+	}
+
 	const parts: string[] = [];
+	let remainingUnits = typeof maxUnits === 'number' ? maxUnits : Infinity;
 
 	for (const unitKey of UNITS_IN_ORDER) {
-		if (reachedLowest) {
-			break;
-		}
+		if (remainingUnits <= 0) break;
 
 		const part = formatUnitPart(unitKey, seconds, opt);
 		if (part) {
 			parts.push(part.value);
 			seconds = part.remainingSeconds;
-		}
-
-		if (opt.outputUnit === unitKey) {
-			reachedLowest = true;
+			remainingUnits--;
 		}
 	}
 
-	return parts.join(opt.separator ?? ' ');
+	return parts.join(separator ?? ' ');
 }
 
 /**
@@ -92,7 +103,7 @@ function formatUnitPart(
 	if (value > 0) {
 		const plural = value > 1 && label !== 'mois' ? 's' : '';
 		return {
-			value: `${value} ${opt.compact ? labelCompact : label}${plural}`,
+			value: `${value}${opt.compact ? '' : ' '}${opt.compact ? labelCompact : label}${plural}`,
 			remainingSeconds: seconds % unitSize,
 		};
 	}

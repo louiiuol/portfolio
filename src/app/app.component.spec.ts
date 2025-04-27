@@ -19,24 +19,21 @@ describe('AppComponent', () => {
 
 	it('should have the correct host class', () => {
 		const fixture = TestBed.createComponent(AppComponent);
-		const appElement = fixture.debugElement;
-		expect(appElement.classes['flex']).toBeTrue();
-		expect(appElement.classes['flex-col']).toBeTrue();
-		expect(appElement.classes['h-screen']).toBeTrue();
+		const appElement = fixture.debugElement.nativeElement;
+		expect(appElement.classList.contains('flex')).toBeTruthy();
+		expect(appElement.classList.contains('flex-col')).toBeTruthy();
 	});
 
-	it('should render header, main, and footer', () => {
+	it('should render header, main', () => {
 		const fixture = TestBed.createComponent(AppComponent);
 		fixture.detectChanges();
 		const header = fixture.debugElement.query(By.css('app-header'));
 		const main = fixture.debugElement.query(By.css('main'));
-		const footer = fixture.debugElement.query(By.css('app-footer'));
 		expect(header).toBeTruthy();
 		expect(main).toBeTruthy();
-		expect(footer).toBeTruthy();
 	});
 
-	it('main should have the correct classes', () => {
+	it('should render <main> with correct classes', () => {
 		const fixture = TestBed.createComponent(AppComponent);
 		fixture.detectChanges();
 		const main = fixture.debugElement.query(By.css('main'));

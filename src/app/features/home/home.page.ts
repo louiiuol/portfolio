@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LogoIcon } from '@shared/components/atoms/icon/logo.icon';
-import { TypistComponent } from '@shared/components/molecules/typist/typist.component';
+
+import { LogoIcon, TypistComponent } from '@shared/components';
 
 @Component({
 	selector: 'app-home-page',
@@ -15,7 +15,6 @@ import { TypistComponent } from '@shared/components/molecules/typist/typist.comp
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage {
-	protected readonly title = 'portfolio';
 	protected readonly introTexts = [
 		'Bienvenue sur mon portfolio 👋',
 		'Je suis un développeur fullstack souhaitant construire des interfaces propres, intuitives et utiles',

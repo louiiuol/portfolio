@@ -1,1 +1,1 @@
-export { sleep } from './sleep.fn';
+export { sleep } from './sleep/sleep.fn';

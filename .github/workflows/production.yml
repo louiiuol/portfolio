@@ -1,0 +1,34 @@
+name: Run Karma Tests and Comment Coverage
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  karma-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests with Karma
+        run: npm run test:ci
+
+      - name: Generate coverage summary
+        run: |
+          mkdir -p ./coverage/summary
+          npx nyc report --reporter=text-summary > ./coverage/summary/coverage.txt || echo "No coverage summary found"
+
+      - name: Comment coverage on PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: ./coverage/summary/coverage.txt
