@@ -24,9 +24,9 @@ jobs:
         run: npm run test:ci
 
       - name: Generate nice coverage summary
-        run: node scripts/coverage-summary.js
+        run: node scripts/coverage-summary.js > coverage-comment.txt
 
       - name: Comment coverage on PR
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          path: coverage/summary.txt
+          path: ./coverage-comment.txt

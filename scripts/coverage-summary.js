@@ -1,48 +1,45 @@
-import { existsSync, readFileSync, writeFileSync } from 'fs';
-import { join } from 'path';
+// scripts/coverage-summary.js
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const coveragePath = join(
+// Fix pour __dirname en module ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Lecture du fichier de coverage
+const coverageSummaryPath = path.join(
 	__dirname,
-	'../coverage/ton-projet/coverage-summary.json'
+	'../coverage/portfolio/coverage-summary.json'
 );
-const outputPath = join(__dirname, '../coverage/summary.txt');
 
-function getBadge(percentage) {
-	if (percentage >= 80) {
-		return '🟩';
-	}
-	if (percentage >= 50) {
-		return '🟧';
-	}
-	return '🟥';
+if (!fs.existsSync(coverageSummaryPath)) {
+	console.error('❌ Coverage summary file not found.');
+	process.exit(1);
 }
 
-function generateSummary() {
-	if (!existsSync(coveragePath)) {
-		console.error('Coverage summary not found.');
-		process.exit(1);
-	}
+const summary = JSON.parse(fs.readFileSync(coverageSummaryPath, 'utf8'));
 
-	const coverage = JSON.parse(readFileSync(coveragePath, 'utf-8'));
-	const total = coverage.total;
+const total = summary.total;
 
-	const badge = getBadge(total.statements.pct);
+// Formatage Markdown
+const markdown = `
+## 🛡️ Code Coverage Report
 
-	const lines = [
-		`# 🛡️ Test Coverage Report`,
-		``,
-		`| Type        | %     |`,
-		`|-------------|-------|`,
-		`| Statements  | ${total.statements.pct}% |`,
-		`| Branches    | ${total.branches.pct}% |`,
-		`| Functions   | ${total.functions.pct}% |`,
-		`| Lines       | ${total.lines.pct}% |`,
-		``,
-		`${badge} **Global Coverage:** ${total.statements.pct}%`,
-	];
+| Metric         | Covered | Total | %     |
+|----------------|---------|-------|-------|
+| Statements     | ${total.statements.covered} / ${total.statements.total} | ${total.statements.pct}% |
+| Branches       | ${total.branches.covered} / ${total.branches.total} | ${total.branches.pct}% |
+| Functions      | ${total.functions.covered} / ${total.functions.total} | ${total.functions.pct}% |
+| Lines          | ${total.lines.covered} / ${total.lines.total} | ${total.lines.pct}% |
 
-	writeFileSync(outputPath, lines.join('\n'));
-	console.log('✅ Coverage summary generated with badge!');
+`;
+
+console.log(markdown);
+
+// Fail si couverture < 80%
+const coverageThreshold = 80;
+if (total.lines.pct < coverageThreshold) {
+	console.error(`❌ Coverage is below threshold (${coverageThreshold}%)`);
+	process.exit(1);
 }
-
-generateSummary();
