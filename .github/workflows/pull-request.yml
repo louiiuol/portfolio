@@ -24,9 +24,3 @@ jobs:
       - name: Run tests with Karma
         run: npm run test:ci
 
-      - name: Upload full coverage report
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-report
-          path: ./coverage
-          retention-days: 14
