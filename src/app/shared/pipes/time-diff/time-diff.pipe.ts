@@ -19,30 +19,27 @@ export class TimeDifferencePipe implements PipeTransform {
 		outputUnit: TimeUnit = 'month',
 		compact: boolean = false
 	): string => {
-transform = (
-	dates: { startDate: Date; endDate?: Date | nullish },
-	outputUnit: TimeUnit = 'month',
-	compact: boolean = false
-): string => {
-	if (!dates?.startDate) {
-		return '--';
-	}
+		if (!dates?.startDate) {
+			return '--';
+		}
 
-	const endTimestamp = (
-		dates.endDate ? new Date(dates.endDate) : new Date()
-	).getTime();
-	const startTimestamp = new Date(dates.startDate).getTime();
-	
-	// Check for invalid dates
-	if (isNaN(startTimestamp) || isNaN(endTimestamp)) {
-		return '--';
-	}
+		const endTimestamp = (
+			dates.endDate ? new Date(dates.endDate) : new Date()
+		).getTime();
+		const startTimestamp = new Date(dates.startDate).getTime();
 
-	// …rest of your logic…
-};
-		return formatDuration(endTimestamp - startTimestamp, {
-			outputUnit,
-			compact,
-		});
+		// Check for invalid dates
+		if (isNaN(startTimestamp) || isNaN(endTimestamp)) {
+			return '--';
+		}
+
+		const prefix = endTimestamp > startTimestamp ? '-' : '';
+		return (
+			prefix +
+			formatDuration(Math.abs(endTimestamp - startTimestamp), {
+				outputUnit,
+				compact,
+			})
+		);
 	};
 }

@@ -5,8 +5,8 @@ describe('formatDuration', () => {
 		expect(formatDuration(0, {})).toBe('0 seconde');
 	});
 
-	it('should return "--" for negative milliseconds', () => {
-		expect(formatDuration(-1000, {})).toBe('--');
+	it('should return "0 seconde" for negative milliseconds', () => {
+		expect(formatDuration(-1000, {})).toBe('0 seconde');
 	});
 
 	it('should format milliseconds into seconds', () => {
@@ -84,5 +84,12 @@ describe('formatDuration', () => {
 		const result = formatDuration(time, { compact: true });
 
 		expect(result).toBe('36s');
+	});
+
+	it('should render as seated outputUnit, even if value is lower', () => {
+		const time = 3600;
+		const result = formatDuration(time, { outputUnit: 'hour' });
+
+		expect(result).toBe('0 heure');
 	});
 });

@@ -1,5 +1,5 @@
 import { timeFactors, UNITS_IN_ORDER } from '@shared/constants';
-import type { TimeUnit } from '@shared/types';
+import { isNullish, type TimeUnit } from '@shared/types';
 
 /**
  * Formats a duration in seconds into a readable string, optionally stopping
@@ -19,26 +19,17 @@ export function formatDuration(
 		maxUnits?: number;
 	}
 ): string {
-	if (milliseconds < 0) {
+	if (isNullish(milliseconds) || isNaN(milliseconds)) {
 		return '--';
 	}
 
 	const seconds = milliseconds * timeFactors['millisecond'].seconds;
+
 	if (seconds <= 0) {
-		return formatZeroDuration(opt);
+		return `0${opt?.compact ? timeFactors.second.labelCompact : ' ' + timeFactors.second.label}`;
 	}
 
 	return formatDurationParts(seconds, opt);
-}
-
-/**
- * Formats a duration of 0 seconds into a readable string.
- *
- * @param opt - Options for formatting.
- * @returns A string representing the zero duration.
- */
-function formatZeroDuration(opt?: { compact?: boolean }): string {
-	return `0${opt?.compact ? timeFactors.second.labelCompact : ' ' + timeFactors.second.label}`;
 }
 
 /**
@@ -62,9 +53,9 @@ function formatDurationParts(
 	if (outputUnit) {
 		const { seconds: unitSize, label, labelCompact } = timeFactors[outputUnit];
 		const value = Math.floor(seconds / unitSize);
+		const unit = compact ? labelCompact : ' ' + label;
 		const plural = !opt?.compact && value > 1 && label !== 'mois' ? 's' : '';
-
-		return [value, compact ? labelCompact : ' ' + label, plural].join('');
+		return [value, unit, plural].join('');
 	}
 
 	const parts: string[] = [];
