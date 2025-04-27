@@ -1,4 +1,4 @@
-name: Run Units tests & Comments coverage summary
+name: Build & Run units tests
 
 on:
   pull_request:
