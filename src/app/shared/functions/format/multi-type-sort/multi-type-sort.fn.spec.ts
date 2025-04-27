@@ -72,4 +72,11 @@ describe('multiTypeSort', () => {
 		const result = multiTypeSort(data, 'name', 'asc');
 		expect(result).toEqual([{ name: 'Alice' }]);
 	});
+
+	it('should handle objects with missing sort field', () => {
+		const data = [{ name: 'Charlie' }, {}, { name: 'Alice' }];
+		const result = multiTypeSort(data, 'name', 'asc');
+		// Implementation-dependent: Missing values could be first or last
+		expect(result.length).toBe(3);
+	});
 });

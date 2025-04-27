@@ -1,26 +1,34 @@
 import { inject, Injectable, resource } from '@angular/core';
 import { environment } from '@env';
 
-import { type Diploma, type Place, type Skill } from '@feat/cv/types';
-import type { JobInput } from '@feat/cv/types/job.type';
-import type { TrainingEntry } from '@feat/cv/types/training.type';
+import {
+	diplomaSchema,
+	jobSchema,
+	placeSchema,
+	skillSchema,
+} from '@feat/cv/types';
+import { trainingSchema } from '@feat/cv/types/training.type';
 import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services';
 import { isUnknownRecord, type UnknownRecord } from '@shared/types';
 import { createClient } from 'contentful';
+import { z } from 'zod';
 import { isRichTextDocument } from '../types/rich-text.type';
 import { RichTextService } from './rich-text.service';
 
+const entriesSchema = z.object({
+	exprience: z.array(jobSchema),
+	skill: z.array(skillSchema),
+	company: z.array(placeSchema),
+	school: z.array(placeSchema),
+	diploma: z.array(diplomaSchema),
+	training: z.array(trainingSchema),
+});
+type EntriesRecord = z.infer<typeof entriesSchema>;
+
 // Internal types
 type ContentTypeId = 'exprience' | 'skill' | 'company' | 'school' | 'diploma';
-const entriesRecord: {
-	exprience: JobInput[];
-	skill: Skill[];
-	company: Place[];
-	school: Place[];
-	diploma: Diploma[];
-	training: TrainingEntry[];
-} = {
+const entriesRecord: EntriesRecord = {
 	exprience: [],
 	skill: [],
 	company: [],
@@ -28,8 +36,6 @@ const entriesRecord: {
 	diploma: [],
 	training: [],
 } as const;
-type EntriesRecord = typeof entriesRecord;
-type StoredEntriesRecord = (EntriesRecord & { updatedAt: Date }) | null;
 
 @Injectable()
 export class ContentfullService {
@@ -61,18 +67,18 @@ export class ContentfullService {
 	private readonly localStorageKey = 'contentfull-entries';
 
 	private setLocalEntries(entries: EntriesRecord) {
-		this.localStorageService.setItem<StoredEntriesRecord>(
-			this.localStorageKey,
-			{
-				...entries,
-				updatedAt: new Date(),
-			}
-		);
+		this.localStorageService.set(this.localStorageKey, {
+			...entries,
+			updatedAt: new Date(),
+		});
 	}
 
 	private getLocalEntries(): EntriesRecord | null {
-		const localEntries = this.localStorageService.getItem<StoredEntriesRecord>(
-			this.localStorageKey
+		const localEntries = this.localStorageService.get(
+			this.localStorageKey,
+			entriesSchema.extend({
+				updatedAt: z.date(),
+			})
 		);
 		const twoWeeksAgo = Date.now() - 1000 * 60 * 60 * 24 * 14;
 		if (new Date(localEntries?.updatedAt ?? 0).getTime() < twoWeeksAgo) {

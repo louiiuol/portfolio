@@ -57,4 +57,32 @@ describe('isSchemaType', () => {
 		expect(isSchemaType(validObject, nestedSchema)).toBe(true);
 		expect(isSchemaType(invalidObject, nestedSchema)).toBe(false);
 	});
+
+	it('should validate arrays of objects', () => {
+		const arraySchema = z.array(
+			z.object({
+				name: z.string(),
+				age: z.number(),
+			})
+		);
+		const validArray = [
+			{ name: 'John', age: 30 },
+			{ name: 'Jane', age: 25 },
+		];
+		const invalidArray = [
+			{ name: 'John', age: 30 },
+			{ name: 'Jane', age: 'twenty-five' },
+		];
+		expect(isSchemaType(validArray, arraySchema)).toBe(true);
+		expect(isSchemaType(invalidArray, arraySchema)).toBe(false);
+	});
+
+	it('should validate union types', () => {
+		const unionSchema = z.object({
+			id: z.union([z.string(), z.number()]),
+		});
+		expect(isSchemaType({ id: '123' }, unionSchema)).toBe(true);
+		expect(isSchemaType({ id: 123 }, unionSchema)).toBe(true);
+		expect(isSchemaType({ id: true }, unionSchema)).toBe(false);
+	});
 });

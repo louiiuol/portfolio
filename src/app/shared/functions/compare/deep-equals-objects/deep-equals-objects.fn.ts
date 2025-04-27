@@ -29,6 +29,18 @@ export function deepEqualObjects(obj1: unknown, obj2: unknown): boolean {
 		return true;
 	}
 
+	if (typeof obj1 !== typeof obj2) {
+		return false;
+	}
+
+	if (obj1 instanceof Date && obj2 instanceof Date) {
+		return obj1.getTime() === obj2.getTime();
+	}
+
+	if (typeof obj1 === 'function' && typeof obj2 === 'function') {
+		return obj1.toString() === obj2.toString();
+	}
+
 	if (Array.isArray(obj1) && Array.isArray(obj2)) {
 		return areArraysEqual(obj1, obj2);
 	}

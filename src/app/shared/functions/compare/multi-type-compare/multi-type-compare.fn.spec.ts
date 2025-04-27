@@ -33,4 +33,31 @@ describe('multiTypeCompare', () => {
 		expect(multiTypeCompare([1, 2, 3], [1, 2])).toBeGreaterThan(0);
 		expect(multiTypeCompare([1, 2], [1, 2])).toBe(0);
 	});
+
+	it('should handle null and undefined values', () => {
+		expect(multiTypeCompare(null, null)).toBe(0);
+		expect(multiTypeCompare(undefined, undefined)).toBe(0);
+		expect(multiTypeCompare(null, undefined)).toBe(0);
+		expect(multiTypeCompare(undefined, null)).toBe(0);
+	});
+
+	it('should return 0 for unsupported types', () => {
+		expect(multiTypeCompare({}, {})).toBe(0);
+		expect(multiTypeCompare([], {})).toBe(0);
+		expect(multiTypeCompare({}, [])).toBe(0);
+	});
+
+	it('should return 0 for mixed types', () => {
+		expect(multiTypeCompare('string', 10 as any)).toBe(0);
+		expect(multiTypeCompare(10, 'string' as any)).toBe(0);
+		expect(multiTypeCompare(true, 'string' as any)).toBe(0);
+		expect(multiTypeCompare('string', true as any)).toBe(0);
+	});
+
+	it('should return 0 for mixed types with null and undefined', () => {
+		expect(multiTypeCompare(null, 'string')).toBe(0);
+		expect(multiTypeCompare('string', null)).toBe(0);
+		expect(multiTypeCompare(undefined, 'string')).toBe(0);
+		expect(multiTypeCompare('string', undefined)).toBe(0);
+	});
 });

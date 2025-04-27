@@ -1,4 +1,4 @@
-import type { NonNullish } from '@shared/types/nullish.type';
+import type { NonNullish } from '@shared/types/nullish/nullish.type';
 
 /**
  * Recursively strips out null/undefined props from any object or array

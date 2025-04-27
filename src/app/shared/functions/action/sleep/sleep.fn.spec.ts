@@ -12,15 +12,7 @@ describe('sleep function', () => {
 		});
 	});
 
-	it('should resolve without throwing an error', done => {
-		sleep(50)
-			.then(() => {
-				expect(true).toBeTrue();
-				done();
-			})
-			.catch(() => {
-				fail('The sleep function should not throw an error');
-				done();
-			});
+	it('should resolve without throwing an error', async () => {
+		await expectAsync(sleep(50)).toBeResolved();
 	});
 });

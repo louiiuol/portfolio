@@ -77,4 +77,51 @@ describe('deepEqualObjects', () => {
 		const objB = { a: 1, b: 2 };
 		expect(deepEqualObjects(objA, objB)).toBe(false);
 	});
+
+	it('should handle Date objects correctly', () => {
+		const date1 = new Date('2023-01-01');
+		const date2 = new Date('2023-01-01');
+		const date3 = new Date('2023-01-02');
+
+		expect(deepEqualObjects(date1, date2)).toBe(true);
+		expect(deepEqualObjects(date1, date3)).toBe(false);
+	});
+
+	it('should handle objects with methods correctly', () => {
+		const obj1 = {
+			id: 1,
+			method: function () {
+				return 'test';
+			},
+		};
+		const obj2 = {
+			id: 1,
+			method: function () {
+				return 'test';
+			},
+		};
+		const obj3 = {
+			id: 1,
+			method: function () {
+				return 'different';
+			},
+		};
+
+		// Note: Function equality is typically handled by reference,
+		// so this might fail unless deepEqualObjects has special handling
+		expect(deepEqualObjects(obj1, obj2)).toBe(true);
+		expect(deepEqualObjects(obj1, obj3)).toBe(false);
+	});
+
+	it('should return false for objects with different types', () => {
+		const objA = { a: 1, b: 'string' };
+		const objB = { a: 1, b: 2 };
+		expect(deepEqualObjects(objA, objB)).toBe(false);
+	});
+
+	it('should return false if arrays have different lengths', () => {
+		const arrA = [1, 2, 3];
+		const arrB = [1, 2];
+		expect(deepEqualObjects(arrA, arrB)).toBe(false);
+	});
 });

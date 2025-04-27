@@ -50,7 +50,7 @@
 		],
 	},
 
-	"Anguar -> IconComponent": {
+	"Angular -> IconComponent": {
 		"scope": "typescript",
 		"prefix": "ngIcon",
 		"description": "Angular Icon Component",
@@ -64,7 +64,7 @@
 			"    'class': 'app-icon',",
 			"    '[class]': 'size()'",
 			"  },",
-			"  template: `class=\"fill-current\" ${4}`,",
+			"  template: `<svg xmlns='http://www.w3.org/2000/svg' class='fill-current' ${4}></svg>,",
 			"  changeDetection: ChangeDetectionStrategy.OnPush,",
 			"})",
 			"export class ${2:name}Icon {",

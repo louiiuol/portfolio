@@ -126,4 +126,23 @@ describe('formatZodError', () => {
 			expect(formattedError).toContain('email: Invalid email format');
 		}
 	});
+
+	it('should use custom message prefix when provided', () => {
+		const schema = z.object({
+			name: z.string(),
+		});
+
+		const result = schema.safeParse({
+			name: 123, // Invalid type
+		});
+
+		if (!result.success) {
+			const customMessage = 'Validation failed:';
+			const formattedError = formatZodError(result.error, customMessage);
+			expect(formattedError).toContain('Validation failed:');
+			expect(formattedError).toContain(
+				'name: Expected string, received number'
+			);
+		}
+	});
 });
