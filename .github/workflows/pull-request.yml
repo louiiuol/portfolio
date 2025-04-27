@@ -23,10 +23,3 @@ jobs:
 
       - name: Run tests with Karma
         run: npm run test:ci
-
-      - name: Comment coverage summary
-        uses: peter-evans/create-or-update-comment@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          body: |
-            $(node scripts/coverage-summary.js)
