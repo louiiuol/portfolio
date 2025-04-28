@@ -22,7 +22,7 @@ import { CalendarIcon } from '../../atoms/icon';
 		@if (event().endDate) {
 			<span>{{ event().endDate | date: dateFormat() | capitalize }}</span>
 		} @else {
-			Aujourd'hui
+			<span>Aujourd'hui</span>
 		}
 		@if (showTimeDiff()) {
 			<span class="font-semibold">
