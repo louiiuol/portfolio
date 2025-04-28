@@ -20,74 +20,83 @@ describe('DurationPipe', () => {
 	});
 
 	it('should format duration correctly with minute as output unit', () => {
-		const time = 3604000;
-		const outputUnit = 'minute';
+		const time = 4651000;
+		const minOutput = 'minute';
 		const compact = false;
-		const separator = ', ';
 
-		const result = pipe.transform(time, outputUnit, compact, separator);
+		const result = pipe.transform(time, { minOutput, compact });
 
-		expect(result).toBe('60 minutes');
+		expect(result).toBe('1 heure 17 minutes');
 	});
 
 	it('should use default parameters when optional arguments are not provided', () => {
 		const time = 36000;
-		const result = pipe.transform(time);
+		const result = pipe.transform(time, { compact: true });
 
 		expect(result).toBe('36s');
 	});
 
 	it('should handle negative time values correctly', () => {
 		const time = -3600;
-		const result = pipe.transform(time);
+		const result = pipe.transform(time, { compact: true });
 
 		expect(result).toBe('0s');
 	});
 
 	it('should handle very large time values correctly', () => {
 		const time = 31536000000; // 1 year in milliseconds
-		const outputUnit = 'day';
+		const minOutput = 'year';
 
-		const result = pipe.transform(time, outputUnit);
+		const result = pipe.transform(time, { minOutput });
 
-		expect(result).toBe('365j');
+		expect(result).toBe('1 an');
 	});
 
 	it('should format duration correctly with hours as output unit', () => {
 		const time = 7200000; // 2 hours in milliseconds
-		const outputUnit = 'hour';
+		const minOutput = 'hour';
 
-		const result = pipe.transform(time, outputUnit);
+		const result = pipe.transform(time, { minOutput, compact: true });
 
 		expect(result).toBe('2h');
 	});
 
 	it('should format duration correctly with days as output unit', () => {
 		const time = 172800000; // 2 days in milliseconds
-		const outputUnit = 'day';
+		const minOutput = 'day';
 
-		const result = pipe.transform(time, outputUnit);
+		const result = pipe.transform(time, { minOutput, compact: true });
 
 		expect(result).toBe('2j');
 	});
 
 	it('should format duration correctly with compact set to false', () => {
 		const time = 3600000; // 1 hour in milliseconds
-		const outputUnit = 'hour';
+		const minOutput = 'hour';
 		const compact = false;
 
-		const result = pipe.transform(time, outputUnit, compact);
+		const result = pipe.transform(time, { minOutput, compact });
 
 		expect(result).toBe('1 heure');
 	});
 
 	it('should format duration correctly with compact set to true', () => {
-		const time = 10; // 1 hour in milliseconds
-		const outputUnit = 'day';
+		const time = 3600000; // 1 hour in milliseconds
+		const minOutput = 'hour';
 		const compact = true;
 
-		const result = pipe.transform(time, outputUnit, compact);
+		const result = pipe.transform(time, { minOutput, compact });
 
-		expect(result).toBe('0j');
+		expect(result).toBe('1h');
+	});
+
+	it('should render below minOutput if time is', () => {
+		const time = 5000; // 5 seconds in milliseconds
+		const minOutput = 'minute';
+		const compact = false;
+
+		const result = pipe.transform(time, { minOutput, compact });
+
+		expect(result).toBe('5 secondes');
 	});
 });

@@ -35,6 +35,7 @@ describe('HomePage', () => {
 
 	it('should have the correct introTexts', () => {
 		expect((component as any).introTexts.length).toBe(3);
+		expect(Array.isArray((component as any).introTexts)).toBe(true);
 	});
 
 	it('should render the TypistComponent', () => {
