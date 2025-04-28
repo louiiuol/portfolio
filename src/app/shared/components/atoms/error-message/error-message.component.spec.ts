@@ -12,7 +12,7 @@ class HostComponent {
 	message = signal('erreur personnalisé');
 }
 
-describe('LoaderComponent', () => {
+describe('ErrorMessageComponent', () => {
 	let fixture: ComponentFixture<HostComponent>;
 
 	beforeEach(async () => {

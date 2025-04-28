@@ -16,7 +16,7 @@ class HostComponent {
 	closable = signal(true);
 }
 
-describe('LoaderComponent', () => {
+describe('CardComponent', () => {
 	let fixture: ComponentFixture<HostComponent>;
 
 	beforeEach(async () => {
