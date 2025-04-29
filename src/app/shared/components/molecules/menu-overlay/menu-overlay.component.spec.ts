@@ -59,3 +59,9 @@ describe('MenuOverlayComponent', () => {
 		expect((component as any).isOpen()).toBeFalse();
 	});
 });
+/**
+  * @todo: Keyboard navigation (accessibility)
+Behavior when clicking menu items without actions
+Testing that clicks outside the dropdown close it (if implemented)
+Menu positioning or styling if those are important aspects
+  */

@@ -35,7 +35,7 @@ export class ChevronIcon {
 			case 'down':
 				return 'rotate(90deg)';
 			case 'left':
-				return 'rotate(0)';
+				return 'rotate(0deg)';
 			case 'right':
 				return 'rotate(180deg)';
 		}
