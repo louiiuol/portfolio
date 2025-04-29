@@ -1,21 +1,23 @@
 import { timeFactors, UNITS_IN_ORDER } from '@shared/constants';
 import { isNullish, type TimeUnit } from '@shared/types';
 
-/**
- * Formats a duration in milliseconds into a readable string.
- * Allows controlling formatting using min/max units, compact labels, separators, and maxUnits.
- */
+type FormatOptions = {
+	separator?: string;
+	compact?: boolean;
+	minOutput?: TimeUnit;
+	maxOutput?: TimeUnit;
+	maxUnits?: number;
+};
+
 export function formatDuration(
 	milliseconds: number,
-	opt?: {
-		separator?: string;
-		compact?: boolean;
-		minOutput?: TimeUnit;
-		maxOutput?: TimeUnit;
-		maxUnits?: number;
-	}
+	opt?: FormatOptions
 ): string {
-	if (isNullish(milliseconds) || isNaN(milliseconds)) {
+	if (
+		isNullish(milliseconds) ||
+		isNaN(milliseconds) ||
+		typeof milliseconds !== 'number'
+	) {
 		return '--';
 	}
 
@@ -29,112 +31,143 @@ export function formatDuration(
 	return formatDurationParts(seconds, opt);
 }
 
-function formatDurationParts(
-	seconds: number,
-	opt?: {
-		separator?: string;
-		compact?: boolean;
-		minOutput?: TimeUnit;
-		maxOutput?: TimeUnit;
-		maxUnits?: number;
-	}
-): string {
+/*───────────────────────────────────────*
+ *              CORE LOGIC               *
+ *───────────────────────────────────────*/
+function formatDurationParts(seconds: number, opt?: FormatOptions): string {
 	const { separator, compact, minOutput, maxOutput, maxUnits } = opt ?? {};
-
 	const minIndex = UNITS_IN_ORDER.indexOf(minOutput ?? 'second');
 	const maxIndex = UNITS_IN_ORDER.indexOf(maxOutput ?? 'year');
-	const units = UNITS_IN_ORDER.slice(maxIndex, minIndex + 1); // from largest to smallest unit
+	const units = UNITS_IN_ORDER.slice(maxIndex, minIndex + 1);
 
 	const minUnitInSeconds = timeFactors[minOutput ?? 'second'].seconds;
 
-	// 🔹 If duration is smaller than minOutput, display in the best smaller unit available
 	if (seconds < minUnitInSeconds) {
-		for (let i = minIndex + 1; i < UNITS_IN_ORDER.length; i++) {
-			const unitKey = UNITS_IN_ORDER[i];
-			const unit = timeFactors[unitKey];
-			const value = seconds / unit.seconds;
-
-			if (value >= 1) {
-				return formatRawValue(value, unitKey, compact);
-			}
-		}
-
-		// Fallback: use the smallest known unit
-		const lastUnit = UNITS_IN_ORDER[UNITS_IN_ORDER.length - 1];
-		return formatRawValue(
-			seconds / timeFactors[lastUnit].seconds,
-			lastUnit,
-			compact
-		);
+		return formatSmallerThanMin(seconds, minIndex, compact);
 	}
 
-	// 🔹 Special case: if maxUnits === 1
 	if (maxUnits === 1) {
-		if (minOutput) {
-			// Force display in minOutput
-			const unit = timeFactors[minOutput];
-			const value = Math.floor(seconds / unit.seconds);
-			const plural =
-				(!compact || unit.label === 'an') && value > 1 && unit.label !== 'mois'
-					? 's'
-					: '';
-			return `${value}${compact ? '' : ' '}${compact ? unit.labelCompact : unit.label}${plural}`;
-		}
-		// Choose the best highest unit available
-		for (const unitKey of units) {
-			const unit = timeFactors[unitKey];
-			const value = Math.floor(seconds / unit.seconds);
-			if (value >= 1) {
-				const plural =
-					!compact && value > 1 && unit.label !== 'mois' ? 's' : '';
-				return `${value}${compact ? '' : ' '}${compact ? unit.labelCompact : unit.label}${plural}`;
-			}
-		}
-		// Fallback: show in the smallest unit
-		const smallest = units[units.length - 1];
-		return formatRawValue(
-			seconds / timeFactors[smallest].seconds,
-			smallest,
-			compact
-		);
+		return formatSingleUnit(seconds, units, compact, minOutput);
 	}
 
-	// 🔹 Standard case: build parts from maxOutput to minOutput
+	return formatMultiUnit(seconds, units, compact, separator, maxUnits);
+}
+
+/*───────────────────────────────────────*
+ *         FORMATTING VARIANTS           *
+ *───────────────────────────────────────*/
+
+function formatSmallerThanMin(
+	seconds: number,
+	minIndex: number,
+	compact?: boolean
+): string {
+	for (let i = minIndex + 1; i < UNITS_IN_ORDER.length; i++) {
+		const unitKey = UNITS_IN_ORDER[i];
+		const unit = timeFactors[unitKey];
+		const value = seconds / unit.seconds;
+		if (value >= 1) {
+			return formatRawValue(value, unitKey, compact);
+		}
+	}
+
+	const smallest = UNITS_IN_ORDER[UNITS_IN_ORDER.length - 1];
+	return formatRawValue(
+		seconds / timeFactors[smallest].seconds,
+		smallest,
+		compact
+	);
+}
+
+function formatSingleUnit(
+	seconds: number,
+	units: TimeUnit[],
+	compact?: boolean,
+	minOutput?: TimeUnit
+): string {
+	if (minOutput) {
+		return formatFixedUnit(seconds, minOutput, compact);
+	}
+
+	const unitKey = findLargestUnitWithValue(seconds, units);
+	if (unitKey) {
+		return formatFixedUnit(seconds, unitKey, compact);
+	}
+
+	const fallbackUnit = units[units.length - 1];
+	const value = seconds / timeFactors[fallbackUnit].seconds;
+	return formatRawValue(value, fallbackUnit, compact);
+}
+
+function formatFixedUnit(
+	seconds: number,
+	unitKey: TimeUnit,
+	compact?: boolean
+): string {
+	const unit = timeFactors[unitKey];
+	const value = Math.floor(seconds / unit.seconds);
+	const plural =
+		(!compact || unit.label === 'an') && value > 1 && unit.label !== 'mois'
+			? 's'
+			: '';
+	return `${value}${compact ? '' : ' '}${compact ? unit.labelCompact : unit.label}${plural}`;
+}
+
+function findLargestUnitWithValue(
+	seconds: number,
+	units: TimeUnit[]
+): TimeUnit | null {
+	for (const unitKey of units) {
+		const unit = timeFactors[unitKey];
+		const value = Math.floor(seconds / unit.seconds);
+		if (value >= 1) {
+			return unitKey;
+		}
+	}
+	return null;
+}
+
+function formatMultiUnit(
+	seconds: number,
+	units: TimeUnit[],
+	compact?: boolean,
+	separator = ' ',
+	maxUnits = Infinity
+): string {
 	const parts: string[] = [];
-	let remainingUnits = typeof maxUnits === 'number' ? maxUnits : Infinity;
 
 	for (const unitKey of units) {
-		if (remainingUnits <= 0) {
+		if (maxUnits <= 0) {
 			break;
 		}
 
-		const part = formatUnitPart(unitKey, seconds, { compact });
+		const part = formatUnitPart(unitKey, seconds, compact);
 		if (part) {
 			parts.push(part.value);
 			seconds = part.remainingSeconds;
-			remainingUnits--;
+			maxUnits--;
 		}
 	}
 
-	return parts.join(separator ?? ' ');
+	return parts.join(separator);
 }
 
-/**
- * Formats a unit part of the total duration.
- * Returns the formatted string and remaining seconds.
- */
+/*───────────────────────────────────────*
+ *          LOW-LEVEL HELPERS            *
+ *───────────────────────────────────────*/
+
 function formatUnitPart(
 	unitKey: TimeUnit,
 	seconds: number,
-	opt?: { compact?: boolean }
+	compact?: boolean
 ): { value: string; remainingSeconds: number } | null {
 	const { seconds: unitSize, label, labelCompact } = timeFactors[unitKey];
 	const value = Math.floor(seconds / unitSize);
 
 	if (value > 0) {
-		const plural = !opt?.compact && value > 1 && label !== 'mois' ? 's' : '';
+		const plural = !compact && value > 1 && label !== 'mois' ? 's' : '';
 		return {
-			value: `${value}${opt?.compact ? '' : ' '}${opt?.compact ? labelCompact : label}${plural}`,
+			value: `${value}${compact ? '' : ' '}${compact ? labelCompact : label}${plural}`,
 			remainingSeconds: seconds % unitSize,
 		};
 	}
@@ -142,9 +175,6 @@ function formatUnitPart(
 	return null;
 }
 
-/**
- * Formats a raw value into a unit string with up to two decimal places.
- */
 function formatRawValue(
 	value: number,
 	unitKey: TimeUnit,

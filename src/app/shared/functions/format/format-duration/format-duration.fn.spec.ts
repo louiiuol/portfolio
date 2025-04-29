@@ -1,6 +1,16 @@
 import { formatDuration } from './format-duration.fn';
 
 describe('formatDuration', () => {
+	it('should return "--" for nullish input', () => {
+		expect(formatDuration(null as any)).toBe('--');
+		expect(formatDuration(undefined as any)).toBe('--');
+		expect(formatDuration(NaN as any)).toBe('--');
+		expect(formatDuration('' as any)).toBe('--');
+		expect(formatDuration('invalid' as any)).toBe('--');
+		expect(formatDuration({} as any)).toBe('--');
+		expect(formatDuration([] as any)).toBe('--');
+	});
+
 	it('should return "0 seconde" for 0 milliseconds', () => {
 		expect(formatDuration(0, {})).toBe('0 seconde');
 	});
