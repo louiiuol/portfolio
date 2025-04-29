@@ -1,5 +1,6 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
+import { createDateEvent } from '@mocks/stubs/date-event-create.stub';
 import { EventDatesComponent } from './event-dates.component';
 
 describe('EventDatesComponent', () => {
@@ -26,19 +27,14 @@ describe('EventDatesComponent', () => {
 	});
 
 	it('should display the start date correctly', () => {
-		fixture.componentRef.setInput('event', {
-			startDate: new Date('2023-01-01'),
-		});
+		fixture.componentRef.setInput('event', createDateEvent());
 		fixture.detectChanges();
 		const span = fixture.nativeElement.querySelector('span');
 		expect(span.textContent).toContain('Jan 2023');
 	});
 
 	it('should display the start and end dates correctly', () => {
-		fixture.componentRef.setInput('event', {
-			startDate: new Date('2023-01-01'),
-			endDate: new Date('2023-12-31'),
-		});
+		fixture.componentRef.setInput('event', createDateEvent('2023-12-31'));
 		fixture.detectChanges();
 		const spans = fixture.nativeElement.querySelectorAll('span');
 		expect(spans[0].textContent).toContain('Jan 2023');
@@ -46,10 +42,7 @@ describe('EventDatesComponent', () => {
 	});
 
 	it('should display "Aujourd\'hui" if endDate is null', () => {
-		fixture.componentRef.setInput('event', {
-			startDate: new Date('2023-01-01'),
-			endDate: null,
-		});
+		fixture.componentRef.setInput('event', createDateEvent());
 		fixture.detectChanges();
 		const spans = fixture.nativeElement.querySelectorAll('span');
 
@@ -57,10 +50,7 @@ describe('EventDatesComponent', () => {
 	});
 
 	it('should display the time difference if showTimeDiff is true', () => {
-		fixture.componentRef.setInput('event', {
-			startDate: new Date('2023-01-01'),
-			endDate: new Date('2023-12-31'),
-		});
+		fixture.componentRef.setInput('event', createDateEvent('2023-12-31'));
 		fixture.componentRef.setInput('showTimeDiff', true);
 
 		fixture.detectChanges();
@@ -71,9 +61,7 @@ describe('EventDatesComponent', () => {
 
 	it('should display the calendar icon if showIcon is true', () => {
 		fixture.componentRef.setInput('showIcon', true);
-		fixture.componentRef.setInput('event', {
-			startDate: new Date('2023-01-01'),
-		});
+		fixture.componentRef.setInput('event', createDateEvent());
 		fixture.detectChanges();
 		const icon = fixture.nativeElement.querySelector('app-icon-calendar');
 		expect(icon).toBeTruthy();

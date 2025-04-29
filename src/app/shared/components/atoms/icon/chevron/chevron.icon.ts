@@ -4,7 +4,7 @@ import {
 	computed,
 	input,
 } from '@angular/core';
-import type { IconSize } from './icon-size.type';
+import type { IconSize } from '../icon-size.type';
 
 @Component({
 	selector: 'app-icon-chevron',

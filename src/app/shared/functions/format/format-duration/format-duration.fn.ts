@@ -1,5 +1,6 @@
 import { timeFactors, UNITS_IN_ORDER } from '@shared/constants';
 import { isNullish, type TimeUnit } from '@shared/types';
+import type { TimeFactor } from '../../../constants/time.const';
 
 type FormatOptions = {
 	separator?: string;
@@ -40,9 +41,7 @@ function formatDurationParts(seconds: number, opt?: FormatOptions): string {
 	const maxIndex = UNITS_IN_ORDER.indexOf(maxOutput ?? 'year');
 	const units = UNITS_IN_ORDER.slice(maxIndex, minIndex + 1);
 
-	const minUnitInSeconds = timeFactors[minOutput ?? 'second'].seconds;
-
-	if (seconds < minUnitInSeconds) {
+	if (seconds < timeFactors[minOutput ?? 'second'].seconds) {
 		return formatSmallerThanMin(seconds, minIndex, compact);
 	}
 
@@ -106,11 +105,12 @@ function formatFixedUnit(
 ): string {
 	const unit = timeFactors[unitKey];
 	const value = Math.floor(seconds / unit.seconds);
-	const plural =
-		(!compact || unit.label === 'an') && value > 1 && unit.label !== 'mois'
-			? 's'
-			: '';
-	return `${value}${compact ? '' : ' '}${compact ? unit.labelCompact : unit.label}${plural}`;
+	return outputResult({
+		value,
+		plural: getPluralSuffix({ value, timeUnit: unitKey, compact }),
+		unit,
+		compact,
+	});
 }
 
 function findLargestUnitWithValue(
@@ -161,13 +161,17 @@ function formatUnitPart(
 	seconds: number,
 	compact?: boolean
 ): { value: string; remainingSeconds: number } | null {
-	const { seconds: unitSize, label, labelCompact } = timeFactors[unitKey];
+	const unitSize = timeFactors[unitKey].seconds;
 	const value = Math.floor(seconds / unitSize);
 
 	if (value > 0) {
-		const plural = !compact && value > 1 && label !== 'mois' ? 's' : '';
 		return {
-			value: `${value}${compact ? '' : ' '}${compact ? labelCompact : label}${plural}`,
+			value: outputResult({
+				value,
+				plural: getPluralSuffix({ value, timeUnit: unitKey, compact }),
+				unit: timeFactors[unitKey],
+				compact,
+			}),
 			remainingSeconds: seconds % unitSize,
 		};
 	}
@@ -180,8 +184,39 @@ function formatRawValue(
 	unitKey: TimeUnit,
 	compact?: boolean
 ): string {
-	const { label, labelCompact } = timeFactors[unitKey];
-	const rounded = Math.round(value * 100) / 100;
-	const plural = !compact && rounded > 1 && label !== 'mois' ? 's' : '';
-	return `${rounded}${compact ? '' : ' '}${compact ? labelCompact : label}${plural}`;
+	return outputResult({
+		value: Math.round(value * 100) / 100,
+		plural: getPluralSuffix({ value, timeUnit: unitKey, compact }),
+		unit: timeFactors[unitKey],
+		compact,
+	});
+}
+
+function getPluralSuffix({
+	value,
+	timeUnit,
+	compact,
+}: {
+	value: number;
+	timeUnit: TimeUnit;
+	compact?: boolean;
+}): string {
+	// (french grammar) Don't pluralize for compact format if the unit is 'month'. But force pluralization for 'year' and.
+	return (!compact || timeUnit === 'year') && value > 1 && timeUnit !== 'month'
+		? 's'
+		: '';
+}
+
+function outputResult({
+	value,
+	compact,
+	plural,
+	unit,
+}: {
+	value: number;
+	plural: string;
+	unit: Omit<TimeFactor, 'seconds'>;
+	compact?: boolean;
+}): string {
+	return `${value}${compact ? '' : ' '}${compact ? unit.labelCompact : unit.label}${plural}`;
 }

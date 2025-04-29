@@ -1,15 +1,5 @@
+import { createDateEvent } from '@mocks/stubs/date-event-create.stub';
 import { TimeDifferencePipe } from './time-diff.pipe';
-
-/**
- * @internal Used by the tests to create a date event object.
- */
-const createDateEvent = (
-	endDate?: string | null,
-	startDate: string = '2023-01-01'
-) => ({
-	startDate: new Date(startDate),
-	endDate: endDate ? new Date(endDate) : null,
-});
 
 describe('TimeDifferencePipe', () => {
 	let pipe: TimeDifferencePipe;
