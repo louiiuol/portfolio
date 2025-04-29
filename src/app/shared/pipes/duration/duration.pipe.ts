@@ -22,13 +22,15 @@ import type { nullish, TimeUnit } from '@shared/types';
 export class DurationPipe implements PipeTransform {
 	transform(
 		ms: number | nullish,
-		outputUnit: TimeUnit = 'second',
-		compact = true,
-		separator: string = ' '
+		opt?: {
+			minOutput?: TimeUnit;
+			compact?: boolean;
+			separator?: string;
+		}
 	): string {
 		if (!ms) {
 			return '--';
 		}
-		return formatDuration(ms, { separator, compact, outputUnit });
+		return formatDuration(ms, opt);
 	}
 }

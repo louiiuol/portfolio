@@ -16,8 +16,17 @@ import type { nullish, TimeUnit } from '@shared/types';
 export class TimeDifferencePipe implements PipeTransform {
 	transform = (
 		dates: { startDate: Date; endDate?: Date | nullish },
-		outputUnit: TimeUnit = 'month',
-		compact: boolean = false
+		{
+			minOutput,
+			maxOutput,
+			maxUnits,
+			compact = false,
+		}: {
+			minOutput?: TimeUnit;
+			maxOutput?: TimeUnit;
+			maxUnits?: number;
+			compact?: boolean;
+		}
 	): string => {
 		if (!dates?.startDate) {
 			return '--';
@@ -33,11 +42,13 @@ export class TimeDifferencePipe implements PipeTransform {
 			return '--';
 		}
 
-		const prefix = endTimestamp > startTimestamp ? '-' : '';
+		const prefix = endTimestamp < startTimestamp ? '-' : '';
 		return (
 			prefix +
-			formatDuration(Math.abs(endTimestamp - startTimestamp), {
-				outputUnit,
+			formatDuration(Math.abs(startTimestamp - endTimestamp), {
+				minOutput,
+				maxOutput,
+				maxUnits,
 				compact,
 			})
 		);

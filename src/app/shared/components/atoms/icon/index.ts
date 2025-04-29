@@ -1,5 +1,5 @@
 export { CalendarIcon } from './calendar.icon';
-export { ChevronIcon } from './chevron.icon';
+export { ChevronIcon } from './chevron/chevron.icon';
 export { CloseIcon } from './close.icon';
 export { ContractIcon } from './contract.icon';
 export { DownloadIcon } from './download.icon';

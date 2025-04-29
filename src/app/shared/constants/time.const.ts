@@ -16,6 +16,7 @@ export const timeFactors: Record<
 	second: { seconds: 1, labelCompact: 's', label: 'seconde' },
 	millisecond: { seconds: 0.001, labelCompact: 'ms', label: 'milliseconde' },
 };
+export type TimeFactor = (typeof timeFactors)[TimeUnit];
 
 // Keep a consistent order from largest to smallest:
 export const UNITS_IN_ORDER: TimeUnit[] = Object.keys(

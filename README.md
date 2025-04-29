@@ -1,6 +1,7 @@
 # Louis Godlewski | Portfolio
 
 [![Run Units-Tests 🧪](https://github.com/louiiuol/portfolio/actions/workflows/pull-request.yml/badge.svg)](https://github.com/louiiuol/portfolio/actions/workflows/pull-request.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=louiiuol_portfolio&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=louiiuol_portfolio)
 
 ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=plastic&logo=javascript&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3077C6?style=plastic&logo=typescript&logoColor=white)

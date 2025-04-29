@@ -1,104 +1,222 @@
 import { timeFactors, UNITS_IN_ORDER } from '@shared/constants';
 import { isNullish, type TimeUnit } from '@shared/types';
+import type { TimeFactor } from '../../../constants/time.const';
 
-/**
- * Formats a duration in seconds into a readable string, optionally stopping
- * at a specified lowest unit.
- *
- * @param milliseconds - The total duration in milliseconds (can be fractional).
- * @param separator - The string used to separate each time part in the output.
- * @param compact - If true, uses short labels instead of long labels.
- * @param outputUnit - If provided, once this unit is reached it becomes the smallest displayed (and smaller units are discarded).
- */
+type FormatOptions = {
+	separator?: string;
+	compact?: boolean;
+	minOutput?: TimeUnit;
+	maxOutput?: TimeUnit;
+	maxUnits?: number;
+};
+
 export function formatDuration(
 	milliseconds: number,
-	opt?: {
-		separator?: string;
-		compact?: boolean;
-		outputUnit?: TimeUnit;
-		maxUnits?: number;
-	}
+	opt?: FormatOptions
 ): string {
-	if (isNullish(milliseconds) || isNaN(milliseconds)) {
+	if (
+		isNullish(milliseconds) ||
+		isNaN(milliseconds) ||
+		typeof milliseconds !== 'number'
+	) {
 		return '--';
 	}
 
 	const seconds = milliseconds * timeFactors['millisecond'].seconds;
-	const unit = timeFactors[opt?.outputUnit ?? 'second'];
 
 	if (seconds <= 0) {
+		const unit = timeFactors[opt?.minOutput ?? 'second'];
 		return `0${opt?.compact ? unit.labelCompact : ' ' + unit.label}`;
 	}
 
 	return formatDurationParts(seconds, opt);
 }
 
-/**
- * Formats a duration in seconds into a readable string, stopping at the specified lowest unit.
- *
- * @param seconds - The total duration in seconds.
- * @param opt - Options for formatting.
- * @returns A string representing the formatted duration.
- */
-function formatDurationParts(
+/*───────────────────────────────────────*
+ *              CORE LOGIC               *
+ *───────────────────────────────────────*/
+function formatDurationParts(seconds: number, opt?: FormatOptions): string {
+	const { separator, compact, minOutput, maxOutput, maxUnits } = opt ?? {};
+	const minIndex = UNITS_IN_ORDER.indexOf(minOutput ?? 'second');
+	const maxIndex = UNITS_IN_ORDER.indexOf(maxOutput ?? 'year');
+	const units = UNITS_IN_ORDER.slice(maxIndex, minIndex + 1);
+
+	if (seconds < timeFactors[minOutput ?? 'second'].seconds) {
+		return formatSmallerThanMin(seconds, minIndex, compact);
+	}
+
+	if (maxUnits === 1) {
+		return formatSingleUnit(seconds, units, compact, minOutput);
+	}
+
+	return formatMultiUnit(seconds, units, compact, separator, maxUnits);
+}
+
+/*───────────────────────────────────────*
+ *         FORMATTING VARIANTS           *
+ *───────────────────────────────────────*/
+
+function formatSmallerThanMin(
 	seconds: number,
-	opt?: {
-		separator?: string;
-		compact?: boolean;
-		outputUnit?: TimeUnit;
-		maxUnits?: number;
-	}
+	minIndex: number,
+	compact?: boolean
 ): string {
-	const { outputUnit, separator, compact, maxUnits } = opt ?? {};
-
-	if (outputUnit) {
-		const { seconds: unitSize, label, labelCompact } = timeFactors[outputUnit];
-		const value = Math.floor(seconds / unitSize);
-		const unit = compact ? labelCompact : ' ' + label;
-		const plural = !opt?.compact && value > 1 && label !== 'mois' ? 's' : '';
-		return [value, unit, plural].join('');
-	}
-
-	const parts: string[] = [];
-	let remainingUnits = typeof maxUnits === 'number' ? maxUnits : Infinity;
-
-	for (const unitKey of UNITS_IN_ORDER) {
-		if (remainingUnits <= 0) break;
-
-		const part = formatUnitPart(unitKey, seconds, opt);
-		if (part) {
-			parts.push(part.value);
-			seconds = part.remainingSeconds;
-			remainingUnits--;
+	for (let i = minIndex + 1; i < UNITS_IN_ORDER.length; i++) {
+		const unitKey = UNITS_IN_ORDER[i];
+		const unit = timeFactors[unitKey];
+		const value = seconds / unit.seconds;
+		if (value >= 1) {
+			return formatRawValue(value, unitKey, compact);
 		}
 	}
 
-	return parts.join(separator ?? ' ');
+	const smallest = UNITS_IN_ORDER[UNITS_IN_ORDER.length - 1];
+	return formatRawValue(
+		seconds / timeFactors[smallest].seconds,
+		smallest,
+		compact
+	);
 }
 
-/**
- * Formats a specific unit part of the duration into a readable string.
- *
- * @param unitKey - The time unit to format.
- * @param seconds - The total duration in seconds.
- * @param opt - Options for formatting.
- * @returns An object containing the formatted value and remaining seconds, or null if the value is 0.
- */
+function formatSingleUnit(
+	seconds: number,
+	units: TimeUnit[],
+	compact?: boolean,
+	minOutput?: TimeUnit
+): string {
+	if (minOutput) {
+		return formatFixedUnit(seconds, minOutput, compact);
+	}
+
+	const unitKey = findLargestUnitWithValue(seconds, units);
+	if (unitKey) {
+		return formatFixedUnit(seconds, unitKey, compact);
+	}
+
+	const fallbackUnit = units[units.length - 1];
+	const value = seconds / timeFactors[fallbackUnit].seconds;
+	return formatRawValue(value, fallbackUnit, compact);
+}
+
+function formatFixedUnit(
+	seconds: number,
+	unitKey: TimeUnit,
+	compact?: boolean
+): string {
+	const unit = timeFactors[unitKey];
+	const value = Math.floor(seconds / unit.seconds);
+	return outputResult({
+		value,
+		plural: getPluralSuffix({ value, timeUnit: unitKey, compact }),
+		unit,
+		compact,
+	});
+}
+
+function findLargestUnitWithValue(
+	seconds: number,
+	units: TimeUnit[]
+): TimeUnit | null {
+	for (const unitKey of units) {
+		const unit = timeFactors[unitKey];
+		const value = Math.floor(seconds / unit.seconds);
+		if (value >= 1) {
+			return unitKey;
+		}
+	}
+	return null;
+}
+
+function formatMultiUnit(
+	seconds: number,
+	units: TimeUnit[],
+	compact?: boolean,
+	separator = ' ',
+	maxUnits = Infinity
+): string {
+	const parts: string[] = [];
+
+	for (const unitKey of units) {
+		if (maxUnits <= 0) {
+			break;
+		}
+
+		const part = formatUnitPart(unitKey, seconds, compact);
+		if (part) {
+			parts.push(part.value);
+			seconds = part.remainingSeconds;
+			maxUnits--;
+		}
+	}
+
+	return parts.join(separator);
+}
+
+/*───────────────────────────────────────*
+ *          LOW-LEVEL HELPERS            *
+ *───────────────────────────────────────*/
+
 function formatUnitPart(
 	unitKey: TimeUnit,
 	seconds: number,
-	opt?: { compact?: boolean }
+	compact?: boolean
 ): { value: string; remainingSeconds: number } | null {
-	const { seconds: unitSize, label, labelCompact } = timeFactors[unitKey];
+	const unitSize = timeFactors[unitKey].seconds;
 	const value = Math.floor(seconds / unitSize);
 
 	if (value > 0) {
-		const plural = !opt?.compact && value > 1 && label !== 'mois' ? 's' : '';
 		return {
-			value: `${value}${opt?.compact ? '' : ' '}${opt?.compact ? labelCompact : label}${plural}`,
+			value: outputResult({
+				value,
+				plural: getPluralSuffix({ value, timeUnit: unitKey, compact }),
+				unit: timeFactors[unitKey],
+				compact,
+			}),
 			remainingSeconds: seconds % unitSize,
 		};
 	}
 
 	return null;
+}
+
+function formatRawValue(
+	value: number,
+	unitKey: TimeUnit,
+	compact?: boolean
+): string {
+	return outputResult({
+		value: Math.round(value * 100) / 100,
+		plural: getPluralSuffix({ value, timeUnit: unitKey, compact }),
+		unit: timeFactors[unitKey],
+		compact,
+	});
+}
+
+function getPluralSuffix({
+	value,
+	timeUnit,
+	compact,
+}: {
+	value: number;
+	timeUnit: TimeUnit;
+	compact?: boolean;
+}): string {
+	// (french grammar) Don't pluralize for compact format if the unit is 'month'. But force pluralization for 'year' and.
+	return (!compact || timeUnit === 'year') && value > 1 && timeUnit !== 'month'
+		? 's'
+		: '';
+}
+
+function outputResult({
+	value,
+	compact,
+	plural,
+	unit,
+}: {
+	value: number;
+	plural: string;
+	unit: Omit<TimeFactor, 'seconds'>;
+	compact?: boolean;
+}): string {
+	return `${value}${compact ? '' : ' '}${compact ? unit.labelCompact : unit.label}${plural}`;
 }

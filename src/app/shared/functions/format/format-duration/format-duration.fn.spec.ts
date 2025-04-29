@@ -1,12 +1,22 @@
 import { formatDuration } from './format-duration.fn';
 
 describe('formatDuration', () => {
+	it('should return "--" for nullish input', () => {
+		expect(formatDuration(null as any)).toBe('--');
+		expect(formatDuration(undefined as any)).toBe('--');
+		expect(formatDuration(NaN as any)).toBe('--');
+		expect(formatDuration('' as any)).toBe('--');
+		expect(formatDuration('invalid' as any)).toBe('--');
+		expect(formatDuration({} as any)).toBe('--');
+		expect(formatDuration([] as any)).toBe('--');
+	});
+
 	it('should return "0 seconde" for 0 milliseconds', () => {
 		expect(formatDuration(0, {})).toBe('0 seconde');
 	});
 
 	it('should return "0 jour" for 0 milliseconds if output unit is set to "day"', () => {
-		expect(formatDuration(0, { outputUnit: 'day' })).toBe('0 jour');
+		expect(formatDuration(0, { minOutput: 'day' })).toBe('0 jour');
 	});
 
 	it('should return "0 seconde" for negative milliseconds', () => {
@@ -30,13 +40,13 @@ describe('formatDuration', () => {
 	});
 
 	it('should stop formatting at the specified output unit', () => {
-		expect(formatDuration(3661000, { outputUnit: 'minute' })).toBe(
-			'61 minutes'
-		);
+		expect(
+			formatDuration(3661000, { minOutput: 'minute', maxOutput: 'minute' })
+		).toBe('61 minutes');
 	});
 
 	it('should handle fractional milliseconds correctly', () => {
-		expect(formatDuration(1500, { outputUnit: 'second' })).toBe('1 seconde');
+		expect(formatDuration(1500, { minOutput: 'second' })).toBe('1 seconde');
 	});
 
 	it('should handle large durations correctly', () => {
@@ -63,22 +73,26 @@ describe('formatDuration', () => {
 	});
 
 	it('should handle edge case where duration is just below 1 unit', () => {
-		expect(formatDuration(59999, { outputUnit: 'second' })).toBe('59 secondes');
+		expect(formatDuration(59999, { minOutput: 'second' })).toBe('59 secondes');
 	});
 
 	it('should limit the number of units displayed to maxUnits', () => {
 		expect(formatDuration(3661000, { maxUnits: 2 })).toBe('1 heure 1 minute');
 		expect(formatDuration(3661000, { maxUnits: 1 })).toBe('1 heure');
-		expect(formatDuration(3661000, { maxUnits: 3 })).toBe(
-			'1 heure 1 minute 1 seconde'
-		);
+		expect(
+			formatDuration(3661000, {
+				maxUnits: 4,
+				minOutput: 'second',
+				maxOutput: 'hour',
+			})
+		).toBe('1 heure 1 minute 1 seconde');
 	});
 
 	it('should handle maxUnits with outputUnit', () => {
-		expect(formatDuration(3661000, { maxUnits: 2, outputUnit: 'minute' })).toBe(
-			'61 minutes'
+		expect(formatDuration(3661000, { maxUnits: 2, minOutput: 'minute' })).toBe(
+			'1 heure 1 minute'
 		);
-		expect(formatDuration(3661000, { maxUnits: 1, outputUnit: 'minute' })).toBe(
+		expect(formatDuration(3661000, { maxUnits: 1, minOutput: 'minute' })).toBe(
 			'61 minutes'
 		);
 	});
@@ -92,8 +106,8 @@ describe('formatDuration', () => {
 
 	it('should render as seated outputUnit, even if value is lower', () => {
 		const time = 3600;
-		const result = formatDuration(time, { outputUnit: 'hour' });
+		const result = formatDuration(time, { minOutput: 'hour' });
 
-		expect(result).toBe('0 heure');
+		expect(result).toBe('3.6 secondes');
 	});
 });

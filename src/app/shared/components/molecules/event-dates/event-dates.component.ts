@@ -6,7 +6,7 @@ import {
 	input,
 } from '@angular/core';
 import { CapitalizePipe, TimeDifferencePipe } from '@shared/pipes';
-import { CalendarIcon } from '../../atoms';
+import { CalendarIcon } from '../../atoms/icon';
 
 @Component({
 	selector: 'app-event-dates',
@@ -22,10 +22,12 @@ import { CalendarIcon } from '../../atoms';
 		@if (event().endDate) {
 			<span>{{ event().endDate | date: dateFormat() | capitalize }}</span>
 		} @else {
-			Aujourd'hui
+			<span>Aujourd'hui</span>
 		}
 		@if (showTimeDiff()) {
-			<span class="font-semibold">({{ event() | timeDiff }})</span>
+			<span class="font-semibold">
+				({{ event() | timeDiff: { minOutput: 'month' } }})
+			</span>
 		}
 	`,
 	imports: [DatePipe, CapitalizePipe, TimeDifferencePipe, CalendarIcon],
