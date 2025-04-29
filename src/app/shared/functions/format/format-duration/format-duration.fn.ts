@@ -74,7 +74,10 @@ function formatDurationParts(
 			// Force display in minOutput
 			const unit = timeFactors[minOutput];
 			const value = Math.floor(seconds / unit.seconds);
-			const plural = !compact && value > 1 && unit.label !== 'mois' ? 's' : '';
+			const plural =
+				(!compact || unit.label === 'an') && value > 1 && unit.label !== 'mois'
+					? 's'
+					: '';
 			return `${value}${compact ? '' : ' '}${compact ? unit.labelCompact : unit.label}${plural}`;
 		}
 		// Choose the best highest unit available

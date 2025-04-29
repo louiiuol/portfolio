@@ -1,5 +1,16 @@
 import { TimeDifferencePipe } from './time-diff.pipe';
 
+/**
+ * @internal Used by the tests to create a date event object.
+ */
+const createDateEvent = (
+	endDate?: string | null,
+	startDate: string = '2023-01-01'
+) => ({
+	startDate: new Date(startDate),
+	endDate: endDate ? new Date(endDate) : null,
+});
+
 describe('TimeDifferencePipe', () => {
 	let pipe: TimeDifferencePipe;
 
@@ -8,23 +19,15 @@ describe('TimeDifferencePipe', () => {
 	});
 
 	it('should calculate the difference in months between two dates', () => {
-		const startDate = new Date('2023-01-01');
-		const endDate = new Date('2023-04-01');
-
-		const result = pipe.transform(
-			{ startDate, endDate },
-			{ minOutput: 'month' }
-		);
-		expect(result).toBe('3 mois');
+		const result = pipe.transform(createDateEvent(), { minOutput: 'month' });
+		expect(result).toBe('2 ans 3 mois');
 	});
 
 	it('should calculate the difference in days when outputUnit is "day"', () => {
-		const startDate = new Date('2023-01-01');
-		const endDate = new Date('2023-01-10');
-		const result = pipe.transform(
-			{ startDate, endDate },
-			{ minOutput: 'day', maxOutput: 'day' }
-		);
+		const result = pipe.transform(createDateEvent('2023-01-10'), {
+			minOutput: 'day',
+			maxOutput: 'day',
+		});
 		expect(result).toBe('9 jours');
 	});
 
@@ -47,62 +50,50 @@ describe('TimeDifferencePipe', () => {
 	});
 
 	it('should return a compact string when compact is true', () => {
-		const startDate = new Date('2023-01-01');
-		const endDate = new Date('2023-04-01');
-		const result = pipe.transform(
-			{ startDate, endDate },
-			{ minOutput: 'month', maxUnits: 1, compact: true }
-		);
+		const result = pipe.transform(createDateEvent('2023-04-01'), {
+			minOutput: 'month',
+			maxUnits: 1,
+			compact: true,
+		});
 		expect(result).toBe('3m');
 	});
 
 	it('should calculate the difference in years for large time differences', () => {
-		const startDate = new Date('2000-01-01');
-		const endDate = new Date('2023-01-01');
-		const result = pipe.transform(
-			{ startDate, endDate },
-			{ minOutput: 'year' }
-		);
+		const result = pipe.transform(createDateEvent('2046-01-01'), {
+			minOutput: 'year',
+		});
 		expect(result).toBe('23 ans');
 	});
 
 	it('should return "0" for zero time difference', () => {
-		const startDate = new Date('2023-01-01');
-		const endDate = new Date('2023-01-01');
-		const result = pipe.transform(
-			{ startDate, endDate },
-			{ minOutput: 'second' }
-		);
+		const result = pipe.transform(createDateEvent('2023-01-01'), {
+			minOutput: 'second',
+		});
 		expect(result).toBe('0 seconde');
 	});
 
 	it('should handle negative time differences', () => {
-		const startDate = new Date('2023-04-01');
-		const endDate = new Date('2023-01-01');
-		const result = pipe.transform(
-			{ startDate, endDate },
-			{ minOutput: 'month' }
-		);
+		const result = pipe.transform(createDateEvent('2022-10-01'), {
+			minOutput: 'month',
+		});
 		expect(result).toBe('-3 mois');
 	});
 
 	it('should return a compact format for years when compact is true', () => {
-		const startDate = new Date('2000-01-01');
-		const endDate = new Date('2023-01-01');
-		const result = pipe.transform(
-			{ startDate, endDate },
-			{ minOutput: 'year', maxUnits: 1, compact: true }
-		);
-		expect(result).toBe('23an');
+		const result = pipe.transform(createDateEvent('2046-01-01'), {
+			minOutput: 'year',
+			maxUnits: 1,
+			compact: true,
+		});
+		expect(result).toBe('23ans');
 	});
 
 	it('should return a compact format for days when compact is true', () => {
-		const startDate = new Date('2023-01-01');
-		const endDate = new Date('2023-01-10');
-		const result = pipe.transform(
-			{ startDate, endDate },
-			{ minOutput: 'day', maxUnits: 1, compact: true }
-		);
+		const result = pipe.transform(createDateEvent('2023-01-10'), {
+			minOutput: 'day',
+			maxUnits: 1,
+			compact: true,
+		});
 		expect(result).toBe('9j');
 	});
 
