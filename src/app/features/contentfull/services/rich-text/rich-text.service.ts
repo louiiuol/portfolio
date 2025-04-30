@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import type { FormattedRichText, RichTextNode } from '../types/rich-text.type';
+import type {
+	FormattedRichText,
+	RichTextNode,
+} from '../../types/rich-text/rich-text.type';
 
 @Injectable()
 export class RichTextService {

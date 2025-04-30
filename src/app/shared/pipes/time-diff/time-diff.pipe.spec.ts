@@ -9,7 +9,9 @@ describe('TimeDifferencePipe', () => {
 	});
 
 	it('should calculate the difference in months between two dates', () => {
-		const result = pipe.transform(createDateEvent(), { minOutput: 'month' });
+		const result = pipe.transform(createDateEvent('2025-04-01'), {
+			minOutput: 'month',
+		});
 		expect(result).toBe('2 ans 3 mois');
 	});
 

@@ -13,8 +13,8 @@ import { LocalStorageService } from '@shared/services';
 import { isUnknownRecord, type UnknownRecord } from '@shared/types';
 import { createClient } from 'contentful';
 import { z } from 'zod';
-import { isRichTextDocument } from '../types/rich-text.type';
-import { RichTextService } from './rich-text.service';
+import { isRichTextDocument } from '../../types/rich-text/rich-text.type';
+import { RichTextService } from '../rich-text/rich-text.service';
 
 const entriesSchema = z.object({
 	exprience: z.array(jobSchema),

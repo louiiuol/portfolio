@@ -1,6 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { ContentfullService } from '@feat/contentfull/services/contentfull.service';
+import { ContentfullService } from '@feat/contentfull/services/contentfull/contentfull.service';
 import {
 	deepEqualObjects,
 	multiTypeSort,

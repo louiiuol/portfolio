@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import type { FormattedRichText } from '../types/rich-text.type';
+import type { FormattedRichText } from '../types/rich-text/rich-text.type';
 
 @Component({
 	selector: 'app-rich-text',

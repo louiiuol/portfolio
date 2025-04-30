@@ -5,4 +5,4 @@ export {
 	isRichTextDocument,
 	type FormattedRichText,
 	type RichTextNode,
-} from './rich-text.type';
+} from './rich-text/rich-text.type';
