@@ -1,10 +1,17 @@
+import type { ElementRef } from '@angular/core';
 import {
 	booleanAttribute,
 	ChangeDetectionStrategy,
 	Component,
+	inject,
 	input,
 	output,
+	viewChild,
 } from '@angular/core';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { NavigationEnd, Router } from '@angular/router';
+import { isNotNullish } from '@shared/types';
+import { combineLatest, filter, map } from 'rxjs';
 import { ButtonComponent, CloseIcon } from '../../atoms';
 
 @Component({
@@ -34,7 +41,8 @@ import { ButtonComponent, CloseIcon } from '../../atoms';
 		</div>
 
 		<section
-			class="flex flex-col gap-6 overflow-y-auto px-3 -mx-3 py-3 sm:-mx-6 sm:px-4 bg-slate-50 rounded-lg relative flex-1 stable-scrollbar-gutter inset-app-shadow">
+			class="flex flex-col gap-6 overflow-y-auto px-3 -mx-3 py-3 sm:-mx-6 sm:px-4 bg-slate-50 rounded-lg relative flex-1 stable-scrollbar-gutter inset-app-shadow"
+			#scrollContainer>
 			<ng-content />
 		</section>
 
@@ -50,4 +58,24 @@ export class Card {
 	readonly closable = input(false, { transform: booleanAttribute });
 
 	readonly closed = output<void>();
+
+	private readonly router = inject(Router);
+
+	private readonly scrollContainer =
+		viewChild<ElementRef<HTMLDivElement>>('scrollContainer');
+
+	private readonly scrollElement$ = toObservable(this.scrollContainer).pipe(
+		map(el => el?.nativeElement),
+		filter(isNotNullish)
+	);
+
+	constructor() {
+		combineLatest([this.router.events, this.scrollElement$])
+			.pipe(
+				filter(([event]) => event instanceof NavigationEnd),
+				map(res => res[1]),
+				takeUntilDestroyed()
+			)
+			.subscribe(element => (element.scrollTop = 0));
+	}
 }
