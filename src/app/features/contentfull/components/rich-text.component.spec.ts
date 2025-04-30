@@ -15,6 +15,7 @@ describe('RichTextComponent', () => {
 	beforeEach(() => {
 		fixture = TestBed.createComponent(RichTextComponent);
 		component = fixture.componentInstance;
+		fixture.componentRef.setInput('content', []);
 		fixture.detectChanges();
 	});
 
