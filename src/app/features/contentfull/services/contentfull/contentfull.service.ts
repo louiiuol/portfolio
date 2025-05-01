@@ -70,7 +70,7 @@ export class ContentfullService {
 		const localEntries = this.localStorageService.get(
 			this.localStorageKey,
 			entriesSchema.extend({
-				updatedAt: z.date(),
+				updatedAt: z.coerce.date(),
 			})
 		);
 

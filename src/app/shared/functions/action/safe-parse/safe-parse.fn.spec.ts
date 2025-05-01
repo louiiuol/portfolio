@@ -1,12 +1,10 @@
 import { safeParse } from './safe-parse.fn';
 
 describe('SafeParse', () => {
-	it('should handle null or undefined raw values', () => {
-		const resultNull = safeParse(null);
-		const resultUndefined = safeParse(undefined);
-
-		expect(resultNull).toBeNull();
-		expect(resultUndefined).toBeNull();
+	it('should handle nullish values & empty string (returns null)', () => {
+		expect(safeParse('')).toBeNull();
+		expect(safeParse(null)).toBeNull();
+		expect(safeParse(undefined)).toBeNull();
 	});
 
 	it('should handle primitive raw values', () => {
@@ -14,12 +12,25 @@ describe('SafeParse', () => {
 		const rawNumber = 42;
 		const rawBoolean = true;
 
-		const resultString = safeParse(rawString);
-		const resultNumber = safeParse(rawNumber as any);
-		const resultBoolean = safeParse(rawBoolean as any);
-
-		expect(resultString).toBe(rawString);
-		expect(resultNumber).toBe(rawNumber);
-		expect(resultBoolean).toBe(rawBoolean);
+		expect(safeParse(rawString)).toBe(rawString);
+		expect(safeParse(String(rawNumber))).toBe(rawNumber);
+		expect(safeParse(String(rawBoolean))).toBe(rawBoolean);
 	});
+
+	it('should handle valid JSON strings', () => {
+		const jsonString = '{"key": "value"}';
+		const jsonArray = '[1, 2, 3]';
+
+		expect(safeParse(jsonString)).toEqual({ key: 'value' });
+		expect(safeParse(jsonArray)).toEqual([1, 2, 3]);
+	});
+
+	it('should return null for invalid JSON strings', () => {
+		const invalidJson = '{key: value}';
+		const anotherInvalidJson = '[1, 2, 3';
+		expect(safeParse(invalidJson)).toBeNull();
+		expect(safeParse(anotherInvalidJson)).toBeNull();
+	});
+
+	it('should return null for empty strings', () => {});
 });

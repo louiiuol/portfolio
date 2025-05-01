@@ -2,7 +2,7 @@
  * map-functions.spec.ts
  * ------------------------------------------------------------- */
 
-import type { UnknownRecord } from '../../../../shared/types';
+import type { UnknownRecord } from '@shared/types';
 import type { RichTextNode } from '../../types';
 import {
 	mapEntry,
@@ -29,7 +29,19 @@ describe('map-* helpers', () => {
 				b: { c: 2, d: { e: 3 } },
 			});
 			expect(out).not.toBe(input); // new reference
+
 			expect(out['b']).not.toBe(input['b']);
+			if (
+				typeof out['b'] === 'object' &&
+				out['b'] !== null &&
+				'd' in out['b'] &&
+				typeof out['b'] === 'object' &&
+				out['b'] !== null &&
+				'd' in out['b']
+			) {
+				const nest = (out['b'] as { d: unknown })['d'];
+				expect(nest).not.toBe((input['b'] as { d: unknown })['d']);
+			}
 		});
 	});
 

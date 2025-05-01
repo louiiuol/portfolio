@@ -2,11 +2,8 @@ import { isNotNullish, isNullish } from './nullish.type';
 
 describe('nullish.type', () => {
 	describe('isNullish', () => {
-		it('should return true for null', () => {
+		it('should return true for nullish values', () => {
 			expect(isNullish(null)).toBe(true);
-		});
-
-		it('should return true for undefined', () => {
 			expect(isNullish(undefined)).toBe(true);
 		});
 
@@ -22,9 +19,6 @@ describe('nullish.type', () => {
 	describe('isNotNullish', () => {
 		it('should return false for null', () => {
 			expect(isNotNullish(null)).toBe(false);
-		});
-
-		it('should return false for undefined', () => {
 			expect(isNotNullish(undefined)).toBe(false);
 		});
 

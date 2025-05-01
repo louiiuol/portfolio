@@ -45,9 +45,10 @@ export function mapRichTextNode(node: RichTextNode): FormattedRichText {
 				type: 'text',
 				content: content
 					.map(c =>
-						Array.isArray(c.content) ? c.content.join(' ') : c.content
+						(Array.isArray(c.content) ? c.content.join(' ') : c.content).trim()
 					)
-					.join(' '),
+					.join(' ')
+					.replace(/\s{2,}/g, ' '), // remove double spaces due to previous join
 			},
 		];
 	}
@@ -56,9 +57,16 @@ export function mapRichTextNode(node: RichTextNode): FormattedRichText {
 		return [
 			{
 				type: 'list',
-				content: listItems.map(item =>
-					Array.isArray(item.content) ? item.content.join(' ') : item.content
-				),
+				content: listItems
+					.filter(
+						(i): i is { content: string | string[]; type: 'text' | 'list' } =>
+							'content' in i &&
+							['text', 'list'].includes(i.type) &&
+							['string', 'array'].includes(typeof i.content)
+					)
+					.map(item =>
+						Array.isArray(item.content) ? item.content.join(' ') : item.content
+					),
 			},
 		];
 	}

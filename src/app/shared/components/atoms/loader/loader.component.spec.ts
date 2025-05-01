@@ -1,49 +1,39 @@
-import { Component, signal } from '@angular/core';
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { LoaderComponent } from './loader.component';
 
-@Component({
-	imports: [LoaderComponent],
-	template: `<app-loader [message]="message()" />`,
-})
-class HostComponent {
-	message = signal('chargement personnalisé');
-}
-
 describe('LoaderComponent', () => {
-	let fixture: ComponentFixture<HostComponent>;
+	let fixture: ComponentFixture<LoaderComponent>;
+	let compiled: HTMLElement;
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
-			imports: [HostComponent],
-		}).compileComponents();
-
-		fixture = TestBed.createComponent(HostComponent);
+	beforeEach(() => {
+		fixture = TestBed.configureTestingModule({
+			imports: [LoaderComponent],
+		}).createComponent(LoaderComponent);
+		// Set any required inputs here if needed
 		fixture.detectChanges();
+		compiled = fixture.nativeElement as HTMLElement;
+	});
+
+	it('Should display correct default message', () => {
+		expect(compiled.textContent?.toLowerCase()).toContain(
+			'chargement du contenu'.toLowerCase()
+		);
 	});
 
 	it('Should display correct message with Capitalize pipe', () => {
-		const compiled = fixture.nativeElement as HTMLElement;
-		expect(compiled.textContent?.toLowerCase()).toContain(
-			'Chargement personnalisé'.toLowerCase()
-		);
+		fixture.componentRef.setInput('message', 'chargement personnalisé');
+		fixture.detectChanges();
+
+		expect(compiled.textContent).toContain('Chargement personnalisé');
+	});
+
+	it('should have message ended with "⏳"', () => {
+		expect(compiled.textContent?.endsWith('⏳')).toBe(true);
 	});
 
 	it('should contain spinner with animation', () => {
-		const compiled = fixture.nativeElement as HTMLElement;
 		const spinner = compiled.querySelector('.animate-spin');
 		expect(spinner).toBeTruthy();
-	});
-
-	it('Should update message when it changes', () => {
-		const host = fixture.componentInstance;
-		host.message.set('nouveau chargement');
-		fixture.detectChanges();
-
-		const compiled = fixture.nativeElement as HTMLElement;
-		expect(compiled.textContent?.toLowerCase()).toContain(
-			'Nouveau chargement'.toLowerCase()
-		);
 	});
 });

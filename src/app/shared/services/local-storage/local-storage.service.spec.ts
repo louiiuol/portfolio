@@ -17,13 +17,18 @@ describe('LocalStorageService', () => {
 
 	it('should set and get a primitive value', () => {
 		const key = 'testKey';
-		const value = 'testValue';
-		const schema = z.string();
+		const stringValue = 'testValue';
+		const booleanValue = true;
+		const numberValue = 42;
 
-		service.set(key, value);
-		const result = service.get(key, schema);
+		service.set(key, stringValue);
+		expect(service.get(key, z.string())).toBe(stringValue);
 
-		expect(result).toBe(value);
+		service.set(key, booleanValue);
+		expect(service.get(key, z.boolean())).toBe(booleanValue);
+
+		service.set(key, numberValue);
+		expect(service.get(key, z.number())).toBe(numberValue);
 	});
 
 	it('should set and get an object', () => {
