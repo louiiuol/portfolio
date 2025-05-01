@@ -10,12 +10,11 @@ import {
 import { trainingSchema } from '@feat/cv/types/training.type';
 import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services';
-import { isUnknownRecord, type UnknownRecord } from '@shared/types';
 import { createClient } from 'contentful';
 import { z } from 'zod';
-import { isRichTextDocument } from '../../types/rich-text/rich-text.type';
-import { RichTextService } from '../rich-text/rich-text.service';
+import { mapEntry } from '../../functions';
 
+// Internal types, constants & schemas
 const entriesSchema = z.object({
 	exprience: z.array(jobSchema),
 	skill: z.array(skillSchema),
@@ -26,7 +25,6 @@ const entriesSchema = z.object({
 });
 type EntriesRecord = z.infer<typeof entriesSchema>;
 
-// Internal types
 type ContentTypeId = 'exprience' | 'skill' | 'company' | 'school' | 'diploma';
 const entriesRecord: EntriesRecord = {
 	exprience: [],
@@ -50,28 +48,23 @@ export class ContentfullService {
 			const entries = items.reduce((acc: EntriesRecord, el) => {
 				const key = el.sys.contentType.sys.id as ContentTypeId;
 				acc[key].push({
-					...this.processEntry(el),
+					...mapEntry(el),
 					id: el.sys.id, // @todo improve the type of the entry (one type for each entry)
 				});
 				return acc;
 			}, entriesRecord);
-			this.setLocalEntries(entries);
+			this.localStorageService.set(this.localStorageKey, {
+				...entries,
+				updatedAt: new Date(),
+			});
 			return entries;
 		},
 	});
 
 	private readonly cdaClient = createClient(environment.contenftull);
-	private readonly richTextService = inject(RichTextService);
 	private readonly localStorageService = inject(LocalStorageService);
 
 	private readonly localStorageKey = 'contentfull-entries';
-
-	private setLocalEntries(entries: EntriesRecord) {
-		this.localStorageService.set(this.localStorageKey, {
-			...entries,
-			updatedAt: new Date(),
-		});
-	}
 
 	private getLocalEntries(): EntriesRecord | null {
 		const localEntries = this.localStorageService.get(
@@ -80,37 +73,18 @@ export class ContentfullService {
 				updatedAt: z.date(),
 			})
 		);
-		const twoWeeksAgo = Date.now() - 1000 * 60 * 60 * 24 * 14;
-		if (new Date(localEntries?.updatedAt ?? 0).getTime() < twoWeeksAgo) {
+
+		if (!localEntries) {
 			return null;
 		}
+
+		// If stored value is older than 2 weeks, return null and remove it from local storage
+		const twoWeeksAgo = Date.now() - 1000 * 60 * 60 * 24 * 14;
+		if (new Date(localEntries.updatedAt).getTime() < twoWeeksAgo) {
+			this.localStorageService.remove(this.localStorageKey);
+			return null;
+		}
+
 		return localEntries;
-	}
-
-	// @todo improve the type of the entry
-	private processEntry<T>(entry: unknown): T {
-		if (Array.isArray(entry)) {
-			return entry.map(item => this.processEntry<T>(item)) as T;
-		}
-		if (isUnknownRecord(entry)) {
-			if (this.hasFields(entry)) {
-				return this.processEntry<T>(entry.fields);
-			}
-			if (isRichTextDocument(entry)) {
-				return this.richTextService.processRichTextNodes(entry.content) as T;
-			}
-			return this.processObject(entry) as T;
-		}
-		return entry as T;
-	}
-
-	private hasFields(record: UnknownRecord): record is { fields: unknown[] } {
-		return 'fields' in record;
-	}
-
-	private processObject(obj: UnknownRecord): UnknownRecord {
-		return Object.fromEntries(
-			Object.entries(obj).map(([key, value]) => [key, this.processEntry(value)])
-		);
 	}
 }

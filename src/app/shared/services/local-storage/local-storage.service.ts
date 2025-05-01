@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import type { z, ZodType } from 'zod';
-import type { nullish } from '../../types';
-import { isNotNullish, isPrimitive } from '../../types';
+import { safeParse } from '@shared/functions';
+import { isNullish, isPrimitive } from '@shared/types';
+import type { z, ZodType, ZodTypeDef } from 'zod';
 
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
@@ -15,43 +15,35 @@ export class LocalStorageService {
 	get = <
 		Output,
 		Input = Output,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		Schema extends ZodType<Output, any, Input> = ZodType<Output, any, Input>,
+		Schema extends ZodType<Output, ZodTypeDef, Input> = ZodType<
+			Output,
+			ZodTypeDef,
+			Input
+		>,
 	>(
 		key: string,
 		schema: Schema
 	): z.infer<Schema> | null => {
-		const content = this.safeParseRaw(localStorage.getItem(key));
+		const content = safeParse(localStorage.getItem(key));
 
-		if (!isNotNullish(content)) {
+		if (isNullish(content)) {
 			return null;
 		}
 
-		const result = schema.safeParse(content);
+		const validator = schema.safeParse(content);
 
-		if (result.success) {
-			return result.data; // TypeScript sait que c'est z.infer<Schema>
+		if (!validator.success) {
+			console.error(
+				"Une erreur est survenue lors de la récupération de l'objet :",
+				validator.error
+			);
+			return null;
 		}
-		console.error(
-			"Une erreur est survenue lors de la récupération de l'objet :",
-			result.error
-		);
-		return null;
+
+		return validator.data; // TypeScript infers via z.infer<Schema> here
 	};
 
 	check = (key: string) => !!localStorage.getItem(key);
 
 	remove = (key: string) => localStorage.removeItem(key);
-
-	private readonly safeParseRaw = (raw: string | nullish): unknown => {
-		if (raw === null || raw === undefined) {
-			return null;
-		}
-		try {
-			return JSON.parse(raw);
-		} catch {
-			// C'était un primitive simple (string/number/boolean) pas un JSON
-			return raw;
-		}
-	};
 }

@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ContentfullService } from './services/contentfull/contentfull.service';
-import { RichTextService } from './services/rich-text/rich-text.service';
 
 @NgModule({
-	providers: [ContentfullService, RichTextService],
+	providers: [ContentfullService],
 })
 export class ContentfullModule {}

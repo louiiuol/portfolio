@@ -1,14 +1,13 @@
 import { sleep } from './sleep.fn';
 
 describe('sleep function', () => {
-	it('should resolve after the specified time', done => {
+	it('should resolve after the specified time', async () => {
 		const start = Date.now();
 		const delay = 100;
 
-		sleep(delay).then(() => {
+		await sleep(delay).then(() => {
 			const elapsed = Date.now() - start;
 			expect(elapsed).toBeGreaterThanOrEqual(delay);
-			done();
 		});
 	});
 
