@@ -18,12 +18,11 @@ class HostComponent {
 describe('CardComponent', () => {
 	let fixture: ComponentFixture<HostComponent>;
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
+	beforeEach(() => {
+		fixture = TestBed.configureTestingModule({
 			imports: [HostComponent],
-		}).compileComponents();
+		}).createComponent(HostComponent);
 
-		fixture = TestBed.createComponent(HostComponent);
 		fixture.detectChanges();
 	});
 

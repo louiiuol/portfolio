@@ -2,6 +2,11 @@ import { type nullish } from '@shared/types';
 
 /**
  * Parse stringified JSON, handling primitive values gracefully.
+ * @param raw - The string to parse.
+ * @returns The parsed value, or null if parsing fails or the input is empty.
+ * * Handles primitive-like values (true, false, null) and invalid JSON gracefully.
+ * * Returns the trimmed string itself if parsing fails.
+ * * Returns null for empty strings or nullish values.
  */
 export const safeParse = (raw: string | nullish): unknown => {
 	if (!raw?.trim()) {
@@ -46,9 +51,14 @@ export const safeParse = (raw: string | nullish): unknown => {
 	}
 };
 
-const isInvalidJsonStructureError = (message: string): boolean => {
-	return (
-		message.startsWith("Expected property name or '}'") ||
-		message.startsWith("Expected ',' or ']' after array element in JSON")
+/**
+ * Check if the error message indicates an invalid JSON structure.
+ * @param message - The error message to check.
+ * @returns True if the error message indicates an invalid JSON structure, false otherwise.
+ */
+const isInvalidJsonStructureError = (message: string): boolean =>
+	!!(
+		/Expected property name or '}'/.test(message) ||
+		+/Expected ',' or ']' after array element/.test(message) ||
+		+/Unexpected end of JSON input/.test(message)
 	);
-};
