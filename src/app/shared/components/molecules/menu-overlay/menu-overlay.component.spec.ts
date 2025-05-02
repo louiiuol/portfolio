@@ -8,12 +8,11 @@ describe('MenuOverlayComponent', () => {
 	let component: MenuOverlay<MenuItem>;
 	let fixture: ComponentFixture<MenuOverlay<MenuItem>>;
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
+	beforeEach(() => {
+		fixture = TestBed.configureTestingModule({
 			imports: [MenuOverlay],
-		}).compileComponents();
+		}).createComponent(MenuOverlay);
 
-		fixture = TestBed.createComponent(MenuOverlay);
 		component = fixture.componentInstance;
 		fixture.componentRef.setInput('menuItems', [
 			{ label: 'Item 1', action: jasmine.createSpy('action1') },

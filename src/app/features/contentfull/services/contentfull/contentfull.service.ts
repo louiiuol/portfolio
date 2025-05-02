@@ -25,40 +25,11 @@ const entriesSchema = z.object({
 });
 type EntriesRecord = z.infer<typeof entriesSchema>;
 
-type ContentTypeId = 'exprience' | 'skill' | 'company' | 'school' | 'diploma';
-const entriesRecord: EntriesRecord = {
-	exprience: [],
-	skill: [],
-	company: [],
-	school: [],
-	diploma: [],
-	training: [],
-} as const;
-
 @Injectable({ providedIn: 'root' })
 export class ContentfullService {
 	readonly contentResource = resource({
-		loader: async () => {
-			const localEntries = this.getLocalEntries();
-			await sleep(1000);
-			if (localEntries) {
-				return Promise.resolve(localEntries);
-			}
-			const { items } = await this.cdaClient.getEntries();
-			const entries = items.reduce((acc: EntriesRecord, el) => {
-				const key = el.sys.contentType.sys.id as ContentTypeId;
-				acc[key].push({
-					...mapEntry(el),
-					id: el.sys.id, // @todo improve the type of the entry (one type for each entry)
-				});
-				return acc;
-			}, entriesRecord);
-			this.localStorageService.set(this.localStorageKey, {
-				...entries,
-				updatedAt: new Date(),
-			});
-			return entries;
-		},
+		loader: async () =>
+			(await this.getLocalEntries()) ?? this.fetchContentfullEntries(),
 	});
 
 	private readonly cdaClient = createClient(environment.contenftull);
@@ -66,7 +37,7 @@ export class ContentfullService {
 
 	private readonly localStorageKey = 'contentfull-entries';
 
-	private getLocalEntries(): EntriesRecord | null {
+	private async getLocalEntries(): Promise<EntriesRecord | null> {
 		const localEntries = this.localStorageService.get(
 			this.localStorageKey,
 			entriesSchema.extend({
@@ -85,6 +56,49 @@ export class ContentfullService {
 			return null;
 		}
 
+		await sleep(1000);
 		return localEntries;
+	}
+
+	private async fetchContentfullEntries(): Promise<EntriesRecord> {
+		const { items, errors } = await this.cdaClient.getEntries();
+
+		if (!items || errors?.length) {
+			throw new Error('Aucun contenu trouvé depuis Contentfull.', {
+				cause: errors,
+			});
+		}
+
+		const entries = items.reduce(
+			(acc: EntriesRecord, el) => {
+				const key = el.sys.contentType.sys.id as
+					| 'exprience'
+					| 'skill'
+					| 'company'
+					| 'school'
+					| 'diploma';
+
+				acc[key].push({
+					...mapEntry(el),
+					id: el.sys.id, // @todo improve the type of the entry (one type for each entry)
+				});
+				return acc;
+			},
+			{
+				exprience: [],
+				skill: [],
+				company: [],
+				school: [],
+				diploma: [],
+				training: [],
+			}
+		);
+
+		this.localStorageService.set(this.localStorageKey, {
+			...entries,
+			updatedAt: new Date(),
+		});
+
+		return entries;
 	}
 }

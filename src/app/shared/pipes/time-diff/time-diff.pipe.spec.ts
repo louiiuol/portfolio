@@ -1,4 +1,4 @@
-import { createDateEvent } from '@mocks/stubs/date-event-create.stub';
+import { createDateEvent } from '@mocks';
 import { TimeDifferencePipe } from './time-diff.pipe';
 
 describe('TimeDifferencePipe', () => {

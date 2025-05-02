@@ -1,18 +1,17 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import { createDateEvent } from '@mocks/stubs/date-event-create.stub';
+import { createDateEvent } from '@mocks';
 import { EventDatesComponent } from './event-dates.component';
 
 describe('EventDatesComponent', () => {
 	let component: EventDatesComponent;
 	let fixture: ComponentFixture<EventDatesComponent>;
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
+	beforeEach(() => {
+		fixture = TestBed.configureTestingModule({
 			imports: [EventDatesComponent],
-		}).compileComponents();
+		}).createComponent(EventDatesComponent);
 
-		fixture = TestBed.createComponent(EventDatesComponent);
 		component = fixture.componentInstance;
 	});
 

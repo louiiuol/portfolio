@@ -20,8 +20,8 @@
 		"module": "ES2022",
 		"paths": {
 			"@shared/*": ["./src/app/shared/*"],
-			"@mocks/*": ["./src/mocks/*"],
 			"@feat/*": ["./src/app/features/*"],
+			"@mocks": ["./src/mocks/index"],
 			"@env": ["./src/environments/environment"]
 		}
 	},
