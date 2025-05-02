@@ -35,7 +35,7 @@ const entriesRecord: EntriesRecord = {
 	training: [],
 } as const;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ContentfullService {
 	readonly contentResource = resource({
 		loader: async () => {

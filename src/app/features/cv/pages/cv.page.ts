@@ -6,7 +6,6 @@ import {
 	input,
 } from '@angular/core';
 
-import { ContentfullModule } from '@feat/contentfull/contentfull.module';
 import {
 	Card,
 	ErrorMessageComponent,
@@ -45,7 +44,6 @@ import { CvService } from '../services/cv.service';
 		<app-event-dialog [event]="cvService.activeEvent()" />
 	`,
 	imports: [
-		ContentfullModule,
 		LoaderComponent,
 		CvTimelineComponent,
 		EventDialog,
