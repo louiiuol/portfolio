@@ -17,13 +17,18 @@ describe('LocalStorageService', () => {
 
 	it('should set and get a primitive value', () => {
 		const key = 'testKey';
-		const value = 'testValue';
-		const schema = z.string();
+		const stringValue = 'testValue';
+		const booleanValue = true;
+		const numberValue = 42;
 
-		service.set(key, value);
-		const result = service.get(key, schema);
+		service.set(key, stringValue);
+		expect(service.get(key, z.string())).toBe(stringValue);
 
-		expect(result).toBe(value);
+		service.set(key, booleanValue);
+		expect(service.get(key, z.boolean())).toBe(booleanValue);
+
+		service.set(key, numberValue);
+		expect(service.get(key, z.number())).toBe(numberValue);
 	});
 
 	it('should set and get an object', () => {
@@ -85,27 +90,5 @@ describe('LocalStorageService', () => {
 		const result = service.get(key, schema);
 
 		expect(result).toBeNull();
-	});
-
-	it('should handle null or undefined raw values in safeParseRaw', () => {
-		const resultNull = (service as any).safeParseRaw(null);
-		const resultUndefined = (service as any).safeParseRaw(undefined);
-
-		expect(resultNull).toBeNull();
-		expect(resultUndefined).toBeNull();
-	});
-
-	it('should handle primitive raw values in safeParseRaw', () => {
-		const rawString = 'testString';
-		const rawNumber = 42;
-		const rawBoolean = true;
-
-		const resultString = (service as any).safeParseRaw(rawString);
-		const resultNumber = (service as any).safeParseRaw(rawNumber);
-		const resultBoolean = (service as any).safeParseRaw(rawBoolean);
-
-		expect(resultString).toBe(rawString);
-		expect(resultNumber).toBe(rawNumber);
-		expect(resultBoolean).toBe(rawBoolean);
 	});
 });

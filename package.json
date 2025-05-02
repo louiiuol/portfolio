@@ -6,9 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test:ui": "ng test",
-    "test:coverage": "ng test --browsers ChromeHeadless --code-coverage",
-    "test:ci": "npx ng test --browsers ChromeHeadless --watch=false --code-coverage",
+    "test:spec": "ng test --code-coverage",
+    "test:headless": "ng test --browsers ChromeHeadless --code-coverage",
+    "test:ci": "npx ng test --browsers ChromeHeadless --code-coverage --watch=false",
     "serve:ssr:portfolio": "node dist/portfolio/server/server.mjs"
   },
   "private": true,

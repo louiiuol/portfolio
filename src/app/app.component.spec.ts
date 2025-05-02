@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideActivatedRouteMocked } from '@mocks/activated-route.mock';
+import { provideActivatedRouteMocked } from '@mocks';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {

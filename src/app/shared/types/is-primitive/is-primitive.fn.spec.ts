@@ -1,33 +1,18 @@
 import { isPrimitive } from './primitive.type';
 
 describe('isPrimitive', () => {
-	it('should return true for string', () => {
+	it('should return true for primitive values: string | number | boolean | symbol | bigint', () => {
 		expect(isPrimitive('hello')).toBe(true);
-	});
-
-	it('should return true for number', () => {
 		expect(isPrimitive(123)).toBe(true);
-	});
-
-	it('should return true for boolean', () => {
 		expect(isPrimitive(true)).toBe(true);
 		expect(isPrimitive(false)).toBe(true);
-	});
-
-	it('should return false for null', () => {
-		expect(isPrimitive(null)).toBe(false);
-	});
-
-	it('should return false for undefined', () => {
-		expect(isPrimitive(undefined)).toBe(false);
-	});
-
-	it('should return true for symbol', () => {
 		expect(isPrimitive(Symbol('test'))).toBe(true);
+		expect(isPrimitive(BigInt(123))).toBe(true);
 	});
 
-	it('should return true for bigint', () => {
-		expect(isPrimitive(BigInt(123))).toBe(true);
+	it('should return false for nullish value', () => {
+		expect(isPrimitive(null)).toBe(false);
+		expect(isPrimitive(undefined)).toBe(false);
 	});
 
 	it('should return false for object', () => {

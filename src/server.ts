@@ -1,8 +1,8 @@
 import {
-  AngularNodeAppEngine,
-  createNodeRequestHandler,
-  isMainModule,
-  writeResponseToNodeResponse,
+	AngularNodeAppEngine,
+	createNodeRequestHandler,
+	isMainModule,
+	writeResponseToNodeResponse,
 } from '@angular/ssr/node';
 import express from 'express';
 import { dirname, resolve } from 'node:path';
@@ -22,13 +22,10 @@ const angularApp = new AngularNodeAppEngine();
  * ```ts
  * app.get('/api/**', (req, res) => {
  *   // Handle API request
+ *  res.json({ message: 'Hello from Express!' });
  * });
  * ```
  */
-
-// app.get('/api/hello', (req, res) => {
-// 	res.json({ message: 'Hello from Express!' });
-// });
 
 /**
  * Serve static files from /browser
@@ -58,7 +55,7 @@ app.use('/**', (req, res, next) => {
  * The server listens on the port defined by the `PORT` environment variable, or defaults to 4000.
  */
 if (isMainModule(import.meta.url)) {
-	const port = process.env['PORT'] || 4000;
+	const port = process.env['PORT'] ?? 4000;
 	app.listen(port, () => {
 		console.log(`Node Express server listening on http://localhost:${port}`);
 	});
