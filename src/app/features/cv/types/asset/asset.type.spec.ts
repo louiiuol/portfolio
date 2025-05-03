@@ -1,4 +1,4 @@
-import { invalidAsset, validAsset } from '../../mocks/asset.mock';
+import { validAsset } from '../../mocks/asset.mock';
 import { isAsset } from './asset.type';
 
 describe('Asset', () => {
@@ -8,7 +8,7 @@ describe('Asset', () => {
 		});
 
 		it('should return false for invalid asset type', () => {
-			expect(isAsset(invalidAsset)).toBe(false);
+			expect(isAsset({ ...validAsset, file: null })).toBe(false);
 		});
 	});
 });

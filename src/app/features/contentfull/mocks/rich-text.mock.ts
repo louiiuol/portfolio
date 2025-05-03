@@ -1,3 +1,5 @@
+import type { FormattedRichText } from '../types';
+
 export const validDocument = {
 	nodeType: 'document',
 	content: [
@@ -17,10 +19,7 @@ export const invalidDocument = {
 	content: 'Not an array',
 };
 
-export const validFormattedRichText: Array<{
-	type: 'text' | 'list';
-	content: string | string[];
-}> = [
+export const validFormattedRichText: FormattedRichText = [
 	{ type: 'text', content: 'Sample text' },
 	{ type: 'list', content: ['Item 1', 'Item 2'] },
 ];

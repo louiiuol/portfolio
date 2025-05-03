@@ -23,7 +23,16 @@ const entriesSchema = z.object({
 	diploma: z.array(diplomaSchema),
 	training: z.array(trainingSchema),
 });
-type EntriesRecord = z.infer<typeof entriesSchema>;
+export type EntriesRecord = z.infer<typeof entriesSchema>;
+
+export const INITIAL_ENTRIES = () => ({
+	exprience: [],
+	skill: [],
+	company: [],
+	school: [],
+	diploma: [],
+	training: [],
+});
 
 @Injectable({ providedIn: 'root' })
 export class ContentfullService {
@@ -69,30 +78,20 @@ export class ContentfullService {
 			});
 		}
 
-		const entries = items.reduce(
-			(acc: EntriesRecord, el) => {
-				const key = el.sys.contentType.sys.id as
-					| 'exprience'
-					| 'skill'
-					| 'company'
-					| 'school'
-					| 'diploma';
+		const entries = items.reduce((acc: EntriesRecord, el) => {
+			const key = el.sys.contentType.sys.id as
+				| 'exprience'
+				| 'skill'
+				| 'company'
+				| 'school'
+				| 'diploma';
 
-				acc[key].push({
-					...mapEntry(el),
-					id: el.sys.id, // @todo improve the type of the entry (one type for each entry)
-				});
-				return acc;
-			},
-			{
-				exprience: [],
-				skill: [],
-				company: [],
-				school: [],
-				diploma: [],
-				training: [],
-			}
-		);
+			acc[key].push({
+				...mapEntry(el),
+				id: el.sys.id, // @todo improve the type of the entry (one type for each entry)
+			});
+			return acc;
+		}, INITIAL_ENTRIES());
 
 		this.localStorageService.set(this.localStorageKey, {
 			...entries,

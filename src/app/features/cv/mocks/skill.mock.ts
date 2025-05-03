@@ -5,8 +5,3 @@ export const validSkill: Skill = {
 	description: 'This is a test skill',
 	level: 'expert',
 };
-
-export const invalidSkill = {
-	name: 'Invalid Skill',
-	level: 'not-a-level', // Invalid level
-};

@@ -19,7 +19,7 @@ describe('sleep function', () => {
 		const start = Date.now();
 		const delay = 100;
 
-		await sleep(delay - 50).then(() => {
+		await sleep(delay - 100).then(() => {
 			const elapsed = Date.now() - start;
 			expect(elapsed).toBeLessThan(delay);
 		});

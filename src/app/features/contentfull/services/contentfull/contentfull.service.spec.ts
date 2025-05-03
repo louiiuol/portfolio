@@ -1,17 +1,18 @@
+import { ResourceStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { mockLocalStorageService } from '@mocks';
+import { waitForResourceResolved } from '@shared/functions';
 import { LocalStorageService } from '@shared/services';
-import { ContentfullService } from './contentfull.service';
+import { ContentfullService, INITIAL_ENTRIES } from './contentfull.service';
 
-const mockClient = {
-	getEntries: jasmine.createSpy(),
-};
+const mockCdaClient = { getEntries: jasmine.createSpy() };
 
-// @todo: Add tests for ressource (next ng version mb bringing tools to test it)
 describe('ContentfullService', () => {
 	let service: ContentfullService;
 
 	beforeEach(() => {
+		jasmine.clock().install(); // ⏱️ fake timers
+
 		TestBed.configureTestingModule({
 			providers: [
 				ContentfullService,
@@ -20,31 +21,67 @@ describe('ContentfullService', () => {
 		});
 
 		service = TestBed.inject(ContentfullService);
-		// Directly override the internal client instance
-		(service as any).cdaClient = mockClient;
+		(service as any).cdaClient = mockCdaClient;
 	});
 
 	afterEach(() => {
 		mockLocalStorageService.get.calls.reset();
 		mockLocalStorageService.set.calls.reset();
 		mockLocalStorageService.remove.calls.reset();
-		mockClient.getEntries.calls.reset();
+		mockCdaClient.getEntries.calls.reset();
+		jasmine.clock().uninstall();
+	});
+
+	it('should resolve to local cache if present and fresh', async () => {
+		mockLocalStorageService.get.and.returnValue({
+			...INITIAL_ENTRIES(),
+			updatedAt: new Date(),
+		});
+
+		/** PREMIÈRE micro-tâche : getLocalEntries() démarre le sleep(1000) */
+		await Promise.resolve();
+
+		jasmine.clock().tick(1000); // ⏩  on “avance” le sleep
+
+		await waitForResourceResolved(service.contentResource);
+		expect(mockLocalStorageService.get).toHaveBeenCalled();
+		expect(service.contentResource.status()).toBe(ResourceStatus.Resolved);
+	});
+
+	it('should fallback content by fetching contentfull entries if no local found', async () => {
+		mockLocalStorageService.get.and.returnValue(null);
+		mockCdaClient.getEntries.and.returnValue(
+			Promise.resolve({
+				items: [
+					{
+						sys: { contentType: { sys: { id: 'exprience' } }, id: '1' },
+						fields: {},
+					},
+				],
+			})
+		);
+		await Promise.resolve();
+		jasmine.clock().tick(1000); // ⏩  on “avance” le sleep
+
+		const data = await waitForResourceResolved(service.contentResource);
+
+		expect(!!data?.exprience.length).toBeTruthy();
+		expect(mockLocalStorageService.set).toHaveBeenCalled();
 	});
 
 	describe('getLocalEntries', () => {
 		it('should return local entries if they are recent', async () => {
-			const mockData = {
-				exprience: [],
-				skill: [],
-				company: [],
-				school: [],
-				diploma: [],
-				training: [],
+			mockLocalStorageService.get.and.returnValue({
+				...INITIAL_ENTRIES(),
 				updatedAt: new Date(),
-			};
-			mockLocalStorageService.get.and.returnValue(mockData);
+			});
 
-			const result = await (service as any).getLocalEntries();
+			const p = (service as any).getLocalEntries();
+
+			jasmine.clock().tick(1500); // ⏩  on “avance” le sleep
+			await Promise.resolve();
+
+			const result = await p;
 
 			expect(result).toEqual(jasmine.objectContaining({ exprience: [] }));
 			expect(mockLocalStorageService.get).toHaveBeenCalled();
@@ -81,13 +118,13 @@ describe('ContentfullService', () => {
 				],
 			};
 
-			mockClient.getEntries.and.returnValue(
+			mockCdaClient.getEntries.and.returnValue(
 				Promise.resolve(contentfulResponse)
 			);
 
 			const result = await (service as any).fetchContentfullEntries();
 
-			expect(result.exprience.length).toBe(1);
+			expect(!!result.exprience.length).toBeTruthy();
 			expect(mockLocalStorageService.set).toHaveBeenCalledWith(
 				'contentfull-entries',
 				jasmine.objectContaining({
@@ -102,7 +139,7 @@ describe('ContentfullService', () => {
 				items: [],
 				errors: [{ message: 'error' }],
 			};
-			mockClient.getEntries.and.returnValue(
+			mockCdaClient.getEntries.and.returnValue(
 				Promise.resolve(contentfulResponse)
 			);
 

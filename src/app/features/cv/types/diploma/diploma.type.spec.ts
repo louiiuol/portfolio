@@ -1,5 +1,5 @@
-import { invalidDiploma, validDiploma } from '../../mocks/diploma.mock';
-import { isDiploma } from './diploma.type';
+import { validDiploma } from '../../mocks/diploma.mock';
+import { diplomaSchema, isDiploma } from './diploma.type';
 
 describe('diploma.type', () => {
 	describe('isDiploma', () => {
@@ -8,16 +8,19 @@ describe('diploma.type', () => {
 		});
 
 		it('should return false for invalid diploma type', () => {
-			expect(isDiploma(invalidDiploma)).toBe(false);
+			expect(isDiploma({ ...validDiploma, skills: null })).toBe(false);
 		});
 	});
+
 	describe('diplomaSchema', () => {
 		it('should validate a valid diploma object', () => {
-			expect(isDiploma(validDiploma)).toBe(true);
+			expect(diplomaSchema.safeParse(validDiploma).success).toBe(true);
 		});
 
 		it('should invalidate an invalid diploma object', () => {
-			expect(isDiploma(invalidDiploma)).toBe(false);
+			expect(
+				diplomaSchema.safeParse({ ...validDiploma, skills: null }).success
+			).toBe(false);
 		});
 	});
 });

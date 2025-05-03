@@ -16,17 +16,3 @@ export const validAsset: Asset = {
 		contentType: 'image/jpeg',
 	},
 };
-
-export const invalidAsset = {
-	title: 'Invalid Asset',
-	file: {
-		details: {
-			size: 12345,
-			image: {
-				width: 800,
-				height: 600,
-			},
-		},
-		contentType: 'image/jpeg',
-	},
-};

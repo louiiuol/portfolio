@@ -12,9 +12,3 @@ export const validDiploma: Diploma = {
 		},
 	],
 };
-
-export const invalidDiploma = {
-	name: 'Invalid Diploma',
-	description: 'This is an invalid diploma',
-	obtainedAt: 'not-a-date',
-};

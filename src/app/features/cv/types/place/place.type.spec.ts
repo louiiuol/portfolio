@@ -1,4 +1,4 @@
-import { invalidPlace, validPlace } from '../../mocks/place.mock';
+import { validPlace } from '../../mocks/place.mock';
 import { isPlace, placeSchema } from './place.type';
 
 describe('place.type', () => {
@@ -8,7 +8,9 @@ describe('place.type', () => {
 		});
 
 		it('should invalidate an invalid place object', () => {
-			expect(placeSchema.safeParse(invalidPlace).success).toBe(false);
+			expect(placeSchema.safeParse({ ...validPlace, city: null }).success).toBe(
+				false
+			);
 		});
 	});
 
@@ -18,7 +20,7 @@ describe('place.type', () => {
 		});
 
 		it('should return false for invalid place type', () => {
-			expect(placeSchema.safeParse(invalidPlace).success).toBe(false);
+			expect(isPlace({ ...validPlace, city: null })).toBe(false);
 		});
 	});
 });
