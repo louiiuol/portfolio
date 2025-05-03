@@ -1,12 +1,12 @@
 import { entrySchema } from '@feat/contentfull/types';
 import type { nullish } from '@shared/types';
 import { z } from 'zod';
-import type { CvEventType } from './event-type.type';
-import { EVENT_TYPES_KEYS } from './event-type.type';
-import type { JobInput } from './job.type';
-import { placeSchema, type Place } from './place.type';
-import { skillSchema, type Skill } from './skill.type';
-import { type TrainingEntry } from './training.type';
+import type { JobInput } from '../job/job.type';
+import { placeSchema, type Place } from '../place/place.type';
+import { skillSchema, type Skill } from '../skill/skill.type';
+import { type TrainingEntry } from '../training/training.type';
+import type { CvEventType } from './cv-event-type.type';
+import { EVENT_TYPES_KEYS } from './cv-event-type.type';
 
 export type CvEventInput = JobInput | TrainingEntry;
 
