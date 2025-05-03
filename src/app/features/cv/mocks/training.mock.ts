@@ -15,7 +15,7 @@ export const validTraining: Training = {
 	type: 'Formation',
 };
 
-export const validTrainingInput: TrainingEntry = {
+export const validTrainingInput = (): TrainingEntry => ({
 	id: '1',
 	name: 'Test Training',
 	description: 'This is a test training',
@@ -23,4 +23,4 @@ export const validTrainingInput: TrainingEntry = {
 	endDate: new Date('2023-12-31'),
 	school: validPlace,
 	diplomas: [validDiploma],
-};
+});

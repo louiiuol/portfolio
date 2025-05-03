@@ -7,9 +7,9 @@ export async function waitForResourceResolved<T>(
 	const deadline = Date.now() + timeout;
 	while (res.status() !== ResourceStatus.Resolved) {
 		if (Date.now() > deadline) {
-			throw new Error('Resource timeout');
+			throw new Error(`Resource timeout after ${timeout}ms`);
 		}
-		await Promise.resolve(); // micro-tâche suivante
+		await Promise.resolve(); // yield to next microtask
 	}
 	return res.value();
 }

@@ -38,7 +38,7 @@ describe('ContentfullService', () => {
 			updatedAt: new Date(),
 		});
 
-		/** PREMIÈRE micro-tâche : getLocalEntries() démarre le sleep(1000) */
+		/** FIRST microtask: getLocalEntries() starts the sleep(1000) */
 		await Promise.resolve();
 
 		jasmine.clock().tick(1000); // ⏩  on “avance” le sleep
@@ -65,7 +65,7 @@ describe('ContentfullService', () => {
 
 		const data = await waitForResourceResolved(service.contentResource);
 
-		expect(!!data?.exprience.length).toBeTruthy();
+		expect(data?.exprience.length).toBe(1);
 		expect(mockLocalStorageService.set).toHaveBeenCalled();
 	});
 
@@ -90,12 +90,7 @@ describe('ContentfullService', () => {
 		it('should remove and return null if local entry is too old', async () => {
 			const oldDate = new Date(Date.now() - 1000 * 60 * 60 * 24 * 15);
 			const mockData = {
-				exprience: [],
-				skill: [],
-				company: [],
-				school: [],
-				diploma: [],
-				training: [],
+				...INITIAL_ENTRIES(),
 				updatedAt: oldDate,
 			};
 			mockLocalStorageService.get.and.returnValue(mockData);
@@ -124,7 +119,7 @@ describe('ContentfullService', () => {
 
 			const result = await (service as any).fetchContentfullEntries();
 
-			expect(!!result.exprience.length).toBeTruthy();
+			expect(result.exprience.length).toBe(1);
 			expect(mockLocalStorageService.set).toHaveBeenCalledWith(
 				'contentfull-entries',
 				jasmine.objectContaining({

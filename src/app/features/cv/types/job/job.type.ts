@@ -36,8 +36,8 @@ export const jobSchema = entrySchema.extend({
 	assets: z.array(assetSchema).nullish(),
 	skills: z.array(skillSchema),
 });
-export type JobInput = z.infer<typeof jobSchema>;
-export const isJobInput = (entry: unknown): entry is JobInput =>
+export type JobEntry = z.infer<typeof jobSchema>;
+export const isJobInput = (entry: unknown): entry is JobEntry =>
 	isSchemaType(entry, jobSchema, 'JobInput');
 
 export class Job extends CvEvent {
@@ -49,7 +49,7 @@ export class Job extends CvEvent {
 	readonly remotePolicy: RemotePolicy;
 	readonly skills: Skill[];
 
-	constructor(input: JobInput) {
+	constructor(input: JobEntry) {
 		super(input);
 		this.description = input.summary;
 		this.location = input.company;
