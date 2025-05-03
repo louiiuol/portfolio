@@ -1,7 +1,7 @@
 import { entrySchema } from '@feat/contentfull/types';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { assetSchema } from './asset.type';
+import { assetSchema } from '../asset/asset.type';
 
 // COMPANY
 export const placeSchema = entrySchema.extend({

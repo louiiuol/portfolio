@@ -1,12 +1,12 @@
 import { entrySchema } from '@feat/contentfull/types';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { CvEvent, cvEventSchema } from './cv-event.type';
-import type { Diploma } from './diploma.type';
-import { diplomaSchema } from './diploma.type';
-import type { Place } from './place.type';
-import { placeSchema } from './place.type';
-import type { Skill } from './skill.type';
+import { CvEvent, cvEventSchema } from '../cv-event/cv-event.type';
+import type { Diploma } from '../diploma/diploma.type';
+import { diplomaSchema } from '../diploma/diploma.type';
+import type { Place } from '../place/place.type';
+import { placeSchema } from '../place/place.type';
+import type { Skill } from '../skill/skill.type';
 
 export const trainingSchema = entrySchema.extend({
 	name: z.string(),
