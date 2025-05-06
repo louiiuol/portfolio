@@ -162,4 +162,34 @@ describe('CvService', () => {
 		expect(setSpy).toHaveBeenCalledWith(null);
 		expect(service.activeEvent()).toBeNull();
 	});
+
+	it('should keep the current active event when attempting to set an invalid ID', () => {
+		const validEvent = service.sortedEvents().data[0];
+		service.setActiveEvent(validEvent.id);
+
+		service.setActiveEvent('non-existent-id');
+
+		// Should still have the valid event as active
+		expect(service.activeEvent()?.id).toBe(validEvent.id);
+	});
+
+	it('should correctly update and maintain filter state', () => {
+		const initialFilters = {
+			skills: ['Angular'],
+			eventType: 'Formation' as const,
+		};
+		service.updateFilters(initialFilters);
+
+		// Verify filters are applied correctly
+		expect(service.filters()).toEqual(initialFilters);
+
+		// Update a single filter property
+		service.updateFilters({ eventType: 'Formation' });
+
+		// Verify partial update works correctly
+		expect(service.filters()).toEqual({
+			skills: ['Angular'],
+			eventType: 'Formation',
+		});
+	});
 });
