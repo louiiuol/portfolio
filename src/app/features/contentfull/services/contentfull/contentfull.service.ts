@@ -6,8 +6,8 @@ import {
 	jobSchema,
 	placeSchema,
 	skillSchema,
+	trainingSchema,
 } from '@feat/cv/types';
-import { trainingSchema } from '@feat/cv/types/training/training.type';
 import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services';
 import { createClient } from 'contentful';

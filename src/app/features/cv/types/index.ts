@@ -15,4 +15,4 @@ export {
 } from './cv-event/cv-event-type.type';
 export { CvEvent, type CvEventField } from './cv-event/cv-event.type';
 export { isSkill, skillSchema, type Skill } from './skill/skill.type';
-export { isTraining, Training } from './training/training.type';
+export { isTraining, Training, trainingSchema } from './training/training.type';
