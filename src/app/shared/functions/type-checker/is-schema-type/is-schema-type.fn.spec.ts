@@ -37,12 +37,12 @@ describe('isSchemaType', () => {
 	});
 
 	it('should handle optional fields in the schema', () => {
-		const optionalSchema = z.object({
+		const nullishSchema = z.object({
 			name: z.string(),
-			age: z.number().optional(),
+			age: z.number().nullish(),
 		});
 		const validObject = { name: 'John' };
-		expect(isSchemaType(validObject, optionalSchema)).toBe(true);
+		expect(isSchemaType(validObject, nullishSchema)).toBe(true);
 	});
 
 	it('should validate nested schemas', () => {

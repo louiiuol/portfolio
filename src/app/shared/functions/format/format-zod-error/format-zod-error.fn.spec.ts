@@ -93,10 +93,10 @@ describe('formatZodError', () => {
 		}
 	});
 
-	it('should handle optional fields and format errors correctly', () => {
+	it('should handle nullish fields and format errors correctly', () => {
 		const schema = z.object({
 			name: z.string(),
-			age: z.number().optional(),
+			age: z.number().nullish(),
 		});
 
 		const result = schema.safeParse({

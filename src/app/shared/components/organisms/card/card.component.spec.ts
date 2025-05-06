@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { Card } from './card.component';
 
 @Component({
@@ -14,6 +15,7 @@ import { Card } from './card.component';
 class HostComponent {
 	closable = signal(true);
 }
+const CLOSE_BTN_SELECTOR = 'button[aria-label="Fermer la vue"]';
 
 describe('CardComponent', () => {
 	let fixture: ComponentFixture<HostComponent>;
@@ -36,10 +38,8 @@ describe('CardComponent', () => {
 			.componentInstance as Card;
 		spyOn(cardComponent.closed, 'emit');
 
-		const closeButton = fixture.nativeElement.querySelector(
-			'button[aria-label="Fermer la vue"]'
-		);
-		closeButton.click();
+		const closeButton = fixture.debugElement.query(By.css(CLOSE_BTN_SELECTOR));
+		closeButton.nativeElement.click();
 
 		expect(cardComponent.closed.emit).toHaveBeenCalled();
 	});
@@ -49,9 +49,7 @@ describe('CardComponent', () => {
 		host.closable.set(false);
 		fixture.detectChanges();
 
-		const closeButton = fixture.nativeElement.querySelector(
-			'button[aria-label="Fermer la vue"]'
-		);
+		const closeButton = fixture.debugElement.query(By.css(CLOSE_BTN_SELECTOR));
 		expect(closeButton).toBeNull();
 	});
 
@@ -60,9 +58,7 @@ describe('CardComponent', () => {
 		host.closable.set(true);
 		fixture.detectChanges();
 
-		const closeButton = fixture.nativeElement.querySelector(
-			'button[aria-label="Fermer la vue"]'
-		);
+		const closeButton = fixture.debugElement.query(By.css(CLOSE_BTN_SELECTOR));
 		expect(closeButton).toBeTruthy();
 	});
 

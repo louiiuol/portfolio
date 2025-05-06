@@ -18,6 +18,6 @@ export class HomePage {
 	protected readonly introTexts = [
 		'Bienvenue sur mon portfolio 👋',
 		'Je suis un développeur fullstack souhaitant construire des interfaces propres, intuitives et utiles',
-		"N'hésitez pas à me contacter si vous avez un projet en tête ! Bonne visite ! 🚀",
+		'Bonne visite ! ✨',
 	];
 }

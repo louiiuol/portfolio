@@ -35,7 +35,11 @@ html {
 
   .dialog-card {
     @apply flex-1 shrink-0 w-full lg:w-[768px];
-    height: calc(100dvh - 68px);
+    height: min(768px, 90dvh);
+
+    @media screen and (max-width: 768px) {
+      height: calc(100dvh - 68px);
+    }
 
     &>app-card {
       @apply rounded-none md:rounded-lg;

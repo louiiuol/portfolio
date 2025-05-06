@@ -1,18 +1,18 @@
-export { diplomaSchema, type Diploma } from './diploma.type';
+export { diplomaSchema, type Diploma } from './diploma/diploma.type';
 export {
 	isJob,
 	isJobInput,
 	Job,
 	jobSchema,
 	type RemotePolicy,
-} from './job.type';
-export { placeSchema, type Place } from './place.type';
+} from './job/job.type';
+export { placeSchema, type Place } from './place/place.type';
 
-export { CvEvent, type CvEventField } from './cv-event.type';
 export {
 	EVENT_TYPES,
 	type ContractType,
 	type CvEventType,
-} from './event-type.type';
-export { isSkill, skillSchema, type Skill } from './skill.type';
-export { isTraining, Training } from './training.type';
+} from './cv-event/cv-event-type.type';
+export { CvEvent, type CvEventField } from './cv-event/cv-event.type';
+export { isSkill, skillSchema, type Skill } from './skill/skill.type';
+export { isTraining, Training, trainingSchema } from './training/training.type';

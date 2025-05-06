@@ -1,12 +1,12 @@
 import { entrySchema } from '@feat/contentfull/types';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { assetSchema } from './asset.type';
+import { assetSchema } from '../asset/asset.type';
 
 // SKILL
 export const skillSchema = entrySchema.extend({
 	name: z.string(),
-	description: z.string().optional(),
+	description: z.string().nullish(),
 	level: z.enum(['débutant', 'intermédiaire', 'avancé', 'expert']),
 	icon: assetSchema.nullish(),
 });

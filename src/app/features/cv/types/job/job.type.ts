@@ -3,14 +3,14 @@ import { entrySchema, formattedRichTextSchema } from '@feat/contentfull/types';
 
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { assetSchema } from './asset.type';
-import { CvEvent, cvEventSchema } from './cv-event.type';
-import type { ContractType } from './event-type.type';
-import { contractTypesKeys } from './event-type.type';
-import type { Place } from './place.type';
-import { placeSchema } from './place.type';
-import type { Skill } from './skill.type';
-import { skillSchema } from './skill.type';
+import { assetSchema } from '../asset/asset.type';
+import type { ContractType } from '../cv-event/cv-event-type.type';
+import { contractTypesKeys } from '../cv-event/cv-event-type.type';
+import { CvEvent, cvEventSchema } from '../cv-event/cv-event.type';
+import type { Place } from '../place/place.type';
+import { placeSchema } from '../place/place.type';
+import type { Skill } from '../skill/skill.type';
+import { skillSchema } from '../skill/skill.type';
 
 export const REMOTE_POLICIES = [
 	{ value: 'à distance', label: 'À distance' },
@@ -36,8 +36,8 @@ export const jobSchema = entrySchema.extend({
 	assets: z.array(assetSchema).nullish(),
 	skills: z.array(skillSchema),
 });
-export type JobInput = z.infer<typeof jobSchema>;
-export const isJobInput = (entry: unknown): entry is JobInput =>
+export type JobEntry = z.infer<typeof jobSchema>;
+export const isJobInput = (entry: unknown): entry is JobEntry =>
 	isSchemaType(entry, jobSchema, 'JobInput');
 
 export class Job extends CvEvent {
@@ -49,7 +49,7 @@ export class Job extends CvEvent {
 	readonly remotePolicy: RemotePolicy;
 	readonly skills: Skill[];
 
-	constructor(input: JobInput) {
+	constructor(input: JobEntry) {
 		super(input);
 		this.description = input.summary;
 		this.location = input.company;

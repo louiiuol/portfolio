@@ -21,7 +21,7 @@
 		"paths": {
 			"@shared/*": ["./src/app/shared/*"],
 			"@feat/*": ["./src/app/features/*"],
-			"@mocks": ["./src/mocks/index"],
+			"@mocks": ["./src/app/shared/mocks/index"],
 			"@env": ["./src/environments/environment"]
 		}
 	},

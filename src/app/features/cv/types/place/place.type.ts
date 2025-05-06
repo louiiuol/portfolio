@@ -1,7 +1,6 @@
 import { entrySchema } from '@feat/contentfull/types';
-import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { assetSchema } from './asset.type';
+import { assetSchema } from '../asset/asset.type';
 
 // COMPANY
 export const placeSchema = entrySchema.extend({
@@ -10,9 +9,6 @@ export const placeSchema = entrySchema.extend({
 	country: z.string(),
 	description: z.string(),
 	logo: assetSchema,
-	url: z.string().optional(),
+	url: z.string().nullish(),
 });
 export type Place = z.infer<typeof placeSchema>;
-
-export const isPlace = (entry: unknown): entry is Place =>
-	isSchemaType(entry, placeSchema, 'Place');
