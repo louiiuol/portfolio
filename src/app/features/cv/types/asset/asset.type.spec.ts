@@ -1,14 +1,16 @@
 import { validAsset } from '../../mocks/asset.mock';
-import { isAsset } from './asset.type';
+import { assetSchema } from './asset.type';
 
 describe('Asset', () => {
-	describe('isAsset', () => {
+	describe('assetSchema', () => {
 		it('should return true for valid asset type', () => {
-			expect(isAsset(validAsset)).toBe(true);
+			expect(assetSchema.safeParse(validAsset).success).toBe(true);
 		});
 
 		it('should return false for invalid asset type', () => {
-			expect(isAsset({ ...validAsset, file: null })).toBe(false);
+			expect(assetSchema.safeParse({ ...validAsset, file: null }).success).toBe(
+				false
+			);
 		});
 	});
 });

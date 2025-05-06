@@ -97,7 +97,7 @@ describe('formatDuration', () => {
 		);
 	});
 
-	it('should use default parameters when optional arguments are not provided', () => {
+	it('should use default parameters when nullish arguments are not provided', () => {
 		const time = 36000;
 		const result = formatDuration(time, { compact: true });
 

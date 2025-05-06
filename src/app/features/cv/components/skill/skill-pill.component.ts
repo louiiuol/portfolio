@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import type { nullish } from '@shared/types';
 
 @Component({
 	selector: 'app-skill-pill',
@@ -15,5 +16,8 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillPillComponent {
-	readonly skill = input.required<{ name: string; description?: string }>();
+	readonly skill = input.required<{
+		name: string;
+		description?: string | nullish;
+	}>();
 }
