@@ -1,9 +1,7 @@
 // mocks/mock-contentfull.service.ts
 import { Injectable, resource } from '@angular/core';
-import type { Diploma, Place, Skill } from '../../cv/types';
-import type { JobEntry } from '../../cv/types/job/job.type';
-import type { TrainingEntry } from '../../cv/types/training/training.type';
 import type { EntriesRecord } from '../services/contentfull/contentfull.service';
+import type { Diploma, JobEntry, Place, Skill, TrainingEntry } from '../types';
 
 @Injectable()
 export class MockContentfullService {

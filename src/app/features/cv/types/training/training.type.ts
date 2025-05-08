@@ -1,22 +1,13 @@
-import { entrySchema } from '@feat/contentfull/types';
+import type {
+	Diploma,
+	Place,
+	Skill,
+	TrainingEntry,
+} from '@feat/contentfull/types';
+import { diplomaSchema } from '@feat/contentfull/types';
+import { CvEvent, cvEventSchema } from '@feat/cv/types';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { CvEvent, cvEventSchema } from '../cv-event/cv-event.type';
-import type { Diploma } from '../diploma/diploma.type';
-import { diplomaSchema } from '../diploma/diploma.type';
-import type { Place } from '../place/place.type';
-import { placeSchema } from '../place/place.type';
-import type { Skill } from '../skill/skill.type';
-
-export const trainingSchema = entrySchema.extend({
-	name: z.string(),
-	description: z.string(),
-	startDate: z.coerce.date(),
-	endDate: z.coerce.date().nullish(),
-	diplomas: z.array(diplomaSchema),
-	school: placeSchema,
-});
-export type TrainingEntry = z.infer<typeof trainingSchema>;
 
 export class Training extends CvEvent {
 	readonly type: 'Formation';

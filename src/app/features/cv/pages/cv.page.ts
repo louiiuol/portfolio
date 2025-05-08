@@ -12,6 +12,7 @@ import {
 	LoaderComponent,
 } from '@shared/components';
 
+import { JsonPipe } from '@angular/common';
 import { CvFiltersComponent } from '../components/cv/cv-filters.component';
 import { CvSortComponent } from '../components/cv/cv-sort.component';
 import { CvTimelineComponent } from '../components/cv/cv-timeline.component';
@@ -35,6 +36,7 @@ import { CvService } from '../services/cv.service';
 				<app-loader message="chargement des informations du CV" />
 			} @else if (cvService.sortedEvents().error) {
 				<app-error-message [errorMessage]="errorMessage" />
+				{{ cvService.sortedEvents().data | json }}
 			} @else {
 				<app-cv-timeline [events]="cvService.sortedEvents().data" />
 			}
@@ -51,6 +53,7 @@ import { CvService } from '../services/cv.service';
 		ErrorMessageComponent,
 		CvFiltersComponent,
 		CvSortComponent,
+		JsonPipe,
 	],
 	providers: [CvService],
 	changeDetection: ChangeDetectionStrategy.OnPush,

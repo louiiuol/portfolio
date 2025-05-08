@@ -1,6 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentfullService } from '@feat/contentfull/services/contentfull/contentfull.service';
+import { isSkill } from '@feat/contentfull/types';
 import {
 	deepEqualObjects,
 	multiTypeSort,
@@ -8,7 +9,7 @@ import {
 } from '@shared/functions';
 import type { nullish, SortField } from '@shared/types';
 import type { CvEvent, CvEventField, CvEventType } from '../types';
-import { isSkill, Job, Training } from '../types';
+import { Job, Training } from '../types';
 
 export type CvFilters = {
 	eventType?: CvEventType | nullish;

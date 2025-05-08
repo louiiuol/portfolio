@@ -1,9 +1,8 @@
-import { entrySchema } from '@feat/contentfull/types';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
 import { assetSchema } from '../asset/asset.type';
+import { entrySchema } from '../entry.type';
 
-// SKILL
 export const skillSchema = entrySchema.extend({
 	name: z.string(),
 	description: z.string().nullish(),

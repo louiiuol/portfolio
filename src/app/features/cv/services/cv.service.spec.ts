@@ -1,10 +1,14 @@
 import { ResourceStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import {
+	validJobInput,
+	validSkill,
+	validTrainingInput,
+} from '@feat/contentfull/mocks';
 import { ContentfullService } from '@feat/contentfull/services/contentfull/contentfull.service';
 import { createMockResource, mockRouter } from '@mocks';
 import { waitForResourceResolved } from '@shared/functions';
-import { validJobInput, validSkill, validTrainingInput } from '../mocks';
 import type { CvFilters } from './cv.service';
 import { CvService } from './cv.service';
 

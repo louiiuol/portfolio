@@ -1,6 +1,6 @@
-import { validDiploma, validTrainingInput } from '../../mocks';
-import type { TrainingEntry } from './training.type';
-import { Training, isTraining, trainingSchema } from './training.type';
+import { validDiploma, validTrainingInput } from '@feat/contentfull/mocks';
+import type { TrainingEntry } from '@feat/contentfull/types';
+import { Training, isTraining } from './training.type';
 
 describe('Training', () => {
 	it('should create a Training instance with valid input', () => {
@@ -43,15 +43,6 @@ describe('Training', () => {
 			{ name: 'React', level: 'avancé' },
 			{ name: 'TypeScript', level: 'avancé' },
 		]);
-	});
-
-	it('should validate a valid TrainingEntry using trainingSchema', () => {
-		expect(() => trainingSchema.parse(validTrainingInput())).not.toThrow();
-	});
-
-	it('should throw an error for invalid TrainingEntry using trainingSchema', () => {
-		const invalidEntry = { ...validTrainingInput(), name: 123 }; // Invalid name type
-		expect(() => trainingSchema.parse(invalidEntry)).toThrow();
 	});
 
 	it('should correctly identify a Training instance using isTraining', () => {

@@ -1,4 +1,4 @@
-import type { Asset } from '../types/asset/asset.type';
+import type { Asset } from '../types';
 
 export const validAsset: Asset = {
 	title: 'Test Asset',

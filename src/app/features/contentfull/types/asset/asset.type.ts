@@ -1,5 +1,5 @@
-import { entrySchema } from '@feat/contentfull/types';
 import { z } from 'zod';
+import { entrySchema } from '../entry.type';
 
 // ASSET
 export const assetSchema = entrySchema.extend({

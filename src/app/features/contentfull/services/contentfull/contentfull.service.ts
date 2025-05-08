@@ -1,18 +1,18 @@
 import { inject, Injectable, resource } from '@angular/core';
 import { environment } from '@env';
 
+import { sleep } from '@shared/functions';
+import { LocalStorageService } from '@shared/services';
+import { createClient } from 'contentful';
+import { z } from 'zod';
+import { mapEntry } from '../../functions';
 import {
 	diplomaSchema,
 	jobSchema,
 	placeSchema,
 	skillSchema,
 	trainingSchema,
-} from '@feat/cv/types';
-import { sleep } from '@shared/functions';
-import { LocalStorageService } from '@shared/services';
-import { createClient } from 'contentful';
-import { z } from 'zod';
-import { mapEntry } from '../../functions';
+} from '../../types';
 
 // Internal types, constants & schemas
 const entriesSchema = z.object({

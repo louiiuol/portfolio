@@ -1,6 +1,6 @@
-import { validFormattedRichText } from '@feat/contentfull/mocks';
 import type { JobEntry } from '../types/job/job.type';
 import { validPlace } from './place.mock';
+import { validFormattedRichText } from './rich-text.mock';
 
 export const validJobInput = (name = 'Software Engineer'): JobEntry => ({
 	company: validPlace,

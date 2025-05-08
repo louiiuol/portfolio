@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import type { Place, RemotePolicy } from '@feat/contentfull/types';
 import {
 	ExternalLinkIcon,
 	HouseLaptopIcon,
 	LocationPinIcon,
 } from '@shared/components';
-import type { Place, RemotePolicy } from '../../types';
 
 @Component({
 	selector: 'app-place-info',

@@ -1,8 +1,7 @@
-import { entrySchema } from '@feat/contentfull/types';
 import { z } from 'zod';
 import { assetSchema } from '../asset/asset.type';
+import { entrySchema } from '../entry.type';
 
-// COMPANY
 export const placeSchema = entrySchema.extend({
 	name: z.string(),
 	city: z.string(),
