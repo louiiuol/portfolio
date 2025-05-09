@@ -9,5 +9,4 @@ export const diplomaSchema = entrySchema.extend({
 	skills: z.array(skillSchema),
 	// assets: z.array(assetSchema).nullish(),
 });
-export type Diploma = z.infer<typeof diplomaSchema>;
-export type DiplomaField = keyof Diploma;
+export type DiplomaEntry = z.infer<typeof diplomaSchema>;

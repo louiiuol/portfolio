@@ -1,26 +1,25 @@
-import type { FormattedRichText, Place, Skill } from '@feat/contentfull/types';
+import {
+	RemotePolicyKeys,
+	type FormattedRichText,
+	type JobEntry,
+	type PlaceEntry,
+	type RemotePolicy,
+	type SkillEntry,
+} from '@feat/contentfull/types';
 
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import {
-	RemotePolicyKeys,
-	type JobEntry,
-	type RemotePolicy,
-} from '../../../contentfull/types/job/job.type';
-import type { ContractType } from '../../../cv/types/cv-event/cv-event-type.type';
-import {
-	CvEvent,
-	cvEventSchema,
-} from '../../../cv/types/cv-event/cv-event.type';
+import type { ContractType } from '../cv-event/cv-event-type.type';
+import { CvEvent, cvEventSchema } from '../cv-event/cv-event.type';
 
 export class Job extends CvEvent {
 	readonly type: ContractType;
 	readonly description: string;
-	readonly location: Place;
+	readonly location: PlaceEntry;
 	readonly name: string;
 	readonly tasks: FormattedRichText;
 	readonly remotePolicy: RemotePolicy;
-	readonly skills: Skill[];
+	readonly skills: SkillEntry[];
 
 	constructor(input: JobEntry) {
 		super(input);

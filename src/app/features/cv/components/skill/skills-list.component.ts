@@ -5,13 +5,13 @@ import {
 	computed,
 	input,
 } from '@angular/core';
-import type { Skill } from '@feat/contentfull/types';
+import type { SkillEntry } from '@feat/contentfull/types';
 import { SkillPillComponent } from './skill-pill.component';
 
 @Component({
 	selector: 'app-skills-list',
 	host: {
-		class: 'inline-flex flex-wrap gap-2 justify-start items-center',
+		class: 'inline-flex flex-wrap gap-1 justify-start items-center',
 	},
 	template: `
 		@for (skill of shownSkills(); track $index) {
@@ -34,7 +34,7 @@ import { SkillPillComponent } from './skill-pill.component';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SkillsListComponent {
-	readonly skills = input.required<Array<Skill>>();
+	readonly skills = input.required<Array<SkillEntry>>();
 	readonly showAll = input(false, { transform: booleanAttribute });
 	readonly showEmpty = input(false, { transform: booleanAttribute });
 	readonly showMore = input(false, { transform: booleanAttribute });

@@ -1,6 +1,6 @@
-import type { Diploma } from '../types';
+import type { DiplomaEntry } from '../types';
 
-export const validDiploma: Diploma = {
+export const validDiploma: DiplomaEntry = {
 	name: 'Test Diploma',
 	description: 'This is a test diploma',
 	obtainedAt: new Date(),

@@ -1,10 +1,7 @@
 export type AppEnvironment = {
 	production: boolean;
-	contenftull: {
+	contentftull: {
 		space: string;
 		accessToken: string;
-		// contentTypeIds: {
-		// 	[key: string]: string;
-		// };
 	};
 };

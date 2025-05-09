@@ -4,11 +4,11 @@ import { z } from 'zod';
 import type { JobEntry } from '../../../contentfull/types/job/job.type';
 import {
 	placeSchema,
-	type Place,
+	type PlaceEntry,
 } from '../../../contentfull/types/place/place.type';
 import {
 	skillSchema,
-	type Skill,
+	type SkillEntry,
 } from '../../../contentfull/types/skill/skill.type';
 import { type TrainingEntry } from '../../../contentfull/types/training/training.type';
 import type { CvEventType } from './cv-event-type.type';
@@ -24,8 +24,8 @@ export abstract class CvEvent {
 	abstract name: string;
 	abstract description: string;
 	abstract type: CvEventType;
-	abstract location: Place;
-	abstract skills: Skill[];
+	abstract location: PlaceEntry;
+	abstract skills: SkillEntry[];
 
 	constructor(input: CvEventInput) {
 		this.id = input.id;

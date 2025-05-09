@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import type { Place, RemotePolicy } from '@feat/contentfull/types';
+import type { PlaceEntry, RemotePolicy } from '@feat/contentfull/types';
 import {
 	ExternalLinkIcon,
 	HouseLaptopIcon,
@@ -60,6 +60,6 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaceInfoComponent {
-	readonly place = input.required<Place>();
+	readonly place = input.required<PlaceEntry>();
 	readonly remotePolicy = input<RemotePolicy>();
 }

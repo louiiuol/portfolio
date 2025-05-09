@@ -7,9 +7,8 @@ import { createClient } from 'contentful';
 import { z } from 'zod';
 import { mapEntry } from '../../functions';
 import {
-	diplomaSchema,
 	jobSchema,
-	placeSchema,
+	projectSchema,
 	skillSchema,
 	trainingSchema,
 } from '../../types';
@@ -18,21 +17,23 @@ import {
 const entriesSchema = z.object({
 	exprience: z.array(jobSchema),
 	skill: z.array(skillSchema),
-	company: z.array(placeSchema),
-	school: z.array(placeSchema),
-	diploma: z.array(diplomaSchema),
 	training: z.array(trainingSchema),
+	project: z.array(projectSchema),
 });
 export type EntriesRecord = z.infer<typeof entriesSchema>;
+type EntryId = keyof EntriesRecord;
 
-export const INITIAL_ENTRIES = () => ({
+export const INITIAL_ENTRIES = (): Record<EntryId, []> => ({
 	exprience: [],
 	skill: [],
-	company: [],
-	school: [],
-	diploma: [],
 	training: [],
+	project: [],
 });
+
+// Used by fetchContentfullEntries to parse only required entries
+const entryIdSchema = z.enum(
+	Object.keys(INITIAL_ENTRIES()) as [EntryId, ...EntryId[]]
+);
 
 @Injectable({ providedIn: 'root' })
 export class ContentfullService {
@@ -41,7 +42,7 @@ export class ContentfullService {
 			(await this.getLocalEntries()) ?? this.fetchContentfullEntries(),
 	});
 
-	private readonly cdaClient = createClient(environment.contenftull);
+	private readonly cdaClient = createClient(environment.contentftull);
 	private readonly localStorageService = inject(LocalStorageService);
 
 	private readonly localStorageKey = 'contentfull-entries';
@@ -59,7 +60,9 @@ export class ContentfullService {
 		}
 
 		// If stored value is older than 2 weeks, return null and remove it from local storage
-		const twoWeeksAgo = Date.now() - 1000 * 60 * 60 * 24 * 14;
+		const twoWeeksDuration = 1000 * 60 * 60 * 24 * 14;
+		const twoWeeksAgo = Date.now() - twoWeeksDuration;
+
 		if (new Date(localEntries.updatedAt).getTime() < twoWeeksAgo) {
 			this.localStorageService.remove(this.localStorageKey);
 			return null;
@@ -79,17 +82,15 @@ export class ContentfullService {
 		}
 
 		const entries = items.reduce((acc: EntriesRecord, el) => {
-			const key = el.sys.contentType.sys.id as
-				| 'exprience'
-				| 'skill'
-				| 'company'
-				| 'school'
-				| 'diploma';
+			const key = el.sys.contentType.sys.id;
+			const parsedKey = entryIdSchema.safeParse(key);
+			if (parsedKey.success) {
+				acc[parsedKey.data].push({
+					...mapEntry(el),
+					id: el.sys.id, // Sets id to contentfull entry id.
+				});
+			}
 
-			acc[key].push({
-				...mapEntry(el),
-				id: el.sys.id, // @todo improve the type of the entry (one type for each entry)
-			});
 			return acc;
 		}, INITIAL_ENTRIES());
 

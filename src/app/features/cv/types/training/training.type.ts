@@ -1,21 +1,21 @@
 import type {
-	Diploma,
-	Place,
-	Skill,
+	DiplomaEntry,
+	PlaceEntry,
+	SkillEntry,
 	TrainingEntry,
 } from '@feat/contentfull/types';
 import { diplomaSchema } from '@feat/contentfull/types';
-import { CvEvent, cvEventSchema } from '@feat/cv/types';
+import { CvEvent, cvEventSchema } from '@feat/cv/types/cv-event/cv-event.type';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
 
 export class Training extends CvEvent {
 	readonly type: 'Formation';
 	readonly description: string;
-	readonly location: Place;
+	readonly location: PlaceEntry;
 	readonly name: string;
-	readonly skills: Skill[];
-	readonly diplomas: Diploma[];
+	readonly skills: SkillEntry[];
+	readonly diplomas: DiplomaEntry[];
 
 	constructor(input: TrainingEntry) {
 		super(input);

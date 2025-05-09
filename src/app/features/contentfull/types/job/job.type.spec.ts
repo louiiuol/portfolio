@@ -1,5 +1,5 @@
 import { validJobInput } from '../../mocks/job.mock';
-import { isJobInput, jobSchema } from './job.type';
+import { jobSchema } from './job.type';
 
 describe('Job Type', () => {
 	describe('jobSchema', () => {
@@ -13,17 +13,6 @@ describe('Job Type', () => {
 				remotePolicy: 'invalid-policy',
 			};
 			expect(() => jobSchema.parse(invalidJobInput)).toThrow();
-		});
-	});
-
-	describe('isJobInput', () => {
-		it('should correctly identify a valid JobInput using isJobInput', () => {
-			expect(isJobInput(validJobInput())).toBe(true);
-		});
-
-		it('should correctly reject an invalid JobInput using isJobInput', () => {
-			const invalidJobInput = { ...validJobInput(), title: 123 };
-			expect(isJobInput(invalidJobInput)).toBe(false);
 		});
 	});
 });

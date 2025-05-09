@@ -18,4 +18,4 @@ export const assetSchema = entrySchema.extend({
 		contentType: z.string(),
 	}),
 });
-export type Asset = z.infer<typeof assetSchema>;
+export type AssetEntry = z.infer<typeof assetSchema>;

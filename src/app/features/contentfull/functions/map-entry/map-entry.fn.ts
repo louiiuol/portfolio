@@ -5,8 +5,11 @@ import { hasFields } from '../has-field/has-field.fn';
 
 /**
  * Recursively maps an entry to an inferred type.
+ *
+ * Formats all nested array, objects (with fields property), and rich text document according to Contentfull schemas.
  * @param entry - the entry to map
  * @returns the mapped entry
+ * @see FormattedRichText for more information on IO structures
  */
 export function mapEntry<T>(entry: unknown): T {
 	// @todo improve the type of the entry

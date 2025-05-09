@@ -10,4 +10,4 @@ export const placeSchema = entrySchema.extend({
 	logo: assetSchema,
 	url: z.string().nullish(),
 });
-export type Place = z.infer<typeof placeSchema>;
+export type PlaceEntry = z.infer<typeof placeSchema>;

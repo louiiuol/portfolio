@@ -1,5 +1,4 @@
 import { contractTypesKeys } from '@feat/cv/types';
-import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
 import { assetSchema } from '../asset/asset.type';
 import { entrySchema } from '../entry.type';
@@ -32,5 +31,3 @@ export const jobSchema = entrySchema.extend({
 	skills: z.array(skillSchema),
 });
 export type JobEntry = z.infer<typeof jobSchema>;
-export const isJobInput = (entry: unknown): entry is JobEntry =>
-	isSchemaType(entry, jobSchema, 'JobInput');

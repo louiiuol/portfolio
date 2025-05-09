@@ -9,6 +9,7 @@ export const skillSchema = entrySchema.extend({
 	level: z.enum(['débutant', 'intermédiaire', 'avancé', 'expert']),
 	icon: assetSchema.nullish(),
 });
-export type Skill = z.infer<typeof skillSchema>;
-export const isSkill = (entry: unknown): entry is Skill =>
-	isSchemaType(entry, skillSchema, 'Skill');
+export type SkillEntry = z.infer<typeof skillSchema>;
+
+export const isSkill = (entry: unknown): entry is SkillEntry =>
+	isSchemaType(entry, skillSchema, 'SkillEntry');

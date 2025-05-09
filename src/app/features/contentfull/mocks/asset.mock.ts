@@ -1,6 +1,6 @@
-import type { Asset } from '../types';
+import type { AssetEntry } from '../types';
 
-export const validAsset: Asset = {
+export const validAsset: AssetEntry = {
 	title: 'Test Asset',
 	description: 'This is a test asset',
 	file: {
