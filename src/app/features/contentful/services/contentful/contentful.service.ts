@@ -25,7 +25,10 @@ type EntryId = keyof EntriesRecord;
 
 export const INITIAL_ENTRIES = (): Record<EntryId, []> =>
 	Object.keys(entriesSchema.shape).reduce(
-		(acc, k) => ({ ...acc, [k]: [] }),
+		(acc, k) => {
+			acc[k] = [];
+			return acc;
+		},
 		{} as Record<EntryId, []>
 	);
 
