@@ -6,7 +6,7 @@ import { hasFields } from '../has-field/has-field.fn';
 /**
  * Recursively maps an entry to an inferred type.
  *
- * Formats all nested array, objects (with fields property), and rich text document according to Contentfull schemas.
+ * Formats all nested array, objects (with fields property), and rich text document according to Contentful schemas.
  * @param entry - the entry to map
  * @returns the mapped entry
  * @see FormattedRichText for more information on IO structures

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import type { PlaceEntry, RemotePolicy } from '@feat/contentfull/types';
+import type { PlaceEntry, RemotePolicy } from '@feat/contentful/types';
 import {
 	ExternalLinkIcon,
 	HouseLaptopIcon,

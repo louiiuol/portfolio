@@ -1,5 +1,5 @@
 export * from './asset.mock';
-export * from './contentfull.service.mock';
+export * from './contentful.service.mock';
 export * from './diploma.mock';
 export * from './job.mock';
 export * from './place.mock';

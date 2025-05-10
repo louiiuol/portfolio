@@ -5,7 +5,7 @@ import {
 	type PlaceEntry,
 	type RemotePolicy,
 	type SkillEntry,
-} from '@feat/contentfull/types';
+} from '@feat/contentful/types';
 
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';

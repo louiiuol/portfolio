@@ -3,8 +3,8 @@ import type {
 	PlaceEntry,
 	SkillEntry,
 	TrainingEntry,
-} from '@feat/contentfull/types';
-import { diplomaSchema } from '@feat/contentfull/types';
+} from '@feat/contentful/types';
+import { diplomaSchema } from '@feat/contentful/types';
 import { CvEvent, cvEventSchema } from '@feat/cv/types/cv-event/cv-event.type';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';

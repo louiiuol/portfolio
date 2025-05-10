@@ -1,6 +1,6 @@
 export type AppEnvironment = {
 	production: boolean;
-	contentftull: {
+	contentful: {
 		space: string;
 		accessToken: string;
 	};

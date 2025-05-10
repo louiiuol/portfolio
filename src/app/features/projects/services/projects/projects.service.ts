@@ -1,12 +1,12 @@
 import { computed, inject, Injectable } from '@angular/core';
-import { ContentfullService } from '@feat/contentfull/services/contentfull/contentfull.service';
+import { ContentfulService } from '@feat/contentful/services/contentful/contentful.service';
 import { isNotNullish } from '@shared/types';
 import { Project } from '../../types/project.type';
 import { GithubService } from '../github/github.service';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectsService {
-	private readonly contentfulService = inject(ContentfullService);
+	private readonly contentfulService = inject(ContentfulService);
 	private readonly githubService = inject(GithubService);
 
 	readonly projects = computed(() => {

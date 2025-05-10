@@ -3,24 +3,24 @@ import { TestBed } from '@angular/core/testing';
 import { mockLocalStorageService } from '@mocks';
 import { waitForResourceResolved } from '@shared/functions';
 import { LocalStorageService } from '@shared/services';
-import { ContentfullService, INITIAL_ENTRIES } from './contentfull.service';
+import { ContentfulService, INITIAL_ENTRIES } from './contentful.service';
 
 const mockCdaClient = { getEntries: jasmine.createSpy() };
 
-describe('ContentfullService', () => {
-	let service: ContentfullService;
+describe('ContentfulService', () => {
+	let service: ContentfulService;
 
 	beforeEach(() => {
 		jasmine.clock().install(); // ⏱️ fake timers
 
 		TestBed.configureTestingModule({
 			providers: [
-				ContentfullService,
+				ContentfulService,
 				{ provide: LocalStorageService, useValue: mockLocalStorageService },
 			],
 		});
 
-		service = TestBed.inject(ContentfullService);
+		service = TestBed.inject(ContentfulService);
 		(service as any).cdaClient = mockCdaClient;
 	});
 
@@ -48,7 +48,7 @@ describe('ContentfullService', () => {
 		expect(service.entries.status()).toBe(ResourceStatus.Resolved);
 	});
 
-	it('should fallback content by fetching contentfull entries if no local found', async () => {
+	it('should fallback content by fetching contentful entries if no local found', async () => {
 		mockLocalStorageService.get.and.returnValue(null);
 		mockCdaClient.getEntries.and.returnValue(
 			Promise.resolve({
@@ -102,7 +102,7 @@ describe('ContentfullService', () => {
 		});
 	});
 
-	describe('fetchContentfullEntries', () => {
+	describe('fetchContentfulEntries', () => {
 		it('should fetch entries and store them locally', async () => {
 			const contentfulResponse = {
 				items: [
@@ -117,11 +117,11 @@ describe('ContentfullService', () => {
 				Promise.resolve(contentfulResponse)
 			);
 
-			const result = await (service as any).fetchContentfullEntries();
+			const result = await (service as any).fetchContentfulEntries();
 
 			expect(result.exprience.length).toBe(1);
 			expect(mockLocalStorageService.set).toHaveBeenCalledWith(
-				'contentfull-entries',
+				'contentful-entries',
 				jasmine.objectContaining({
 					exprience: jasmine.any(Array),
 					updatedAt: jasmine.any(Date),
@@ -139,7 +139,7 @@ describe('ContentfullService', () => {
 			);
 
 			await expectAsync(
-				(service as any).fetchContentfullEntries()
+				(service as any).fetchContentfulEntries()
 			).toBeRejectedWithError(/Aucun contenu trouvé/);
 		});
 	});

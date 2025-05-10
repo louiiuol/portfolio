@@ -1,6 +1,6 @@
-// mocks/mock-contentfull.service.ts
+// mocks/mock-contentful.service.ts
 import { Injectable, resource } from '@angular/core';
-import type { EntriesRecord } from '../services/contentfull/contentfull.service';
+import type { EntriesRecord } from '../services/contentful/contentful.service';
 import type {
 	DiplomaEntry,
 	JobEntry,
@@ -10,7 +10,7 @@ import type {
 } from '../types';
 
 @Injectable()
-export class MockContentfullService {
+export class MockContentfulService {
 	/** Internal source */
 	private readonly _data = Promise.resolve({
 		exprience: [] as JobEntry[],

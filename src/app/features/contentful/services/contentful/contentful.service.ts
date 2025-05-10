@@ -30,22 +30,22 @@ export const INITIAL_ENTRIES = (): Record<EntryId, []> => ({
 	project: [],
 });
 
-// Used by fetchContentfullEntries to parse only required entries
+// Used by fetchContentfulEntries to parse only required entries
 const entryIdSchema = z.enum(
 	Object.keys(INITIAL_ENTRIES()) as [EntryId, ...EntryId[]]
 );
 
 @Injectable({ providedIn: 'root' })
-export class ContentfullService {
+export class ContentfulService {
 	readonly entries = resource({
 		loader: async () =>
-			(await this.getLocalEntries()) ?? this.fetchContentfullEntries(),
+			(await this.getLocalEntries()) ?? this.fetchContentfulEntries(),
 	});
 
-	private readonly cdaClient = createClient(environment.contentftull);
+	private readonly cdaClient = createClient(environment.contentful);
 	private readonly localStorageService = inject(LocalStorageService);
 
-	private readonly localStorageKey = 'contentfull-entries';
+	private readonly localStorageKey = 'contentful-entries';
 
 	private async getLocalEntries(): Promise<EntriesRecord | null> {
 		const localEntries = this.localStorageService.get(
@@ -72,11 +72,11 @@ export class ContentfullService {
 		return localEntries;
 	}
 
-	private async fetchContentfullEntries(): Promise<EntriesRecord> {
+	private async fetchContentfulEntries(): Promise<EntriesRecord> {
 		const { items, errors } = await this.cdaClient.getEntries();
 
 		if (!items || errors?.length) {
-			throw new Error('Aucun contenu trouvé depuis Contentfull.', {
+			throw new Error('Aucun contenu trouvé depuis Contentful.', {
 				cause: errors,
 			});
 		}
@@ -87,7 +87,7 @@ export class ContentfullService {
 			if (parsedKey.success) {
 				acc[parsedKey.data].push({
 					...mapEntry(el),
-					id: el.sys.id, // Sets id to contentfull entry id.
+					id: el.sys.id, // Sets id to contentful entry id.
 				});
 			}
 

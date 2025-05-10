@@ -1,5 +1,5 @@
-import { validDiploma, validTrainingInput } from '@feat/contentfull/mocks';
-import type { TrainingEntry } from '@feat/contentfull/types';
+import { validDiploma, validTrainingInput } from '@feat/contentful/mocks';
+import type { TrainingEntry } from '@feat/contentful/types';
 import { Training, isTraining } from './training.type';
 
 describe('Training', () => {

@@ -1,5 +1,5 @@
-import { validJobInput } from '@feat/contentfull/mocks/job.mock';
-import { isJobInput, jobSchema } from '@feat/contentfull/types';
+import { validJobInput } from '@feat/contentful/mocks/job.mock';
+import { isJobInput, jobSchema } from '@feat/contentful/types';
 import { Job, isJob } from './job.type';
 
 describe('Job Type', () => {

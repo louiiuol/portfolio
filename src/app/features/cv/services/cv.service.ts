@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { ContentfullService } from '@feat/contentfull/services/contentfull/contentfull.service';
-import { isSkill } from '@feat/contentfull/types';
+import { ContentfulService } from '@feat/contentful/services/contentful/contentful.service';
+import { isSkill } from '@feat/contentful/types';
 import {
 	deepEqualObjects,
 	multiTypeSort,
@@ -22,11 +22,11 @@ const initialFilters: CvFilters = {
 
 @Injectable()
 export class CvService {
-	private readonly contentfullService = inject(ContentfullService);
+	private readonly contentfulService = inject(ContentfulService);
 	private readonly router = inject(Router);
 
 	readonly skills = computed(() =>
-		(this.contentfullService.entries.value()?.skill ?? []).filter(isSkill)
+		(this.contentfulService.entries.value()?.skill ?? []).filter(isSkill)
 	);
 
 	readonly filters = signal(initialFilters);
@@ -37,10 +37,10 @@ export class CvService {
 
 	// All CV events
 	readonly sortedEvents = computed(() => {
-		const entries = this.contentfullService.entries.value();
+		const entries = this.contentfulService.entries.value();
 		const states = {
-			loading: this.contentfullService.entries.isLoading(),
-			error: this.contentfullService.entries.error(),
+			loading: this.contentfulService.entries.isLoading(),
+			error: this.contentfulService.entries.error(),
 		};
 		if (!entries || states.loading || states.error) {
 			return { ...states, data: [] };

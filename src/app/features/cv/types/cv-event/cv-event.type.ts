@@ -1,16 +1,16 @@
-import { entrySchema } from '@feat/contentfull/types';
+import { entrySchema } from '@feat/contentful/types';
 import type { nullish } from '@shared/types';
 import { z } from 'zod';
-import type { JobEntry } from '../../../contentfull/types/job/job.type';
+import type { JobEntry } from '../../../contentful/types/job/job.type';
 import {
 	placeSchema,
 	type PlaceEntry,
-} from '../../../contentfull/types/place/place.type';
+} from '../../../contentful/types/place/place.type';
 import {
 	skillSchema,
 	type SkillEntry,
-} from '../../../contentfull/types/skill/skill.type';
-import { type TrainingEntry } from '../../../contentfull/types/training/training.type';
+} from '../../../contentful/types/skill/skill.type';
+import { type TrainingEntry } from '../../../contentful/types/training/training.type';
 import type { CvEventType } from './cv-event-type.type';
 import { EVENT_TYPES_KEYS } from './cv-event-type.type';
 

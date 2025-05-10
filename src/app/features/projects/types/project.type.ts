@@ -3,7 +3,7 @@ import type {
 	ProjectEntry,
 	ProjectStatus,
 	ProjectType,
-} from '@feat/contentfull/types';
+} from '@feat/contentful/types';
 import type { Repo } from './repository.type';
 
 export class Project {
@@ -15,12 +15,12 @@ export class Project {
 	repo: Repo;
 	assets?: AssetEntry[];
 
-	constructor(contentfullInput: ProjectEntry, githubInput: Repo) {
+	constructor(contentfulInput: ProjectEntry, githubInput: Repo) {
 		this.id = githubInput.id;
-		this.name = contentfullInput.name;
-		this.description = contentfullInput.description;
-		this.type = contentfullInput.type;
-		this.status = contentfullInput.status;
+		this.name = contentfulInput.name;
+		this.description = contentfulInput.description;
+		this.type = contentfulInput.type;
+		this.status = contentfulInput.status;
 		this.repo = githubInput;
 	}
 }

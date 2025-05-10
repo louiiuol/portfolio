@@ -5,7 +5,7 @@ import {
 	computed,
 	input,
 } from '@angular/core';
-import type { SkillEntry } from '@feat/contentfull/types';
+import type { SkillEntry } from '@feat/contentful/types';
 import { SkillPillComponent } from './skill-pill.component';
 
 @Component({

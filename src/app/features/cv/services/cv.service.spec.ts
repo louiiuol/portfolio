@@ -5,8 +5,8 @@ import {
 	validJobInput,
 	validSkill,
 	validTrainingInput,
-} from '@feat/contentfull/mocks';
-import { ContentfullService } from '@feat/contentfull/services/contentfull/contentfull.service';
+} from '@feat/contentful/mocks';
+import { ContentfulService } from '@feat/contentful/services/contentful/contentful.service';
 import { createMockResource, mockRouter } from '@mocks';
 import { waitForResourceResolved } from '@shared/functions';
 import type { CvFilters } from './cv.service';
@@ -21,9 +21,9 @@ const mockEntries = {
 
 const mockContentResource = createMockResource<typeof mockEntries>(mockEntries);
 
-const mockContentfullService = {
+const mockContentfulService = {
 	contentResource: mockContentResource,
-} as unknown as ContentfullService;
+} as unknown as ContentfulService;
 
 // -----------------------------------------------------------------------------
 // Test suite
@@ -36,13 +36,13 @@ describe('CvService', () => {
 		TestBed.configureTestingModule({
 			providers: [
 				CvService,
-				{ provide: ContentfullService, useValue: mockContentfullService },
+				{ provide: ContentfulService, useValue: mockContentfulService },
 				{ provide: Router, useValue: mockRouter },
 			],
 		});
 
 		service = TestBed.inject(CvService);
-		await waitForResourceResolved(mockContentfullService.entries);
+		await waitForResourceResolved(mockContentfulService.entries);
 	});
 
 	afterEach(() => {
