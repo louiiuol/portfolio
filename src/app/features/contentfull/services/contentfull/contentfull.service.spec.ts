@@ -43,9 +43,9 @@ describe('ContentfullService', () => {
 
 		jasmine.clock().tick(1000); // ⏩  on “avance” le sleep
 
-		await waitForResourceResolved(service.contentResource);
+		await waitForResourceResolved(service.entries);
 		expect(mockLocalStorageService.get).toHaveBeenCalled();
-		expect(service.contentResource.status()).toBe(ResourceStatus.Resolved);
+		expect(service.entries.status()).toBe(ResourceStatus.Resolved);
 	});
 
 	it('should fallback content by fetching contentfull entries if no local found', async () => {
@@ -63,7 +63,7 @@ describe('ContentfullService', () => {
 		await Promise.resolve();
 		jasmine.clock().tick(1000); // ⏩  on “avance” le sleep
 
-		const data = await waitForResourceResolved(service.contentResource);
+		const data = await waitForResourceResolved(service.entries);
 
 		expect(data?.exprience.length).toBe(1);
 		expect(mockLocalStorageService.set).toHaveBeenCalled();

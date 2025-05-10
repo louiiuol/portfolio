@@ -37,7 +37,7 @@ const entryIdSchema = z.enum(
 
 @Injectable({ providedIn: 'root' })
 export class ContentfullService {
-	readonly contentResource = resource({
+	readonly entries = resource({
 		loader: async () =>
 			(await this.getLocalEntries()) ?? this.fetchContentfullEntries(),
 	});

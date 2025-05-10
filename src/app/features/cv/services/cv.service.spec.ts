@@ -42,7 +42,7 @@ describe('CvService', () => {
 		});
 
 		service = TestBed.inject(CvService);
-		await waitForResourceResolved(mockContentfullService.contentResource);
+		await waitForResourceResolved(mockContentfullService.entries);
 	});
 
 	afterEach(() => {

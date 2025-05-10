@@ -26,9 +26,7 @@ export class CvService {
 	private readonly router = inject(Router);
 
 	readonly skills = computed(() =>
-		(this.contentfullService.contentResource.value()?.skill ?? []).filter(
-			isSkill
-		)
+		(this.contentfullService.entries.value()?.skill ?? []).filter(isSkill)
 	);
 
 	readonly filters = signal(initialFilters);
@@ -39,10 +37,10 @@ export class CvService {
 
 	// All CV events
 	readonly sortedEvents = computed(() => {
-		const entries = this.contentfullService.contentResource.value();
+		const entries = this.contentfullService.entries.value();
 		const states = {
-			loading: this.contentfullService.contentResource.isLoading(),
-			error: this.contentfullService.contentResource.error(),
+			loading: this.contentfullService.entries.isLoading(),
+			error: this.contentfullService.entries.error(),
 		};
 		if (!entries || states.loading || states.error) {
 			return { ...states, data: [] };
