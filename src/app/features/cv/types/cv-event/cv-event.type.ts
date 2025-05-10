@@ -1,10 +1,16 @@
-import { entrySchema } from '@feat/contentfull/types';
+import { entrySchema } from '@feat/contentful/types';
 import type { nullish } from '@shared/types';
 import { z } from 'zod';
-import type { JobEntry } from '../job/job.type';
-import { placeSchema, type Place } from '../place/place.type';
-import { skillSchema, type Skill } from '../skill/skill.type';
-import { type TrainingEntry } from '../training/training.type';
+import type { JobEntry } from '../../../contentful/types/job/job.type';
+import {
+	placeSchema,
+	type PlaceEntry,
+} from '../../../contentful/types/place/place.type';
+import {
+	skillSchema,
+	type SkillEntry,
+} from '../../../contentful/types/skill/skill.type';
+import { type TrainingEntry } from '../../../contentful/types/training/training.type';
 import type { CvEventType } from './cv-event-type.type';
 import { EVENT_TYPES_KEYS } from './cv-event-type.type';
 
@@ -18,8 +24,8 @@ export abstract class CvEvent {
 	abstract name: string;
 	abstract description: string;
 	abstract type: CvEventType;
-	abstract location: Place;
-	abstract skills: Skill[];
+	abstract location: PlaceEntry;
+	abstract skills: SkillEntry[];
 
 	constructor(input: CvEventInput) {
 		this.id = input.id;

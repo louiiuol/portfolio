@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { safeParse } from '@shared/functions';
+import { formatZodError, safeParse } from '@shared/functions';
 import { isNullish, isPrimitive } from '@shared/types';
-import type { z, ZodType, ZodTypeDef } from 'zod';
+import { ZodError, type z, type ZodType, type ZodTypeDef } from 'zod';
 
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
@@ -30,17 +30,14 @@ export class LocalStorageService {
 			return null;
 		}
 
-		const validator = schema.safeParse(content);
-
-		if (!validator.success) {
-			console.error(
-				"Une erreur est survenue lors de la récupération de l'objet :",
-				validator.error
-			);
+		try {
+			return schema.parse(content);
+		} catch (error) {
+			if (error instanceof ZodError) {
+				console.error(formatZodError(error, 'Récupération des entrées'));
+			}
 			return null;
 		}
-
-		return validator.data; // TypeScript infers via z.infer<Schema> here
 	};
 
 	check = (key: string) => !!localStorage.getItem(key);

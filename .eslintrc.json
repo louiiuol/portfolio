@@ -54,11 +54,12 @@
 				"@typescript-eslint/ban-ts-comment": "off",
 				"@typescript-eslint/no-namespace": "off",
 				"@typescript-eslint/consistent-type-imports": "error",
+
 				"@typescript-eslint/consistent-type-assertions": [
 					"error",
 					{
 						"assertionStyle": "as",
-						"objectLiteralTypeAssertions": "never"
+						"objectLiteralTypeAssertions": "allow-as-parameter"
 					}
 				],
 				"lines-between-class-members": [
