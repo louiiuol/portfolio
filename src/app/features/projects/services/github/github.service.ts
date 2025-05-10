@@ -1,5 +1,4 @@
 import { inject, Injectable, resource } from '@angular/core';
-import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services';
 import { z } from 'zod';
 import { githubReposSchema, type Repo } from '../../types/repository.type';
@@ -7,15 +6,14 @@ import { githubReposSchema, type Repo } from '../../types/repository.type';
 @Injectable({ providedIn: 'root' })
 export class GithubService {
 	readonly repositories = resource({
-		loader: async () =>
-			(await this.getLocalRepositories()) ?? this.fetchGithubRepos('louiiuol'),
+		loader: async () => this.getLocalRepositories() ?? this.fetchGithubRepos(),
 	});
 
 	private readonly localStorageService = inject(LocalStorageService);
 
 	private readonly localStorageKey = 'github-repositories';
 
-	private async getLocalRepositories(): Promise<Repo[] | null> {
+	private getLocalRepositories(): Repo[] | null {
 		const localEntries = this.localStorageService.get(
 			this.localStorageKey,
 			z.object({
@@ -37,14 +35,13 @@ export class GithubService {
 			return null;
 		}
 
-		await sleep(1000);
 		return localEntries.repositories;
 	}
 
-	private async fetchGithubRepos(username: string) {
+	private async fetchGithubRepos() {
 		const limit = 100;
 		const res = await fetch(
-			`https://api.github.com/users/${username}/repos?per_page=${limit}`
+			`https://api.github.com/users/louiiuol/repos?per_page=${limit}`
 		);
 
 		if (!res.ok) {
@@ -57,11 +54,13 @@ export class GithubService {
 			throw new Error('Validation failed for GitHub repositories');
 		}
 
+		const repositories = parsed.data;
+
 		this.localStorageService.set(this.localStorageKey, {
-			repositories: parsed,
+			repositories,
 			updatedAt: new Date(),
 		});
 
-		return parsed.data;
+		return repositories;
 	}
 }

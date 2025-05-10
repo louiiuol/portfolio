@@ -8,7 +8,7 @@ import { ProjectsService } from '../services/projects/projects.service';
 	host: { class: 'page' },
 	template: `
 		<app-card>
-			<h1 heading>Les projects</h1>
+			<h1 heading>Les projets arrivent</h1>
 			<div class="p-4">
 				{{ projectsService.projects() | json }}
 			</div>

@@ -9,7 +9,7 @@ import { skillSchema } from '../skill/skill.type';
 export const REMOTE_POLICIES = [
 	{ value: 'à distance', label: 'À distance' },
 	{ value: 'hybride', label: 'Hybride' },
-	{ value: 'sur site', label: 'sur site' },
+	{ value: 'sur site', label: 'Sur site' },
 ] as const;
 export type RemotePolicy = (typeof REMOTE_POLICIES)[number]['value'];
 export const RemotePolicyKeys = REMOTE_POLICIES.map(p => p.value) as [

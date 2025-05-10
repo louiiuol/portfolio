@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { assetSchema } from '../asset/asset.type';
 import { entrySchema } from '../entry.type';
 import { skillSchema } from '../skill/skill.type';
 
@@ -7,6 +8,6 @@ export const diplomaSchema = entrySchema.extend({
 	description: z.string(),
 	obtainedAt: z.coerce.date(),
 	skills: z.array(skillSchema),
-	// assets: z.array(assetSchema).nullish(),
+	assets: z.array(assetSchema).nullish(),
 });
 export type DiplomaEntry = z.infer<typeof diplomaSchema>;

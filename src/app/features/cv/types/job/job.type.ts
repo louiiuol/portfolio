@@ -9,6 +9,7 @@ import {
 
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
+import { validFormattedRichText, validPlace } from '../../../contentful/mocks';
 import type { ContractType } from '../cv-event/cv-event-type.type';
 import { CvEvent, cvEventSchema } from '../cv-event/cv-event.type';
 
@@ -41,3 +42,27 @@ export const isJob = (entry: unknown): entry is Job =>
 		}),
 		'Job'
 	);
+
+export const validJob = new Job({
+	id: '1',
+	title: 'Software Engineer',
+	summary: 'Develop and maintain software applications.',
+	company: validPlace,
+	description: validFormattedRichText,
+	contractType: 'alternance',
+	remotePolicy: 'sur site',
+	skills: [
+		{
+			id: 'skill-1',
+			name: 'TypeScript',
+			level: 'expert',
+		},
+		{
+			id: 'skill-2',
+			name: 'React',
+			level: 'débutant',
+		},
+	],
+	startDate: new Date('2022-01-01'),
+	endDate: new Date('2023-01-01'),
+});

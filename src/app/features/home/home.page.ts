@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { LogoIcon, TypistComponent } from '@shared/components';
-import { GithubService } from '../projects/services/github/github.service';
 
 @Component({
 	selector: 'app-home-page',
@@ -16,7 +15,6 @@ import { GithubService } from '../projects/services/github/github.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage {
-	github = inject(GithubService);
 	protected readonly introTexts = [
 		'Bienvenue sur mon portfolio 👋',
 		'Je suis un développeur fullstack souhaitant construire des interfaces propres, intuitives et utiles',

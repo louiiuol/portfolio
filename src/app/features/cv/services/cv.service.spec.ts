@@ -22,7 +22,7 @@ const mockEntries = {
 const mockContentResource = createMockResource<typeof mockEntries>(mockEntries);
 
 const mockContentfulService = {
-	contentResource: mockContentResource,
+	entries: mockContentResource,
 } as unknown as ContentfulService;
 
 // -----------------------------------------------------------------------------

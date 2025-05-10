@@ -31,6 +31,6 @@ export const projectSchema = z.object({
 	githubId: z.number(),
 	status: z.enum(ProjectStatusKeys),
 	type: z.enum(ProjectTypeKeys),
-	assets: z.array(assetSchema).nullish(),
+	assets: z.array(assetSchema).nullish().default([]),
 });
 export type ProjectEntry = z.infer<typeof projectSchema>;

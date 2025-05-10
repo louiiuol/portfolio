@@ -1,7 +1,6 @@
 import { inject, Injectable, resource } from '@angular/core';
 import { environment } from '@env';
 
-import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services';
 import { createClient } from 'contentful';
 import { z } from 'zod';
@@ -15,6 +14,7 @@ import {
 
 // Internal types, constants & schemas
 const entriesSchema = z.object({
+	// @todo fix the typo in "experience" key: Need to be fixed in Contentful first.
 	exprience: z.array(jobSchema),
 	skill: z.array(skillSchema),
 	training: z.array(trainingSchema),
@@ -23,23 +23,21 @@ const entriesSchema = z.object({
 export type EntriesRecord = z.infer<typeof entriesSchema>;
 type EntryId = keyof EntriesRecord;
 
-export const INITIAL_ENTRIES = (): Record<EntryId, []> => ({
-	exprience: [],
-	skill: [],
-	training: [],
-	project: [],
-});
+export const INITIAL_ENTRIES = (): Record<EntryId, []> =>
+	Object.keys(entriesSchema.shape).reduce(
+		(acc, k) => ({ ...acc, [k]: [] }),
+		{} as Record<EntryId, []>
+	);
 
 // Used by fetchContentfulEntries to parse only required entries
 const entryIdSchema = z.enum(
-	Object.keys(INITIAL_ENTRIES()) as [EntryId, ...EntryId[]]
+	Object.keys(entriesSchema.shape) as [EntryId, ...EntryId[]]
 );
 
 @Injectable({ providedIn: 'root' })
 export class ContentfulService {
 	readonly entries = resource({
-		loader: async () =>
-			(await this.getLocalEntries()) ?? this.fetchContentfulEntries(),
+		loader: async () => this.getLocalEntries() ?? this.fetchContentfulEntries(),
 	});
 
 	private readonly cdaClient = createClient(environment.contentful);
@@ -47,7 +45,7 @@ export class ContentfulService {
 
 	private readonly localStorageKey = 'contentful-entries';
 
-	private async getLocalEntries(): Promise<EntriesRecord | null> {
+	private getLocalEntries(): EntriesRecord | null {
 		const localEntries = this.localStorageService.get(
 			this.localStorageKey,
 			entriesSchema.extend({
@@ -67,8 +65,6 @@ export class ContentfulService {
 			this.localStorageService.remove(this.localStorageKey);
 			return null;
 		}
-
-		await sleep(1000);
 		return localEntries;
 	}
 

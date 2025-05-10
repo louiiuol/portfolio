@@ -1,6 +1,6 @@
 import { validJobInput } from '@feat/contentful/mocks/job.mock';
-import { isJobInput, jobSchema } from '@feat/contentful/types';
-import { Job, isJob } from './job.type';
+import { jobSchema } from '@feat/contentful/types';
+import { isJob, Job, validJob } from './job.type';
 
 describe('Job Type', () => {
 	describe('jobSchema', () => {
@@ -17,14 +17,14 @@ describe('Job Type', () => {
 		});
 	});
 
-	describe('isJobInput', () => {
-		it('should correctly identify a valid JobInput using isJobInput', () => {
-			expect(isJobInput(validJobInput())).toBe(true);
+	describe('isJob', () => {
+		it('should correctly identify a valid JobInput using isJob', () => {
+			expect(isJob(validJob)).toBe(true);
 		});
 
-		it('should correctly reject an invalid JobInput using isJobInput', () => {
-			const invalidJobInput = { ...validJobInput(), title: 123 };
-			expect(isJobInput(invalidJobInput)).toBe(false);
+		it('should correctly reject an invalid JobInput using isJob', () => {
+			const invalidJobInput = { ...validJob, name: null };
+			expect(isJob(invalidJobInput)).toBe(false);
 		});
 	});
 
