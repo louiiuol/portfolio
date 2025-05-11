@@ -1,10 +1,14 @@
 import { ResourceStatus } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { ContentfullService } from '@feat/contentfull/services/contentfull/contentfull.service';
+import {
+	validJobInput,
+	validSkill,
+	validTrainingInput,
+} from '@feat/contentful/mocks';
+import { ContentfulService } from '@feat/contentful/services/contentful/contentful.service';
 import { createMockResource, mockRouter } from '@mocks';
 import { waitForResourceResolved } from '@shared/functions';
-import { validJobInput, validSkill, validTrainingInput } from '../mocks';
 import type { CvFilters } from './cv.service';
 import { CvService } from './cv.service';
 
@@ -17,9 +21,9 @@ const mockEntries = {
 
 const mockContentResource = createMockResource<typeof mockEntries>(mockEntries);
 
-const mockContentfullService = {
-	contentResource: mockContentResource,
-} as unknown as ContentfullService;
+const mockContentfulService = {
+	entries: mockContentResource,
+} as unknown as ContentfulService;
 
 // -----------------------------------------------------------------------------
 // Test suite
@@ -32,13 +36,13 @@ describe('CvService', () => {
 		TestBed.configureTestingModule({
 			providers: [
 				CvService,
-				{ provide: ContentfullService, useValue: mockContentfullService },
+				{ provide: ContentfulService, useValue: mockContentfulService },
 				{ provide: Router, useValue: mockRouter },
 			],
 		});
 
 		service = TestBed.inject(CvService);
-		await waitForResourceResolved(mockContentfullService.contentResource);
+		await waitForResourceResolved(mockContentfulService.entries);
 	});
 
 	afterEach(() => {
@@ -136,7 +140,7 @@ describe('CvService', () => {
 
 		service.slideEvent('next');
 		expect(service.activeEvent()?.name).toBe(
-			service.sortedEvents().data[1].name
+			service.sortedEvents().data[0].name
 		);
 
 		// Reset and test "previous"

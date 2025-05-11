@@ -1,7 +1,9 @@
-import { contenftullEnv } from './contentfull.env';
+import { contentfulEnv } from './contentful.env';
 import type { AppEnvironment } from './type';
 
 export const environment: AppEnvironment = {
 	production: true,
-	contenftull: contenftullEnv,
+	contentful: contentfulEnv,
 };
+
+// old domain: 188.165.61.82

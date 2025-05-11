@@ -1,30 +1,21 @@
-import { entrySchema } from '@feat/contentfull/types';
+import type {
+	DiplomaEntry,
+	PlaceEntry,
+	SkillEntry,
+	TrainingEntry,
+} from '@feat/contentful/types';
+import { diplomaSchema } from '@feat/contentful/types';
+import { CvEvent, cvEventSchema } from '@feat/cv/types/cv-event/cv-event.type';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
-import { CvEvent, cvEventSchema } from '../cv-event/cv-event.type';
-import type { Diploma } from '../diploma/diploma.type';
-import { diplomaSchema } from '../diploma/diploma.type';
-import type { Place } from '../place/place.type';
-import { placeSchema } from '../place/place.type';
-import type { Skill } from '../skill/skill.type';
-
-export const trainingSchema = entrySchema.extend({
-	name: z.string(),
-	description: z.string(),
-	startDate: z.coerce.date(),
-	endDate: z.coerce.date().nullish(),
-	diplomas: z.array(diplomaSchema),
-	school: placeSchema,
-});
-export type TrainingEntry = z.infer<typeof trainingSchema>;
 
 export class Training extends CvEvent {
 	readonly type: 'Formation';
 	readonly description: string;
-	readonly location: Place;
+	readonly location: PlaceEntry;
 	readonly name: string;
-	readonly skills: Skill[];
-	readonly diplomas: Diploma[];
+	readonly skills: SkillEntry[];
+	readonly diplomas: DiplomaEntry[];
 
 	constructor(input: TrainingEntry) {
 		super(input);
@@ -36,6 +27,8 @@ export class Training extends CvEvent {
 		this.skills = this.diplomas
 			.map(diploma => diploma.skills)
 			.flat()
+			// need to tell which level is higher than other ..
+			.sort((current, next) => current.level.localeCompare(next.level))
 			.filter(
 				(skills, index, self) =>
 					index === self.findIndex(skill => skill.name === skills.name)

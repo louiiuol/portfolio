@@ -4,7 +4,7 @@ import {
 	input,
 	output,
 } from '@angular/core';
-import { RichTextComponent } from '@feat/contentfull/components/rich-text.component';
+import { RichTextComponent } from '@feat/contentful/components/rich-text.component';
 import {
 	Card,
 	EventDatesComponent,

@@ -17,7 +17,6 @@ import { CvSortComponent } from '../components/cv/cv-sort.component';
 import { CvTimelineComponent } from '../components/cv/cv-timeline.component';
 import { EventDialog } from '../components/event/event-dialog.component';
 import { CvService } from '../services/cv.service';
-
 @Component({
 	selector: 'app-cv-page',
 	host: { class: 'page' },

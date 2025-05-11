@@ -1,6 +1,6 @@
-import { validDiploma, validTrainingInput } from '../../mocks';
-import type { TrainingEntry } from './training.type';
-import { Training, isTraining, trainingSchema } from './training.type';
+import { validDiploma, validTrainingInput } from '@feat/contentful/mocks';
+import type { TrainingEntry } from '@feat/contentful/types';
+import { Training, isTraining } from './training.type';
 
 describe('Training', () => {
 	it('should create a Training instance with valid input', () => {
@@ -45,13 +45,30 @@ describe('Training', () => {
 		]);
 	});
 
-	it('should validate a valid TrainingEntry using trainingSchema', () => {
-		expect(() => trainingSchema.parse(validTrainingInput())).not.toThrow();
-	});
-
-	it('should throw an error for invalid TrainingEntry using trainingSchema', () => {
-		const invalidEntry = { ...validTrainingInput(), name: 123 }; // Invalid name type
-		expect(() => trainingSchema.parse(invalidEntry)).toThrow();
+	// @todo add proper logic to handle this case
+	xit('should handle skills with same name but different levels during deduplication', () => {
+		const entryWithConflictingSkills: TrainingEntry = {
+			...validTrainingInput(),
+			diplomas: [
+				{
+					name: 'Diploma 1',
+					description: 'Description 1',
+					obtainedAt: new Date('2023-01-01'),
+					skills: [{ name: 'JavaScript', level: 'avancé' }],
+				},
+				{
+					name: 'Diploma 2',
+					description: 'Description 2',
+					obtainedAt: new Date('2023-02-01'),
+					skills: [{ name: 'JavaScript', level: 'expert' }],
+				},
+			],
+		};
+		const training = new Training(entryWithConflictingSkills);
+		// Verify which level is kept or how the conflict is resolved
+		expect(training.skills).toEqual([
+			{ name: 'JavaScript', level: 'expert' }, // Or however the implementation resolves this
+		]);
 	});
 
 	it('should correctly identify a Training instance using isTraining', () => {
