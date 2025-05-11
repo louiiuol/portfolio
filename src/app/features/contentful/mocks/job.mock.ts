@@ -3,6 +3,7 @@ import { validPlace } from './place.mock';
 import { validFormattedRichText } from './rich-text.mock';
 
 export const validJobInput = (name = 'Software Engineer'): JobEntry => ({
+	id: 'Job1',
 	company: validPlace,
 	remotePolicy: 'à distance',
 	contractType: 'cdi',
@@ -13,7 +14,7 @@ export const validJobInput = (name = 'Software Engineer'): JobEntry => ({
 	endDate: null,
 	assets: null,
 	skills: [
-		{ name: 'TypeScript', level: 'avancé' },
-		{ name: 'Angular', level: 'expert' },
+		{ id: 'skill1', name: 'TypeScript', level: 'avancé' },
+		{ id: 'skill2', name: 'Angular', level: 'expert' },
 	],
 });

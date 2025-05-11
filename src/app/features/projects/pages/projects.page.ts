@@ -1,6 +1,10 @@
-import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Card } from '@shared/components';
+import {
+	Card,
+	ErrorMessageComponent,
+	LoaderComponent,
+} from '@shared/components';
+import { ProjectCard } from '../components/project-card/project-card.component';
 import { ProjectsService } from '../services/projects/projects.service';
 
 @Component({
@@ -9,14 +13,23 @@ import { ProjectsService } from '../services/projects/projects.service';
 	template: `
 		<app-card>
 			<h1 heading>Les projets arrivent</h1>
-			<div class="p-4">
-				{{ projectsService.projects() | json }}
-			</div>
+			@if (projectsService.projects().loading) {
+				<app-loader message="chargement des projets" />
+			} @else if (projectsService.projects().error) {
+				<app-error-message [errorMessage]="errorMessage" />
+			} @else {
+				@for (project of projectsService.projects().data; track $index) {
+					<app-project-card [project]="project" />
+				}
+			}
 		</app-card>
 	`,
-	imports: [Card, JsonPipe],
+	imports: [Card, LoaderComponent, ErrorMessageComponent, ProjectCard],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsPage {
 	protected readonly projectsService = inject(ProjectsService);
+
+	protected readonly errorMessage =
+		'Impossible de récupérer les projets. Merci de réessayer plus tard... 🙏';
 }

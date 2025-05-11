@@ -1,6 +1,7 @@
 import type { AssetEntry } from '../types';
 
 export const validAsset: AssetEntry = {
+	id: 'Asset1',
 	title: 'Test Asset',
 	description: 'This is a test asset',
 	file: {

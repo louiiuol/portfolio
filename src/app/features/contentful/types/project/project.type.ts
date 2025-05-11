@@ -1,5 +1,7 @@
 import { z } from 'zod';
 import { assetSchema } from '../asset/asset.type';
+import { entrySchema } from '../entry.type';
+import { formattedRichTextSchema } from '../rich-text/rich-text.type';
 
 export const PROJECT_STATUS = [
 	{ value: 'idea', label: 'Une idée' },
@@ -25,10 +27,10 @@ const ProjectTypeKeys = PROJECT_TYPES.map(p => p.value) as [
 	...ProjectType[],
 ];
 
-export const projectSchema = z.object({
+export const projectSchema = entrySchema.extend({
 	name: z.string(),
-	description: z.string(),
-	githubId: z.number(),
+	description: formattedRichTextSchema,
+	githubId: z.string().nullish(),
 	status: z.enum(ProjectStatusKeys),
 	type: z.enum(ProjectTypeKeys),
 	assets: z.array(assetSchema).nullish().default([]),

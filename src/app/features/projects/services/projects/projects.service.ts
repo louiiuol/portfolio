@@ -1,6 +1,5 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { ContentfulService } from '@feat/contentful/services/contentful/contentful.service';
-import { isNotNullish } from '@shared/types';
 import { Project } from '../../types/project.type';
 import { GithubService } from '../github/github.service';
 
@@ -10,25 +9,28 @@ export class ProjectsService {
 	private readonly githubService = inject(GithubService);
 
 	readonly projects = computed(() => {
-		const repositories = this.githubService.repositories.value();
-		const entries = this.contentfulService.entries.value()?.project;
+		const repositoriesResource = this.githubService.repositories;
+		const entriesResource = this.contentfulService.entries;
 
-		// handle states (error, loading - here)
+		const states = {
+			loading: repositoriesResource.isLoading() || entriesResource.isLoading(),
+			error: repositoriesResource.error() ?? entriesResource.error(),
+		};
 
-		if (!repositories || !entries) {
-			console.log('Aucune donnée disponibles', { repositories, entries });
-			return [];
+		const repositories = repositoriesResource.value();
+		const entries = entriesResource.value()?.project;
+
+		if (!entries || !repositories || states.loading || states.error) {
+			return { ...states, data: [] };
 		}
 
-		return entries
-			.map(entry => {
-				const repo = repositories.find(r => r.id === entry.githubId);
-				if (!repo) {
-					console.log('Aucun repository trouvé pour le projet: ' + entry.name);
-					return null;
-				}
+		return {
+			...states,
+			data: entries.map(entry => {
+				const repo =
+					repositories.find(r => r.id.toString() === entry.githubId) ?? null;
 				return new Project(entry, repo);
-			})
-			.filter(isNotNullish);
+			}),
+		};
 	});
 }

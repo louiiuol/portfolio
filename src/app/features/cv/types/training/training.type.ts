@@ -27,6 +27,8 @@ export class Training extends CvEvent {
 		this.skills = this.diplomas
 			.map(diploma => diploma.skills)
 			.flat()
+			// need to tell which level is higher than other ..
+			.sort((current, next) => current.level.localeCompare(next.level))
 			.filter(
 				(skills, index, self) =>
 					index === self.findIndex(skill => skill.name === skills.name)

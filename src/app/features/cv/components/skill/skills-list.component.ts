@@ -38,7 +38,7 @@ export class SkillsListComponent {
 	readonly showAll = input(false, { transform: booleanAttribute });
 	readonly showEmpty = input(false, { transform: booleanAttribute });
 	readonly showMore = input(false, { transform: booleanAttribute });
-	readonly limit = input(3);
+	readonly limit = input(5);
 
 	protected readonly shownSkills = computed(() =>
 		this.showAll() ? this.skills() : this.skills().slice(0, this.limit())

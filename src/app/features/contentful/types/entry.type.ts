@@ -5,5 +5,5 @@ import { z } from 'zod';
 
 // BASE ENTRY
 export const entrySchema = z.object({
-	id: z.string().nullish(),
+	id: z.string().nullish(), // Must be nullish because nested objects don't have an id
 });

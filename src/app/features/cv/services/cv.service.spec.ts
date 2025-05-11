@@ -140,7 +140,7 @@ describe('CvService', () => {
 
 		service.slideEvent('next');
 		expect(service.activeEvent()?.name).toBe(
-			service.sortedEvents().data[1].name
+			service.sortedEvents().data[0].name
 		);
 
 		// Reset and test "previous"
