@@ -19,7 +19,7 @@ import { CvService } from '../services/cv.service';
 	template: `
 		@let events = cvService.sortedEvents();
 		<app-card
-			class="min-h-full  max-w-[1024px] w-full mx-auto !rounded-none sm:!rounded-lg">
+			class="min-h-full  max-w-5xl w-full mx-auto !rounded-none sm:!rounded-lg">
 			<h1 heading>Curriculum Vitae</h1>
 			<nav class="flex gap-4 sm:gap-6 justify-between items-start" subHeader>
 				<app-cv-filters [disabled]="events.loading" />

@@ -73,17 +73,19 @@ export class ContentfulService {
 			})
 		);
 
-		await sleep(600); // Simulate network delay to detect loading state in dev only
-
 		if (!localEntries) {
 			return Promise.resolve(null);
 		}
 
+		await sleep(600); // Simulate network delay to detect loading state in dev only
+
 		// If stored value is older than 2 weeks, return null and remove it from local storage
 		const twoWeeksDuration = 1000 * 60 * 60 * 24 * 14;
-		const twoWeeksAgo = Date.now() - twoWeeksDuration;
 
-		if (new Date(localEntries.updatedAt).getTime() < twoWeeksAgo) {
+		if (
+			new Date(localEntries.updatedAt).getTime() <
+			Date.now() - twoWeeksDuration
+		) {
 			this.localStorageService.remove(this.localStorageKey);
 			return null;
 		}

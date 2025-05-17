@@ -26,6 +26,7 @@ const repoSchema = z.object({
 	git_url: z.string(),
 	ssh_url: z.string(),
 	clone_url: z.string().url(),
+	homepage: z.string().nullish(),
 	size: z.number(),
 	stargazers_count: z.number(),
 	watchers_count: z.number(),
