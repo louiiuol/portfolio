@@ -13,15 +13,26 @@ import { APP_LINKS } from '../../../app.routes';
 		<ul class="flex items-center justify-end gap-3" role="navigation">
 			@for (link of navigationLinks; track $index) {
 				<li>
-					<a
-						app-button
-						appearance="basic"
-						color="primary"
-						[routerLink]="link.path"
-						[routerLinkActive]="'active'"
-						[routerLinkActiveOptions]="{ exact: true }">
-						{{ link.label }}
-					</a>
+					@if (link.internal) {
+						<a
+							app-button
+							appearance="basic"
+							color="primary"
+							[routerLink]="link.path"
+							[routerLinkActive]="'active'"
+							[routerLinkActiveOptions]="{ exact: true }">
+							{{ link.label }}
+						</a>
+					} @else {
+						<a
+							app-button
+							appearance="basic"
+							color="primary"
+							target="_blank"
+							[href]="link.path">
+							{{ link.label }}
+						</a>
+					}
 				</li>
 			}
 		</ul>
@@ -30,5 +41,12 @@ import { APP_LINKS } from '../../../app.routes';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	protected readonly navigationLinks = APP_LINKS;
+	protected readonly navigationLinks = [
+		...APP_LINKS.map(l => ({ ...l, internal: true })),
+		{
+			internal: false,
+			path: 'https://github.com/louiiuol?tab=repositories&q=&type=&language=&sort=stargazers',
+			label: 'Projets',
+		},
+	];
 }

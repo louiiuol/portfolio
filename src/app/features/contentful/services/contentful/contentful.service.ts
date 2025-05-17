@@ -5,12 +5,7 @@ import { LocalStorageService } from '@shared/services';
 import { createClient } from 'contentful';
 import { z } from 'zod';
 import { mapEntry } from '../../functions';
-import {
-	jobSchema,
-	projectSchema,
-	skillSchema,
-	trainingSchema,
-} from '../../types';
+import { jobSchema, skillSchema, trainingSchema } from '../../types';
 
 // Internal types, constants & schemas
 const entriesSchema = z.object({
@@ -18,7 +13,7 @@ const entriesSchema = z.object({
 	exprience: z.array(jobSchema),
 	skill: z.array(skillSchema),
 	training: z.array(trainingSchema),
-	project: z.array(projectSchema),
+	//project: z.array(projectSchema),
 });
 export type EntriesRecord = z.infer<typeof entriesSchema>;
 type EntryId = keyof EntriesRecord;
