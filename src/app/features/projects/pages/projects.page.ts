@@ -1,30 +1,30 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import {
-	Card,
-	ErrorMessageComponent,
-	LoaderComponent,
-} from '@shared/components';
+import { ErrorMessageComponent, LoaderComponent } from '@shared/components';
 import { ProjectCard } from '../components/project-card/project-card.component';
 import { ProjectsService } from '../services/projects/projects.service';
 
 @Component({
 	selector: 'app-project-page',
-	host: { class: 'page' },
+	host: { class: 'page justify-start items-center' },
 	template: `
-		<app-card>
-			<h1 heading>Les projets arrivent</h1>
-			@if (projectsService.projects().loading) {
-				<app-loader message="chargement des projets" />
-			} @else if (projectsService.projects().error) {
-				<app-error-message [errorMessage]="errorMessage" />
-			} @else {
-				@for (project of projectsService.projects().data; track $index) {
-					<app-project-card [project]="project" />
-				}
+		@let projects = projectsService.projects();
+		@if (projects.error) {
+			<app-error-message
+				class="bg-slate-100 rounded-lg text-center mx-auto py-4 flex -items-center justify-center max-w-5xl !mt-0 !flex-0"
+				[errorMessage]="errorMessage" />
+		} @else if (projects.loading) {
+			<app-loader
+				class="text-white font-medium text-xl"
+				hideSpinner
+				message="chargement des projets"
+				theme="transparent" />
+		} @else {
+			@for (project of projects.data; track $index) {
+				<app-project-card [project]="project" />
 			}
-		</app-card>
+		}
 	`,
-	imports: [Card, LoaderComponent, ErrorMessageComponent, ProjectCard],
+	imports: [LoaderComponent, ErrorMessageComponent, ProjectCard],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsPage {

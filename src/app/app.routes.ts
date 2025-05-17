@@ -21,15 +21,15 @@ export const routes: ExtendedRoute[] = [
 		title: 'Louis Godlewski | Curriculum Vitae',
 		label: 'CV',
 	},
-	// {
-	// 	path: 'projects',
-	// 	loadComponent: () =>
-	// 		import('./features/projects/pages/projects.page').then(
-	// 			m => m.ProjectsPage
-	// 		),
-	// 	title: 'Louis Godlewski | Projets',
-	// 	label: 'Projets',
-	// },
+	{
+		path: 'projects',
+		loadComponent: () =>
+			import('./features/projects/pages/projects.page').then(
+				m => m.ProjectsPage
+			),
+		title: 'Louis Godlewski | Projets',
+		label: 'Projets',
+	},
 	{ path: '**', redirectTo: '' },
 ];
 

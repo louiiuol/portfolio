@@ -3,6 +3,7 @@ import {
 	Component,
 	effect,
 	inject,
+	input,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -63,11 +64,21 @@ import { CvService } from '../../services/cv.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CvFiltersComponent {
+	readonly disabled = input(false);
+
 	protected readonly cvService = inject(CvService);
 
 	protected readonly filtersForm = new FormGroup({
 		eventType: new FormControl<CvEventType | nullish>(null),
 		skills: new FormControl<string[]>([]),
+	});
+
+	private readonly syncDisabledInputWithForm = effect(() => {
+		if (this.disabled()) {
+			this.filtersForm.disable();
+		} else {
+			this.filtersForm.enable();
+		}
 	});
 
 	protected readonly eventTypes = EVENT_TYPES;
