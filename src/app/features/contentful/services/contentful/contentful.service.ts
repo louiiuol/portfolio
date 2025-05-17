@@ -1,5 +1,4 @@
 import {
-	Inject,
 	inject,
 	Injectable,
 	PLATFORM_ID,
@@ -61,15 +60,11 @@ export class ContentfulService {
 
 	private readonly localStorageKey = 'contentful-entries';
 
-	protected readonly isBrowser = signal(false);
+	protected readonly isBrowser = signal(isPlatformBrowser(inject(PLATFORM_ID)));
 
-	constructor(@Inject(PLATFORM_ID) platformId: object) {
-		this.isBrowser.set(isPlatformBrowser(platformId));
-	}
-
-	private async getLocalEntries() {
+	private async getLocalEntries(): Promise<EntriesRecord | null> {
 		if (!this.isBrowser()) {
-			return null;
+			return Promise.resolve(null);
 		}
 		const localEntries = this.localStorageService.get(
 			this.localStorageKey,
@@ -81,7 +76,7 @@ export class ContentfulService {
 		await sleep(600); // Simulate network delay to detect loading state in dev only
 
 		if (!localEntries) {
-			return null;
+			return Promise.resolve(null);
 		}
 
 		// If stored value is older than 2 weeks, return null and remove it from local storage

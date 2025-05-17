@@ -1,7 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import {
 	computed,
-	Inject,
 	inject,
 	Injectable,
 	PLATFORM_ID,
@@ -87,11 +86,7 @@ export class CvService {
 	// Active Event (Job or School) (used by modal)
 	readonly activeEvent = signal<CvEvent | nullish>(null);
 
-	protected readonly isBrowser = signal(false);
-
-	constructor(@Inject(PLATFORM_ID) platformId: object) {
-		this.isBrowser.set(isPlatformBrowser(platformId));
-	}
+	protected readonly isBrowser = signal(isPlatformBrowser(inject(PLATFORM_ID)));
 
 	setActiveEvent(event: CvEvent | string | nullish): void {
 		if (typeof event === 'string') {

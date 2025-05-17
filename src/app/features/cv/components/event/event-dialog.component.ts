@@ -3,7 +3,6 @@ import {
 	ChangeDetectionStrategy,
 	Component,
 	inject,
-	Inject,
 	input,
 	PLATFORM_ID,
 	signal,
@@ -88,11 +87,7 @@ export class EventDialog {
 	readonly event = input.required<CvEvent | nullish>();
 
 	// Component must be initialized in the browser only
-	protected readonly isBrowser = signal(false);
+	protected readonly isBrowser = signal(isPlatformBrowser(inject(PLATFORM_ID)));
 
 	protected readonly cvService = inject(CvService);
-
-	constructor(@Inject(PLATFORM_ID) platformId: object) {
-		this.isBrowser.set(isPlatformBrowser(platformId));
-	}
 }
