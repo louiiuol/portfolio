@@ -1,4 +1,11 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import {
+	computed,
+	inject,
+	Injectable,
+	PLATFORM_ID,
+	signal,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { ContentfulService } from '@feat/contentful/services/contentful/contentful.service';
 import { isSkill } from '@feat/contentful/types';
@@ -37,18 +44,23 @@ export class CvService {
 
 	// All CV events
 	readonly sortedEvents = computed(() => {
-		const entries = this.contentfulService.entries.value();
+		const entries = this.contentfulService.entries;
+
+		const entriesValue = entries.value();
+
 		const states = {
-			loading: this.contentfulService.entries.isLoading(),
-			error: this.contentfulService.entries.error(),
+			loading: entries.isLoading() || !this.isBrowser(), // Weird but needed to avoid flickering error message on SSR
+			error: entries.error(),
+			status: entries.status(),
 		};
-		if (!entries || states.loading || states.error) {
+
+		if (!entriesValue || states.loading || states.error) {
 			return { ...states, data: [] };
 		}
 
 		let filtered = [
-			...entries.training.map(entry => new Training(entry)),
-			...entries.exprience.map(entry => new Job(entry)),
+			...entriesValue.training.map(entry => new Training(entry)),
+			...entriesValue.exprience.map(entry => new Job(entry)),
 		];
 
 		const { eventType, skills } = this.filters();
@@ -73,6 +85,8 @@ export class CvService {
 
 	// Active Event (Job or School) (used by modal)
 	readonly activeEvent = signal<CvEvent | nullish>(null);
+
+	protected readonly isBrowser = signal(isPlatformBrowser(inject(PLATFORM_ID)));
 
 	setActiveEvent(event: CvEvent | string | nullish): void {
 		if (typeof event === 'string') {

@@ -9,7 +9,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 	template: ` <span class="min-w-fit whitespace-nowrap">
 		{{ topic() }}
 	</span>`,
-	imports: [],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectTopicPillComponent {

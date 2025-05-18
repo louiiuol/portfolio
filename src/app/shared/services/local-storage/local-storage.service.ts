@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { formatZodError, safeParse } from '@shared/functions';
 import { isNullish, isPrimitive } from '@shared/types';
 import { ZodError, type z, type ZodType, type ZodTypeDef } from 'zod';
@@ -6,10 +7,12 @@ import { ZodError, type z, type ZodType, type ZodTypeDef } from 'zod';
 @Injectable({ providedIn: 'root' })
 export class LocalStorageService {
 	set = (key: string, value: unknown) => {
-		const toStore: string = isPrimitive(value)
-			? String(value)
-			: JSON.stringify(value);
-		localStorage.setItem(key, toStore);
+		if (isPlatformBrowser(this.platformId)) {
+			const toStore = isPrimitive(value)
+				? String(value)
+				: JSON.stringify(value);
+			localStorage.setItem(key, toStore);
+		}
 	};
 
 	get = <
@@ -24,6 +27,10 @@ export class LocalStorageService {
 		key: string,
 		schema: Schema
 	): z.infer<Schema> | null => {
+		if (!isPlatformBrowser(this.platformId)) {
+			return null;
+		}
+
 		const content = safeParse(localStorage.getItem(key));
 
 		if (isNullish(content)) {
@@ -40,7 +47,11 @@ export class LocalStorageService {
 		}
 	};
 
-	check = (key: string) => !!localStorage.getItem(key);
+	check = (key: string) =>
+		isPlatformBrowser(this.platformId) && !!localStorage.getItem(key);
 
-	remove = (key: string) => localStorage.removeItem(key);
+	remove = (key: string) =>
+		isPlatformBrowser(this.platformId) && localStorage.removeItem(key);
+
+	private readonly platformId = inject(PLATFORM_ID);
 }

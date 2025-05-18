@@ -4,16 +4,24 @@ import { entrySchema } from '../entry.type';
 import { formattedRichTextSchema } from '../rich-text/rich-text.type';
 
 export const PROJECT_STATUS = [
-	{ value: 'idea', label: 'Une idée' },
-	{ value: 'draft', label: 'Brouillon' },
-	{ value: 'in_progress', label: 'En développement' },
-	{ value: 'done', label: 'Complété' },
+	{ value: 'idea', label: 'Une idée', color: '#e9c46a', icon: '💡' },
+	{ value: 'draft', label: 'Brouillon', color: '#264653', icon: '📝' },
+	{
+		value: 'in_progress',
+		label: 'En développement',
+		color: '#219ebc',
+		icon: '🔄',
+	},
+	{ value: 'done', label: 'Complété', color: '#2a9d8f', icon: '✅' },
 ] as const;
 export type ProjectStatus = (typeof PROJECT_STATUS)[number]['value'];
 const ProjectStatusKeys = PROJECT_STATUS.map(p => p.value) as [
 	ProjectStatus,
 	...ProjectStatus[],
 ];
+export const getProjectStatusInfo = (status: ProjectStatus) => {
+	return PROJECT_STATUS.find(p => p.value === status) ?? null;
+};
 
 export const PROJECT_TYPES = [
 	{ value: 'webapp', label: 'Application web' },

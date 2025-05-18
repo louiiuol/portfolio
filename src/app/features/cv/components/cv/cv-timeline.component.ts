@@ -9,6 +9,7 @@ import {
 	ButtonComponent,
 	ErrorMessageComponent,
 	EyeIcon,
+	LoaderComponent,
 } from '@shared/components';
 import { Timeline } from 'primeng/timeline';
 import { CvService } from '../../services/cv.service';
@@ -61,9 +62,11 @@ import { EventRowComponent } from '../event/event-row.component';
 			</ng-template>
 		</p-timeline>
 
-		@if (!events().length) {
+		@if (loading()) {
+			<app-loader message="Chargement des événements ..." />
+		} @else if (!events().length) {
 			<app-error-message
-				errorMessage="Aucune expérience disponible ... 🤔 Merci de réessayer plus tard 🙏" />
+				errorMessage="Aucun événement disponible ... 🤔 Merci de réessayer plus tard 🙏" />
 		}`,
 	imports: [
 		Timeline,
@@ -73,10 +76,12 @@ import { EventRowComponent } from '../event/event-row.component';
 		EventRowComponent,
 		EventContextComponent,
 		ErrorMessageComponent,
+		LoaderComponent,
 	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CvTimelineComponent {
 	readonly events = input.required<CvEvent[]>();
+	readonly loading = input<boolean>();
 	protected readonly cvService = inject(CvService);
 }

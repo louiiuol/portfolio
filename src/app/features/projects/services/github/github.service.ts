@@ -28,9 +28,11 @@ export class GithubService {
 
 		// If stored value is older than 2 days, return null and remove it from local storage
 		const twoDaysDuration = 1000 * 60 * 60 * 24 * 2;
-		const twoDaysAgo = Date.now() - twoDaysDuration;
 
-		if (new Date(localEntries.updatedAt).getTime() < twoDaysAgo) {
+		if (
+			new Date(localEntries.updatedAt).getTime() <
+			Date.now() - twoDaysDuration
+		) {
 			this.localStorageService.remove(this.localStorageKey);
 			return null;
 		}
@@ -39,13 +41,20 @@ export class GithubService {
 	}
 
 	private async fetchGithubRepos() {
-		const limit = 100;
 		const res = await fetch(
-			`https://api.github.com/users/louiiuol/repos?per_page=${limit}`
+			`https://api.github.com/users/louiiuol/repos?per_page=100`
 		);
 
 		if (!res.ok) {
-			throw new Error(`GitHub API error: ${res.status}`);
+			let payload: unknown;
+			try {
+				payload = await res.json();
+			} catch {
+				payload = await res.text(); // may still fail but keeps raw body
+			}
+			throw new Error(`GitHub API error: ${res.status}`, {
+				cause: payload,
+			});
 		}
 
 		const parsed = githubReposSchema.safeParse(await res.json());
