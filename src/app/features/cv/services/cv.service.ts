@@ -49,7 +49,7 @@ export class CvService {
 		const entriesValue = entries.value();
 
 		const states = {
-			loading: entries.isLoading() || !this.isBrowser(),
+			loading: entries.isLoading() || !this.isBrowser(), // Weird but needed to avoid flickering error message on SSR
 			error: entries.error(),
 			status: entries.status(),
 		};

@@ -4,39 +4,35 @@ import {
 	computed,
 	input,
 } from '@angular/core';
-import type { ProjectStatus } from '@feat/contentful/types';
+import {
+	getProjectStatusInfo,
+	type ProjectStatus,
+} from '@feat/contentful/types';
 
 @Component({
 	selector: 'app-project-status',
 	host: {
 		'class': 'bg-slate-100 border border-current text-sm rounded-lg px-2 py-1',
-		'[class]': 'statusColor()',
+		'[style.color]': 'statusInfo()?.color',
 	},
-	template: ` {{ statusIcon() }} {{ statusLabel() }}`,
+	template: `
+		@if (statusInfo(); as info) {
+			{{ info.icon }} {{ info.label }}
+		}
+	`,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectStatusComponent {
 	readonly status = input.required<ProjectStatus>();
 
-	protected readonly statusLabel = computed(() => {
-		switch (this.status()) {
-			case 'idea':
-				return 'Idée';
-			case 'draft':
-				return 'Brouillon';
-			case 'in_progress':
-				return 'En cours';
-			case 'done':
-				return 'Terminé';
-			default:
-				return 'Inconnu';
-		}
-	});
+	protected readonly statusInfo = computed(() =>
+		getProjectStatusInfo(this.status())
+	);
 
 	protected readonly statusColor = computed(() => {
 		switch (this.status()) {
 			case 'idea':
-				return 'text-yellow-500';
+				return '#e6df5c';
 			case 'draft':
 				return 'text-blue-500';
 			case 'in_progress':

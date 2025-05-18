@@ -1,9 +1,4 @@
-import {
-	booleanAttribute,
-	ChangeDetectionStrategy,
-	Component,
-	input,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CapitalizePipe } from '@shared/pipes';
 
 /**
@@ -28,17 +23,14 @@ import { CapitalizePipe } from '@shared/pipes';
 			[class.text-slate-100]="theme() === 'dark'">
 			{{ message() | capitalize }} <span class="text-xs">⏳</span>
 		</span>
-		@if (!hideSpinner()) {
-			<span
-				class="rounded-full animate-spin size-12 border-transparent border-4 border-t-accent-300 border-b-accent-300 border-r-accent-300"></span>
-		}
+
+		<span
+			class="rounded-full animate-spin size-12 border-transparent border-4 border-t-accent-300 border-b-accent-300 border-r-accent-300"></span>
 	`,
 	imports: [CapitalizePipe],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoaderComponent {
 	message = input<string>('chargement du contenu');
-	theme = input<'light' | 'dark' | 'transparent'>('light');
-
-	hideSpinner = input(false, { transform: booleanAttribute });
+	theme = input<'light' | 'dark'>('light');
 }

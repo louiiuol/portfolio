@@ -1,12 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
-import {
-	inject,
-	Injectable,
-	PLATFORM_ID,
-	resource,
-	signal,
-} from '@angular/core';
-import { sleep } from '@shared/functions';
+import { inject, Injectable, resource } from '@angular/core';
 import { LocalStorageService } from '@shared/services';
 import { z } from 'zod';
 import { githubReposSchema, type Repo } from '../../types/repository.type';
@@ -14,23 +6,14 @@ import { githubReposSchema, type Repo } from '../../types/repository.type';
 @Injectable({ providedIn: 'root' })
 export class GithubService {
 	readonly repositories = resource({
-		request: () => ({ isBrowser: this.isBrowser() }),
-		loader: async ({ request }) =>
-			request.isBrowser
-				? ((await this.getLocalRepositories()) ?? this.fetchGithubRepos())
-				: Promise.resolve(null),
+		loader: async () => this.getLocalRepositories() ?? this.fetchGithubRepos(),
 	});
 
 	private readonly localStorageService = inject(LocalStorageService);
 
 	private readonly localStorageKey = 'github-repositories';
-	private readonly isBrowser = signal(isPlatformBrowser(inject(PLATFORM_ID)));
 
-	private async getLocalRepositories(): Promise<Repo[] | null> {
-		if (!this.isBrowser()) {
-			return Promise.resolve(null);
-		}
-
+	private getLocalRepositories(): Repo[] | null {
 		const localEntries = this.localStorageService.get(
 			this.localStorageKey,
 			z.object({
@@ -40,10 +23,8 @@ export class GithubService {
 		);
 
 		if (!localEntries) {
-			return Promise.resolve(null);
+			return null;
 		}
-
-		await sleep(600); // Simulate network delay to detect loading state in dev only
 
 		// If stored value is older than 2 days, return null and remove it from local storage
 		const twoDaysDuration = 1000 * 60 * 60 * 24 * 2;
@@ -53,10 +34,10 @@ export class GithubService {
 			Date.now() - twoDaysDuration
 		) {
 			this.localStorageService.remove(this.localStorageKey);
-			return Promise.resolve(null);
+			return null;
 		}
 
-		return Promise.resolve(localEntries.repositories);
+		return localEntries.repositories;
 	}
 
 	private async fetchGithubRepos() {
@@ -65,8 +46,14 @@ export class GithubService {
 		);
 
 		if (!res.ok) {
+			let payload: unknown;
+			try {
+				payload = await res.json();
+			} catch {
+				payload = await res.text(); // may still fail but keeps raw body
+			}
 			throw new Error(`GitHub API error: ${res.status}`, {
-				cause: await res.json(),
+				cause: payload,
 			});
 		}
 

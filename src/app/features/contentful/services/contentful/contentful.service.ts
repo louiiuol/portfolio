@@ -1,14 +1,6 @@
-import {
-	inject,
-	Injectable,
-	PLATFORM_ID,
-	resource,
-	signal,
-} from '@angular/core';
+import { inject, Injectable, resource } from '@angular/core';
 import { environment } from '@env';
 
-import { isPlatformBrowser } from '@angular/common';
-import { sleep } from '@shared/functions';
 import { LocalStorageService } from '@shared/services';
 import { createClient } from 'contentful';
 import { z } from 'zod';
@@ -48,11 +40,7 @@ const entryIdSchema = z.enum(
 @Injectable({ providedIn: 'root' })
 export class ContentfulService {
 	readonly entries = resource({
-		request: () => ({ isBrowser: this.isBrowser() }),
-		loader: async ({ request }) =>
-			request.isBrowser
-				? ((await this.getLocalEntries()) ?? this.fetchContentfulEntries())
-				: Promise.resolve(null),
+		loader: async () => this.getLocalEntries() ?? this.fetchContentfulEntries(),
 	});
 
 	private readonly cdaClient = createClient(environment.contentful);
@@ -60,12 +48,7 @@ export class ContentfulService {
 
 	private readonly localStorageKey = 'contentful-entries';
 
-	protected readonly isBrowser = signal(isPlatformBrowser(inject(PLATFORM_ID)));
-
-	private async getLocalEntries(): Promise<EntriesRecord | null> {
-		if (!this.isBrowser()) {
-			return Promise.resolve(null);
-		}
+	private getLocalEntries(): EntriesRecord | null {
 		const localEntries = this.localStorageService.get(
 			this.localStorageKey,
 			entriesSchema.extend({
@@ -74,10 +57,8 @@ export class ContentfulService {
 		);
 
 		if (!localEntries) {
-			return Promise.resolve(null);
+			return null;
 		}
-
-		await sleep(600); // Simulate network delay to detect loading state in dev only
 
 		// If stored value is older than 2 weeks, return null and remove it from local storage
 		const twoWeeksDuration = 1000 * 60 * 60 * 24 * 14;
