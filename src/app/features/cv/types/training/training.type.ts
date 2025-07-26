@@ -4,7 +4,7 @@ import type {
 	SkillEntry,
 	TrainingEntry,
 } from '@feat/contentful/types';
-import { diplomaSchema } from '@feat/contentful/types';
+import { diplomaSchema, getSkillLevelWeight } from '@feat/contentful/types';
 import { CvEvent, cvEventSchema } from '@feat/cv/types/cv-event/cv-event.type';
 import { isSchemaType } from '@shared/functions';
 import { z } from 'zod';
@@ -27,8 +27,10 @@ export class Training extends CvEvent {
 		this.skills = this.diplomas
 			.map(diploma => diploma.skills)
 			.flat()
-			// need to tell which level is higher than other ..
-			.sort((current, next) => current.level.localeCompare(next.level))
+			.sort(
+				(current, next) =>
+					getSkillLevelWeight(next.level) - getSkillLevelWeight(current.level)
+			)
 			.filter(
 				(skills, index, self) =>
 					index === self.findIndex(skill => skill.name === skills.name)

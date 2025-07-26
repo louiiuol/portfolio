@@ -45,21 +45,21 @@ describe('Training', () => {
 		]);
 	});
 
-	// @todo add proper logic to handle this case
-	xit('should handle skills with same name but different levels during deduplication', () => {
+	it('should handle skills with same name but different levels during deduplication', () => {
 		const entryWithConflictingSkills: TrainingEntry = {
 			...validTrainingInput(),
 			diplomas: [
 				{
-					name: 'Diploma 1',
-					description: 'Description 1',
-					obtainedAt: new Date('2023-01-01'),
-					skills: [{ name: 'JavaScript', level: 'avancé' }],
-				},
-				{
 					name: 'Diploma 2',
 					description: 'Description 2',
 					obtainedAt: new Date('2023-02-01'),
+					skills: [{ name: 'JavaScript', level: 'débutant' }],
+				},
+
+				{
+					name: 'Diploma 1',
+					description: 'Description 1',
+					obtainedAt: new Date('2023-01-01'),
 					skills: [{ name: 'JavaScript', level: 'expert' }],
 				},
 			],
