@@ -1,6 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ButtonComponent, LogoIcon } from '@shared/components';
+import {
+	ButtonComponent,
+	ExternalLinkIcon,
+	LogoIcon,
+} from '@shared/components';
 import { APP_LINKS } from '../../../app.routes';
 
 @Component({
@@ -28,16 +32,26 @@ import { APP_LINKS } from '../../../app.routes';
 							app-button
 							appearance="basic"
 							color="primary"
+							rel="noopener noreferrer"
 							target="_blank"
 							[href]="link.path">
 							{{ link.label }}
+							<app-icon-external-link
+								class="text-blue-500"
+								aria-hidden="true" />
 						</a>
 					}
 				</li>
 			}
 		</ul>
 	`,
-	imports: [RouterLink, RouterLinkActive, LogoIcon, ButtonComponent],
+	imports: [
+		RouterLink,
+		RouterLinkActive,
+		LogoIcon,
+		ButtonComponent,
+		ExternalLinkIcon,
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
